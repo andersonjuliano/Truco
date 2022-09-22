@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="button_back">
+        <item name="background">@drawable/round_button</item>
+        <item name="color">@color/black</item>
+    </style>
+</resources>
