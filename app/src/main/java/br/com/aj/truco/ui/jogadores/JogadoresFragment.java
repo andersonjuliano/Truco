@@ -101,6 +101,7 @@ public class JogadoresFragment extends Fragment {
     }
 
     private int Ordem;
+    private int Time;
     private View.OnClickListener buttonReordenarClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -108,10 +109,13 @@ public class JogadoresFragment extends Fragment {
             ordenarJogadores = true;
             for (Jogador jogador : jogadores) {
                 jogador.setOrdem(0);
-                Ordem = 1;
+                jogador.setTimeID(0);
+            }
+
+            Ordem = 1;
+                Time = 1;
                 adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
                 recyclerView.setAdapter(adapter);
-            }
         }
     };
 
@@ -120,7 +124,12 @@ public class JogadoresFragment extends Fragment {
         public void onClickListener(View view, int position, Jogador object) {
             if (ordenarJogadores) {
                 object.setOrdem(Ordem);
+                object.setTimeID(Time);
                 Ordem += 1;
+                if (Time == 1)
+                    Time = 2;
+                else
+                    Time = 1;
 
                 if (Ordem > jogadores.stream().count() )
                     Ordenar();

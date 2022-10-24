@@ -1,10 +1,15 @@
 package br.com.aj.truco.classe;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
 public class Partida {
+    @PrimaryKey
     private int PartidaID;
-    private Date DataPartida;
+    //public Date DataPartida;
     private int PontosTime1 = 0;
     private int PontosTime2 = 0;
     private int VitoriaTime1 = 0;
@@ -18,13 +23,13 @@ public class Partida {
         PartidaID = partidaID;
     }
 
-    public Date getDataPartida() {
-        return DataPartida;
-    }
-
-    public void setDataPartida(Date dataPartida) {
-        DataPartida = dataPartida;
-    }
+//    public Date getDataPartida() {
+//        return DataPartida;
+//    }
+//
+//    public void setDataPartida(Date dataPartida) {
+//        DataPartida = dataPartida;
+//    }
 
     public int getPontosTime1() {
         return PontosTime1;

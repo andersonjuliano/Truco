@@ -7,7 +7,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
 
-    <string name="menu_home">Jogar</string>
+    <string name="menu_jogar">Jogar</string>
+    <string name="menu_times">Times</string>
     <string name="menu_jogadores">Jogadores</string>
-    <string name="menu_slideshow">Estatísticas</string>
+    <string name="menu_estatistica">Estatísticas</string>
 </resources>

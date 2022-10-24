@@ -41,7 +41,12 @@ public class JogadoresAdapter extends GenericAdapter<Jogador, JogadoresAdapter.V
         Time time = times.stream().filter(x -> x.getTimeID() == jogador.getTimeID()).findFirst().orElse(null);
 
         holder.viewNome.setText(jogador.getNome());
-        holder.viewNomeTime.setText(time.getNome());
+        holder.viewNomeTime.setText(" - ");
+
+        if (time != null)
+            holder.viewNomeTime.setText(time.getNome());
+
+
         holder.viewSequencia.setText(String.valueOf(jogador.getOrdem()));
 
     }

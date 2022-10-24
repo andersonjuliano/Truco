@@ -1,11 +1,9 @@
 package br.com.aj.truco;
 
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 import android.view.WindowManager;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -17,13 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.databinding.ActivityMainBinding;
-import br.com.aj.truco.ui.home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_jogadores, R.id.nav_slideshow)
+                R.id.nav_jogar, R.id.nav_jogadores, R.id.nav_estatistica, R.id.nav_times)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

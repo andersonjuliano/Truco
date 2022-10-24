@@ -1,4 +1,4 @@
-package br.com.aj.truco.ui.home;
+package br.com.aj.truco.ui.jogo;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,12 +24,12 @@ import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.classe.UltimaPartida;
-import br.com.aj.truco.databinding.FragmentHomeBinding;
+import br.com.aj.truco.databinding.FragmentJogoBinding;
 
-public class HomeFragment extends Fragment {
+public class JogoFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private JogoViewModel jogoViewModel;
+    private FragmentJogoBinding binding;
 
     private List<Time> times;
     private List<Jogador> jogadores;
@@ -44,10 +44,10 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        jogoViewModel = new ViewModelProvider(this).get(JogoViewModel.class);
 
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentJogoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         binding.buttonVitoriaTime1.setOnClickListener(btnVitoriaTime1);
@@ -106,8 +106,8 @@ public class HomeFragment extends Fragment {
             ultimaPartida.Pontos = PontoPartida;
             ultimaPartida.PontosTime1 = partida.getPontosTime1();
             ultimaPartida.PontosTime2 = partida.getPontosTime2();
-    ultimaPartida.VitoriasTime1 = partida.getVitoriaTime1();
-    ultimaPartida.VitoriasTime2 = partida.getVitoriaTime2();
+            ultimaPartida.VitoriasTime1 = partida.getVitoriaTime1();
+            ultimaPartida.VitoriasTime2 = partida.getVitoriaTime2();
 
 
             if (jogadorPe.getTimeID() == 1) {
@@ -224,7 +224,7 @@ public class HomeFragment extends Fragment {
 
             //desfaz o ponto
             if (ultimaPartida != null && ultimaPartida.JogadorID > 0) {
-                 partidaJogador = partidaJogadores.stream().filter(x -> x.getJogadorID() == ultimaPartida.JogadorID).findFirst().orElse(null);
+                partidaJogador = partidaJogadores.stream().filter(x -> x.getJogadorID() == ultimaPartida.JogadorID).findFirst().orElse(null);
                 if (ultimaPartida.Vitoria) {
                     partidaJogador.somarPontosGanhos(ultimaPartida.Pontos * -1);
                     partidaJogador.deduzirVitoria();
@@ -233,10 +233,10 @@ public class HomeFragment extends Fragment {
                     partidaJogador.deduzirDerrota();
                 }
 
-               partida.setPontosTime1(ultimaPartida.PontosTime1);
-               partida.setPontosTime2(ultimaPartida.PontosTime2);
-               partida.setVitoriaTime1(ultimaPartida.VitoriasTime1);
-               partida.setVitoriaTime2(ultimaPartida.VitoriasTime2);
+                partida.setPontosTime1(ultimaPartida.PontosTime1);
+                partida.setPontosTime2(ultimaPartida.PontosTime2);
+                partida.setVitoriaTime1(ultimaPartida.VitoriasTime1);
+                partida.setVitoriaTime2(ultimaPartida.VitoriasTime2);
 
 
 //                if ((ultimaPartida.Vitoria && ultimaPartida.TimeID == 1) ||
@@ -271,7 +271,7 @@ public class HomeFragment extends Fragment {
         d.setView(dialogView);
         final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
         numberPicker.setMaxValue(11);
-        numberPicker.setMinValue(1);
+        numberPicker.setMinValue(0);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -313,8 +313,8 @@ public class HomeFragment extends Fragment {
         d.setMessage("Selecione a pontuação");
         d.setView(dialogView);
         final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
-        numberPicker.setMaxValue(11);
-        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(20);
+        numberPicker.setMinValue(0);
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -390,10 +390,12 @@ public class HomeFragment extends Fragment {
     private void FindNextJogador() {
 
         int _ordem = 1;
+        long QtdeJogadores = jogadores.stream().filter(x -> x.getOrdem() > 0).count();
+
         if (jogadorPe != null) {
             _ordem = jogadorPe.getOrdem() + 1;
         }
-        if (_ordem > 6) {
+        if (_ordem > QtdeJogadores) {
             _ordem = 1;
         }
 

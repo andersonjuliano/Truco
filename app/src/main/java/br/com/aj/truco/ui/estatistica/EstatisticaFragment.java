@@ -1,34 +1,30 @@
-package br.com.aj.truco.ui.slideshow;
+package br.com.aj.truco.ui.estatistica;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import br.com.aj.truco.R;
-import br.com.aj.truco.adapter.JogadoresAdapter;
 import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
 import br.com.aj.truco.classe.MySingletonClass;
 import br.com.aj.truco.classe.PartidaJogador;
-import br.com.aj.truco.databinding.FragmentSlideshowBinding;
+import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 
-public class SlideshowFragment extends Fragment {
+public class EstatisticaFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
-    private FragmentSlideshowBinding binding;
+    private EstatisticaViewModel estatisticaViewModel;
+    private FragmentEstatisticaBinding binding;
 
     private RecyclerView recyclerView;
     private Activity activity;
@@ -38,10 +34,10 @@ public class SlideshowFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        estatisticaViewModel =
+                new ViewModelProvider(this).get(EstatisticaViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentEstatisticaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         activity = getActivity();
@@ -60,7 +56,7 @@ public class SlideshowFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 //        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        estatisticaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
 

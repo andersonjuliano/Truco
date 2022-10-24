@@ -17,6 +17,8 @@ public class MySingletonClass {
     private MySingletonClass() {
     }
 
+
+
     private List<Time> times;
     private List<Jogador> jogadores;
     private Jogador jogadorPe;
@@ -101,7 +103,7 @@ public class MySingletonClass {
             partidas = new ArrayList<>();
 
             partida.setPartidaID(1);
-            partida.setDataPartida(Calendar.getInstance().getTime());
+            //partida.setDataPartida(Calendar.getInstance().getTime());
 
             partidas.add(partida);
         }

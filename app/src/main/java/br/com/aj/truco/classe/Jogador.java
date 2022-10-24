@@ -1,7 +1,11 @@
 package br.com.aj.truco.classe;
 
-public class Jogador {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
+public class Jogador {
+    @PrimaryKey
     private int JogadorID;
     private int Ordem;
     private String Nome;
