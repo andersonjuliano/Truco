@@ -10,11 +10,7 @@ import android.view.ViewGroup;
 
 import br.com.aj.truco.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TimesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TimesFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match

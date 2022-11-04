@@ -1,5 +1,10 @@
 package br.com.aj.truco.classe;
 
+
+
+import android.text.format.DateFormat;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,29 +12,32 @@ import java.util.Date;
 
 @Entity
 public class Partida {
-    @PrimaryKey
-    private int PartidaID;
-    //public Date DataPartida;
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private long PartidaID;
+    private long DataPartida;
     private int PontosTime1 = 0;
     private int PontosTime2 = 0;
     private int VitoriaTime1 = 0;
     private int VitoriaTime2 = 0;
+    //pé
+    private long JogadorID = 0;
 
-    public int getPartidaID() {
+    public long getPartidaID() {
         return PartidaID;
     }
 
-    public void setPartidaID(int partidaID) {
+    public void setPartidaID(long partidaID) {
         PartidaID = partidaID;
     }
 
-//    public Date getDataPartida() {
-//        return DataPartida;
-//    }
-//
-//    public void setDataPartida(Date dataPartida) {
-//        DataPartida = dataPartida;
-//    }
+    public long getDataPartida() {
+        return DataPartida;
+    }
+
+    public void setDataPartida(long dataPartida) {
+        DataPartida = dataPartida;
+    }
 
     public int getPontosTime1() {
         return PontosTime1;
@@ -90,7 +98,17 @@ public class Partida {
         }
     }
 
+    public long getJogadorID() {
+        return JogadorID;
+    }
 
+    public void setJogadorID(long jogadorID) {
+        JogadorID = jogadorID;
+    }
 
+    public String getTitulo(){
 
+        return String.valueOf(PartidaID) + " - " + DateFormat.format("dd/MM/yyyy", new Date(DataPartida)).toString();
+
+    }
 }

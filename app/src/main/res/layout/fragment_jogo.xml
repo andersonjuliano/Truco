@@ -6,17 +6,29 @@
     android:layout_height="match_parent"
     android:layout_margin="4dp"
     tools:context=".ui.jogo.JogoFragment"
-    android:background="@drawable/textura_verde">
+    android:background="@drawable/textura_verde"
+    android:tag="fragment_jogo">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linear_jogador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:paddingTop="10dp"
+            android:layout_centerVertical="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <TextView
             android:id="@+id/label_jogador_pe"
@@ -37,7 +49,28 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             tools:text="Nelson" />
-    </LinearLayout>
+        </LinearLayout>
+        </FrameLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:paddingEnd="12dp">-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/button_nova_partida"-->
+<!--                android:layout_width="40dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginLeft="8dp"-->
+<!--                android:background="@drawable/round_button"-->
+<!--                android:src="@drawable/ic_baseline_add_24"               ></ImageButton>-->
+
+<!--        </LinearLayout>-->
+
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linear_placar"

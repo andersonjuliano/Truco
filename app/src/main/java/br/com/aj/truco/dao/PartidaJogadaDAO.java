@@ -17,17 +17,19 @@ public interface PartidaJogadaDAO {
     List<PartidaJogada> getAll();
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaJogadaID = :partidajogadaid")
-    List<PartidaJogada> getByID(int partidajogadaid);
+    List<PartidaJogada> getByID(long partidajogadaid);
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid")
-    List<PartidaJogada> getByPartida(int partidaid);
+    List<PartidaJogada> getByPartida(long partidaid);
 
-    @Query("SELECT * FROM PartidaJogada WHERE TimeID = :timeid")
-    List<PartidaJogada> getByTime(int timeid);
+//    @Query("SELECT * FROM PartidaJogada WHERE TimeID = :timeid")
+//    List<PartidaJogada> getByTime(int timeid);
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid AND JogadorID = :jogadorid")
-    List<PartidaJogada> getByTimeJogador(int partidaid, int jogadorid);
+    List<PartidaJogada> getByTimeJogador(long partidaid, long jogadorid);
 
+    @Query("SELECT * FROM PartidaJogada ORDER BY PartidaJogadaID DESC")
+    PartidaJogada getLast();
 
 
     @Insert
@@ -35,4 +37,7 @@ public interface PartidaJogadaDAO {
 
     @Delete
     void delete(PartidaJogada partidajogada);
+
+    @Query("DELETE FROM PartidaJogada")
+    int deleteAll();
 }

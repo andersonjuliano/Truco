@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Truco</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Truco</string>
     <string name="nav_header_subtitle">Marcador &amp; Estatísticas</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Configurações</string>
+
+    <string name="action_nova_partida">Nova Partida</string>
+    <string name="action_backup">Backup</string>
+    <string name="action_restore">Restore</string>
+    <string name="action_apagar">Limpar Base</string>
+    <string name="action_sobre">Sobre</string>
 
     <string name="menu_jogar">Jogar</string>
     <string name="menu_times">Times</string>
     <string name="menu_jogadores">Jogadores</string>
     <string name="menu_estatistica">Estatísticas</string>
+    <string name="menu_partidas">Partidas</string>
+
 </resources>

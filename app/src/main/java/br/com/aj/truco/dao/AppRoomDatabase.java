@@ -16,15 +16,34 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import br.com.aj.truco.dao.JogadorDAO;
+
 import br.com.aj.truco.classe.Jogador;
+import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaJogada;
+import br.com.aj.truco.classe.PartidaJogador;
+import br.com.aj.truco.classe.Time;
 
 
-@Database(entities = {Jogador.class}, version = 6) //, exportSchema = false)
+@Database(entities = {
+        Jogador.class,
+        PartidaJogada.class,
+        Time.class,
+        Partida.class,
+        PartidaJogador.class
+}, version = 6) //, exportSchema = false)
 //@TypeConverters({DateConverter.class})
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     public abstract JogadorDAO jogadorDAO();
+
+    public abstract PartidaJogadaDAO partidaJogadaDAO();
+
+    public abstract TimeDAO timeDAO();
+
+    public abstract PartidaDAO partidaDAO();
+
+    public abstract PartidaJogadorDAO partidaJogadorDAO();
+
 
     private static volatile AppRoomDatabase INSTANCE;
     //static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -41,7 +60,8 @@ public abstract class AppRoomDatabase extends RoomDatabase {
             setDatabaseCreated();
         }
     }
-    private void setDatabaseCreated(){
+
+    private void setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true);
     }
 
@@ -58,6 +78,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                                     AppRoomDatabase.class, "app_database")
 //                            .addMigrations(MIGRATION_1_2)
                             .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

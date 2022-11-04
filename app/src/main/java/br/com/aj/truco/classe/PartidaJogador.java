@@ -1,42 +1,52 @@
 package br.com.aj.truco.classe;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class PartidaJogador {
-    private int TimeJogadorID;
-    private int PartidaID;
-    private int JogadorID;
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private long PartidaJogadorID;
+    private long TimeJogadorID;
+    private long PartidaID;
+    private long JogadorID;
     private int Vitoria;
     private int Derrota;
     private int PontosGanhos;
     private int PontosPerdidos;
 
-    public PartidaJogador(){
-         Vitoria = 0;
-       Derrota=0;
-       PontosGanhos=0;
-       PontosPerdidos=0;
+    public long getPartidaJogadorID() {
+        return PartidaJogadorID;
     }
 
-    public int getTimeJogadorID() {
+    public void setPartidaJogadorID(long partidaJogadorID) {
+        PartidaJogadorID = partidaJogadorID;
+    }
+
+    public long getTimeJogadorID() {
         return TimeJogadorID;
     }
 
-    public void setTimeJogadorID(int timeJogadorID) {
+    public void setTimeJogadorID(long timeJogadorID) {
         TimeJogadorID = timeJogadorID;
     }
 
-    public int getPartidaID() {
+    public long getPartidaID() {
         return PartidaID;
     }
 
-    public void setPartidaID(int partidaID) {
+    public void setPartidaID(long partidaID) {
         PartidaID = partidaID;
     }
 
-    public int getJogadorID() {
+    public long getJogadorID() {
         return JogadorID;
     }
 
-    public void setJogadorID(int jogadorID) {
+    public void setJogadorID(long jogadorID) {
         JogadorID = jogadorID;
     }
 
@@ -51,6 +61,7 @@ public class PartidaJogador {
     public void somarVitoria() {
         Vitoria += 1;
     }
+
     public void deduzirVitoria() {
         Vitoria -= 1;
     }
@@ -66,6 +77,7 @@ public class PartidaJogador {
     public void somarDerrota() {
         Derrota += 1;
     }
+
     public void deduzirDerrota() {
         Derrota -= 1;
     }

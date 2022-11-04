@@ -402,15 +402,13 @@ public class AppUtil {
         return Math.round(px / context.getResources().getDisplayMetrics().density);
     }
 
-    public static void showDatePicker(final Context context, final EditText editText) {
-        showDatePicker(context, editText, false);
+    public static Calendar showDatePicker(final Context context ) {
+       return showDatePicker(context, false);
     }
 
-    private static void showDatePicker(final Context context, final EditText editText, final boolean flagTime) {
-        String strDate = editText.getText().toString();
-        Calendar calendar = AppUtil.convertDateTimeToCalendar(
-                (flagTime) ? AppUtil.parseDateTime(strDate) : AppUtil.parseDate(strDate)
-        );
+    private static Calendar showDatePicker(final Context context, final boolean flagTime) {
+
+        Calendar calendar = Calendar.getInstance();
 
         if (calendar == null) {
             calendar = GregorianCalendar.getInstance();
@@ -426,10 +424,10 @@ public class AppUtil {
                 calendarAux.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 if (flagTime) {
-                    editText.setText(formatDateTime(calendarAux.getTime()));
-                    showTimePicker(context, editText);
+//                    editText.setText(formatDateTime(calendarAux.getTime()));
+//                    showTimePicker(context, editText);
                 } else {
-                    editText.setText(formatDate(calendarAux.getTime()));
+//                    editText.setText(formatDate(calendarAux.getTime()));
                 }
             }
         },
@@ -439,40 +437,42 @@ public class AppUtil {
         );
 //        dialog.setTitle(context.getString(R.string.pick_date));
         dialog.show();
+
+        return calendarAux;
     }
 
-    public static void showTimePicker(final Context context, final EditText editText) {
-        Calendar calendar = AppUtil.convertDateTimeToCalendar(
-                AppUtil.parseDateTime(editText.getText().toString()));
-        if (calendar == null) {
-            calendar = GregorianCalendar.getInstance();
-        }
+//    public static void showTimePicker(final Context context, final EditText editText) {
+//        Calendar calendar = AppUtil.convertDateTimeToCalendar(
+//                AppUtil.parseDateTime(editText.getText().toString()));
+//        if (calendar == null) {
+//            calendar = GregorianCalendar.getInstance();
+//        }
+//
+//        final Calendar calendarAux = calendar;
+//        TimePickerDialog dialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+//
+//                calendarAux.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//                calendarAux.set(Calendar.MINUTE, minute);
+//                calendarAux.set(Calendar.SECOND, 0);
+//
+//                editText.setText(
+//                        formatDateTime(calendarAux.getTime()));
+//
+//            }
+//        },
+//                calendar.get(Calendar.HOUR_OF_DAY),
+//                calendar.get(Calendar.MINUTE),
+//                true
+//        );
+////        dialog.setTitle(context.getString(R.string.pick_date));
+//        dialog.show();
+//    }
 
-        final Calendar calendarAux = calendar;
-        TimePickerDialog dialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-
-                calendarAux.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendarAux.set(Calendar.MINUTE, minute);
-                calendarAux.set(Calendar.SECOND, 0);
-
-                editText.setText(
-                        formatDateTime(calendarAux.getTime()));
-
-            }
-        },
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true
-        );
-//        dialog.setTitle(context.getString(R.string.pick_date));
-        dialog.show();
-    }
-
-    public static void showDateTimePicker(final Context context, final EditText editText) {
-        AppUtil.showDatePicker(context, editText, true);
-    }
+//    public static void showDateTimePicker(final Context context, final EditText editText) {
+//        AppUtil.showDatePicker(context,  true);
+//    }
 
 
     public static String getAndroidVersion() {

@@ -15,14 +15,35 @@ import br.com.aj.truco.classe.Jogador;
 public interface JogadorDAO     {
 
     @Query("SELECT * FROM Jogador")
-    List<Jogador> getJogadores();
+    List<Jogador> getAll();
+
+    @Query("SELECT * FROM Jogador WHERE Ordem > 0")
+    List<Jogador> getJogadoresAtivos();
 
     @Query("SELECT * FROM Jogador WHERE JogadorID = :JogadorID")
-    List<Jogador> getJogador(int[] JogadorID);
+    Jogador getJogador(long JogadorID);
+
+    @Query("SELECT * FROM Jogador WHERE Nome = :Nome")
+    Jogador getJogadorByNome(String Nome);
+
+ @Query("SELECT * FROM Jogador WHERE Ordem = :ordem")
+    Jogador getJogadorByOrdem(int ordem);
+
+    @Query("SELECT * FROM Jogador ORDER BY Ordem")
+    Jogador getFirstJogador();
+
+    @Query("SELECT MAX(Ordem) FROM Jogador")
+    int getMaxOrdem();
 
     @Insert
     long insert(Jogador jogador);
 
     @Delete
     void delete(Jogador jogador);
+
+    @Query("DELETE FROM Jogador")
+    int deleteAll();
+
+    @Update
+    void update(Jogador jogador);
 }

@@ -20,5 +20,9 @@
             android:id="@+id/nav_estatistica"
             android:icon="@drawable/ic_baseline_show_chart_24"
             android:title="@string/menu_estatistica" />
+        <item
+            android:id="@+id/nav_partidas"
+            android:icon="@drawable/ic_baseline_web_stories_24"
+            android:title="@string/menu_partidas" />
     </group>
 </menu>

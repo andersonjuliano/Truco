@@ -1,20 +1,16 @@
 package br.com.aj.truco.ui.jogadores;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,12 +18,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import br.com.aj.truco.R;
 import br.com.aj.truco.adapter.JogadoresAdapter;
 import br.com.aj.truco.classe.Jogador;
-import br.com.aj.truco.classe.MySingletonClass;
-import br.com.aj.truco.classe.Partida;
-import br.com.aj.truco.databinding.FragmentJogadoresBinding;
+import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentJogadoresBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
 
@@ -41,6 +34,7 @@ public class JogadoresFragment extends Fragment {
     private Activity activity;
     private JogadoresAdapter adapter;
     private boolean ordenarJogadores = false;
+    AppRoomDatabase dbs;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,12 +43,14 @@ public class JogadoresFragment extends Fragment {
 
         activity = getActivity();
 
+        dbs = AppRoomDatabase.getDatabase(getContext());
+
+
         binding = FragmentJogadoresBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recyclerView = binding.jogadoresRecycleview;
-        jogadores = MySingletonClass.getInstance().getJogadores();
-
+        jogadores = dbs.jogadorDAO().getAll();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -70,6 +66,7 @@ public class JogadoresFragment extends Fragment {
 
         binding.buttonReordenar.setOnClickListener(buttonReordenarClick);
 
+
         jogadoresViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
@@ -79,9 +76,9 @@ public class JogadoresFragment extends Fragment {
         return root;
     }
 
-    public  void Ordenar(){
+    public void Ordenar() {
 
-        Collections.sort(jogadores, new Comparator<Jogador>(){
+        Collections.sort(jogadores, new Comparator<Jogador>() {
             public int compare(Jogador obj1, Jogador obj2) {
                 // ## Ascending order
                 //return obj1.firstName.compareToIgnoreCase(obj2.firstName); // To compare string values
@@ -110,28 +107,31 @@ public class JogadoresFragment extends Fragment {
             for (Jogador jogador : jogadores) {
                 jogador.setOrdem(0);
                 jogador.setTimeID(0);
+                dbs.jogadorDAO().update(jogador);
             }
 
             Ordem = 1;
-                Time = 1;
-                adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
-                recyclerView.setAdapter(adapter);
+            Time = 1;
+            adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
+            recyclerView.setAdapter(adapter);
         }
     };
 
     private RecyclerViewListenerHack.OnClickListener listClickListener = new RecyclerViewListenerHack.OnClickListener<Jogador>() {
         @Override
-        public void onClickListener(View view, int position, Jogador object) {
+        public void onClickListener(View view, int position, Jogador jogador) {
             if (ordenarJogadores) {
-                object.setOrdem(Ordem);
-                object.setTimeID(Time);
+                jogador.setOrdem(Ordem);
+                jogador.setTimeID(Time);
+                dbs.jogadorDAO().update(jogador);
+
                 Ordem += 1;
                 if (Time == 1)
                     Time = 2;
                 else
                     Time = 1;
 
-                if (Ordem > jogadores.stream().count() )
+                if (Ordem > jogadores.stream().count())
                     Ordenar();
 
                 adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
