@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "br.com.aj.truco"
@@ -13,6 +13,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -72,4 +78,14 @@ dependencies {
     implementation "androidx.room:room-paging:2.4.1"
 
     //implementation 'de.raphaelebner:roomdatabasebackup:1.0.0-beta11'
+
+    //implementation 'com.github.AnyChart:AnyChart-Android:0.0.3'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'tr.xip.errorview:library:3.0.0'
+
+
+
+
 }

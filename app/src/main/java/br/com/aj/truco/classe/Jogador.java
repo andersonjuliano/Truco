@@ -2,6 +2,7 @@ package br.com.aj.truco.classe;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -44,4 +45,8 @@ public class Jogador {
     public void setNome(String nome) {
         Nome = nome;
     }
+
+   @Ignore public static final String EXTRA_KEY = Jogador.class.getName();
+
+
 }

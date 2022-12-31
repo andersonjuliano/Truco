@@ -42,22 +42,25 @@ public class PartidaJogadoresAdapter extends GenericAdapter<PartidaJogador, Part
     public void onBindViewHolder(ViewHolder holder, int position) {
         PartidaJogador partidaJogador = mList.get(position);
         Jogador jogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
-
+if (jogador != null)
         holder.viewNomeJogador.setText(jogador.getNome());
+else
+    holder.viewNomeJogador.setText("Jogador excluido");
+
         holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
         holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
-        holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.getPontosGanhos() - partidaJogador.getPontosPerdidos()));
-        if ((partidaJogador.getPontosGanhos() - partidaJogador.getPontosPerdidos()) < 0)
+        holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
+        if ((partidaJogador.SaldoPontos() ) < 0)
             holder.viewPontosSaldo.setTextColor(Color.RED);
-        else if ((partidaJogador.getPontosGanhos() - partidaJogador.getPontosPerdidos()) > 0)
+        else if ((partidaJogador.SaldoPontos()) > 0)
             holder.viewPontosSaldo.setTextColor(Color.BLUE);
 
         holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
         holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
-        holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.getVitoria() - partidaJogador.getDerrota()));
-        if ((partidaJogador.getVitoria() - partidaJogador.getDerrota()) < 0)
+        holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.SaldoVitorias()));
+        if ((partidaJogador.SaldoVitorias()) < 0)
             holder.viewPartidasSaldo.setTextColor(Color.RED);
-        else if ((partidaJogador.getVitoria() - partidaJogador.getDerrota()) > 0)
+        else if ((partidaJogador.SaldoVitorias()) > 0)
             holder.viewPartidasSaldo.setTextColor(Color.BLUE);
 
 

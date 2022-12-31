@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -93,6 +94,9 @@ public class JogoFragment extends Fragment {
             if (jogadorPe == null)
                 jogadorPe = dbs.jogadorDAO().getFirstJogador();
         }
+
+        if (jogadorPe == null || QtdeJogadores == 0)
+            Toast.makeText(getActivity(), "Não há lista jogadores definida", Toast.LENGTH_LONG).show();
 
         CarregarTela();
 
@@ -308,8 +312,8 @@ public class JogoFragment extends Fragment {
                 QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
                 partida = dbs.partidaDAO().getPartida(partidaID);
 
-                jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
-                if (jogadorPe == null)
+//                jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
+//                if (jogadorPe == null)
                     jogadorPe = dbs.jogadorDAO().getFirstJogador();
 
                 CarregarTela();
@@ -455,6 +459,15 @@ public class JogoFragment extends Fragment {
         if (jogadorPe != null && partida != null) {
 
             partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogadorPe.getJogadorID(), partida.getPartidaID());
+
+            //inclui se não achar
+            if (partidaJogador == null){
+                partidaJogador = new PartidaJogador();
+                partidaJogador.setJogadorID(jogadorPe.getJogadorID());
+                partidaJogador.setPartidaID(partida.getPartidaID());
+                partidaJogador.setTimeJogadorID(jogadorPe.getTimeID());
+                dbs.partidaJogadorDAO().insert(partidaJogador);
+            }
 
             partida.setJogadorID(jogadorPe.getJogadorID());
 

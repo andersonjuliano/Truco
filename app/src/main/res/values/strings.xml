@@ -5,9 +5,13 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="action_nova_partida">Nova Partida</string>
-    <string name="action_backup">Backup</string>
-    <string name="action_restore">Restore</string>
+    <string name="action_nova_partida_confirmar">Inicia uma nova partida?</string>
+    <string name="action_limpar_hitorico">Limpar Histórico</string>
+    <string name="action_limpar_hitorico_confirmar">Confirma a limpeza do histórico?</string>
+    <string name="action_limpar_estatisticas">Limpar Estatísticas</string>
+    <string name="action_limpar_estatisticas_confirmar">Será apagado todas as estatísticas de todos os jogadores excluídos, sem pontos e partidas sem movimentação, confirma?</string>
     <string name="action_apagar">Limpar Base</string>
+    <string name="action_apagar_confirmar">TODA A BASE DE DADOS SERÁ APAGADA, CONFIRMA?</string>
     <string name="action_sobre">Sobre</string>
 
     <string name="menu_jogar">Jogar</string>
@@ -15,5 +19,24 @@
     <string name="menu_jogadores">Jogadores</string>
     <string name="menu_estatistica">Estatísticas</string>
     <string name="menu_partidas">Partidas</string>
+
+
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_teste">teste</string>
+
+
+    <!-- Error View -->
+    <string name="app_error_view_oops">Oops</string>
+    <string name="app_error_view_retry">Tente Novamente</string>
+    <string name="app_error_view_retry_no">Não, obrigado</string>
+
 
 </resources>

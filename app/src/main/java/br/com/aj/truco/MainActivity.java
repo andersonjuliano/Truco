@@ -1,7 +1,6 @@
 package br.com.aj.truco;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -23,15 +23,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.room.migration.Migration;
 
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -43,6 +38,7 @@ import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.ActivityMainBinding;
 import br.com.aj.truco.util.Constantes;
 import br.com.aj.truco.util.SharedPreferencesUtil;
+//import de.raphaelebner.roomdatabasebackup.core.RoomBackup;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private final String TAG = "TAG_TRUCO";
 
-    private MenuItem mNovaPartida;
+
     private AppRoomDatabase dbs;
+
+    //private final RoomBackup roomBackup = new RoomBackup(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_jogar, R.id.nav_jogadores, R.id.nav_estatistica, R.id.nav_times)
+                R.id.nav_jogar, R.id.nav_times, R.id.nav_jogadores, R.id.nav_estatistica, R.id.nav_partidas)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -89,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-
-
     }
 
 
@@ -98,48 +94,60 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        mNovaPartida = menu.findItem(R.id.action_nova_partida);
+        MenuItem mNovaPartida = menu.findItem(R.id.action_nova_partida);
         mNovaPartida.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 try {
 
-                    List<Partida> partidaList = dbs.partidaDAO().getAll();
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_nova_partida_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    // dbs = AppRoomDatabase.getDatabase(getBaseContext());
+                                    List<Partida> partidaList = dbs.partidaDAO().getAll();
+                                    if (dbs.timeDAO().CountAll() == 0) {
+                                        Time time = new Time();
+                                        time.setNome("Novos");
+                                        dbs.timeDAO().insert(time);
+
+                                        time = new Time();
+                                        time.setNome("Velhos");
+                                        dbs.timeDAO().insert(time);
+                                    }
+
+                                    Calendar c = Calendar.getInstance();
+
+                                    Partida partida = new Partida();
+                                    partida.setDataPartida(c.getTime().getTime());
+                                    long id = dbs.partidaDAO().insert(partida);
+
+                                    //ao iniciar uma nova partida, remove o histórico
+                                    //dbs.partidaJogadaDAO().deleteAll();
+
+                                    SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).edit();
+                                    editor.putLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, id);
+                                    editor.commit();
+
+                                    carregarPartidaJogador(id);
+                                    Toast.makeText(getBaseContext(), "Nova partida iniciada", Toast.LENGTH_LONG).show();
+
+                                    Intent receiverIntent = new Intent(Constantes.ACTION_NOVA_PARTIDA);
+                                    //receiverIntent.putExtra(MensagemChat.EXTRA_KEY, objMensagemChat);
+                                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(receiverIntent);
 
 
-                    if (dbs.timeDAO().CountAll() ==0) {
-
-                       Time time = new Time();
-                        time.setNome("Novos");
-                        dbs.timeDAO().insert(time);
-
-                       time = new Time();
-                        time.setNome("Velhos");
-                        dbs.timeDAO().insert(time);
-                    }
-
-                    Calendar c = Calendar.getInstance();
-
-                    Partida partida = new Partida();
-                    partida.setDataPartida(c.getTime().getTime());
-                    long id = dbs.partidaDAO().insert(partida);
-
-
-                    //ao iniciar uma nova partida, remove o histórico
-                    dbs.partidaJogadaDAO().deleteAll();
-                    
-
-                    SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).edit();
-                    editor.putLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, id);
-                    editor.commit();
-
-                    carregarPartidaJogador(id);
-
-                    Toast.makeText(getBaseContext(), "Nova partida iniciada", Toast.LENGTH_LONG).show();
-
-                    Intent receiverIntent = new Intent(Constantes.ACTION_NOVA_PARTIDA);
-                    //receiverIntent.putExtra(MensagemChat.EXTRA_KEY, objMensagemChat);
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(receiverIntent);
+                                }
+                            }).show();
 
 
                 } catch (Exception e) {
@@ -147,6 +155,129 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return true;
+            }
+        });
+
+        MenuItem mSobre = menu.findItem(R.id.action_sobre);
+        mSobre.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("some_int", 0);
+
+//                getSupportFragmentManager().beginTransaction()
+//                        .add(R.id.nav_host_fragment_content_main, SobreFragment.class, bundle)
+//                        .commit();
+
+
+                return false;
+            }
+        });
+
+
+        MenuItem mBackup = menu.findItem(R.id.action_limpar_hitorico);
+        mBackup.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_limpar_hitorico_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(getBaseContext(), "Limpeza ainda não implementada", Toast.LENGTH_LONG).show();
+                                }
+                            }).show();
+
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                return false;
+            }
+        });
+
+        MenuItem mRestore = menu.findItem(R.id.action_limpar_estatistica);
+        mRestore.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_limpar_estatisticas_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+                                    int qtde = dbs.partidaJogadorDAO().deleteJogadorExcluido();
+                                    qtde += dbs.partidaJogadorDAO().deleteNull(partidaID);
+                                    qtde += dbs.partidaJogadorDAO().deleteZero();
+                                    qtde += dbs.partidaDAO().deleteNull(partidaID);
+                                    Toast.makeText(getBaseContext(), String.valueOf(qtde) + " estatísticas excluídas", Toast.LENGTH_LONG).show();
+
+                                }
+                            }).show();
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                return false;
+            }
+        });
+
+        MenuItem mLimparBase = menu.findItem(R.id.action_limpar);
+        mLimparBase.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_apagar_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dbs.partidaJogadaDAO().deleteAll();
+                                    dbs.partidaDAO().deleteAll();
+                                    dbs.partidaJogadorDAO().deleteAll();
+                                    dbs.jogadorDAO().deleteAll();
+
+                                }
+                            }).show();
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                return false;
             }
         });
 
@@ -244,9 +375,6 @@ public class MainActivity extends AppCompatActivity {
         if (jogadorList == null || jogadorList.stream().count() == 0)
             jogadorList = cargaInicialJogadores();
 
-//        SharedPreferences sharedPreferences = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext());
-        //int partidaID = sharedPreferences.getInt(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-
 
         for (Jogador jogador : jogadorList) {
 
@@ -255,7 +383,6 @@ public class MainActivity extends AppCompatActivity {
             partidaJogador.setJogadorID(jogador.getJogadorID());
             partidaJogador.setPartidaID(partidaID);
             dbs.partidaJogadorDAO().insert(partidaJogador);
-
 
 
         }
@@ -267,9 +394,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-
 
 
 //    private List<Time> times;

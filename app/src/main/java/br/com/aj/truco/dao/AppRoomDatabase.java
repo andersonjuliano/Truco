@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -29,27 +30,24 @@ import br.com.aj.truco.classe.Time;
         PartidaJogada.class,
         Time.class,
         Partida.class,
-        PartidaJogador.class
-}, version = 6) //, exportSchema = false)
-//@TypeConverters({DateConverter.class})
+        PartidaJogador.class},
+        version = AppRoomDatabase.DBVERSION
+        //,autoMigrations = {@AutoMigration(from = 6, to = 7)}
+)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     public abstract JogadorDAO jogadorDAO();
-
     public abstract PartidaJogadaDAO partidaJogadaDAO();
-
     public abstract TimeDAO timeDAO();
-
     public abstract PartidaDAO partidaDAO();
-
     public abstract PartidaJogadorDAO partidaJogadorDAO();
-
 
     private static volatile AppRoomDatabase INSTANCE;
     //static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
 
-    public static final String DATABASE_NAME = "basic-sample-db";
+    public static final int DBVERSION = 6;
+    public static final String DATABASE_NAME = "truco-db.db";
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
     /**
@@ -76,7 +74,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppRoomDatabase.class, "app_database")
-//                            .addMigrations(MIGRATION_1_2)
+                            //.addMigrations(MIGRATION_1_2)
                             .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();

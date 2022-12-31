@@ -8,14 +8,14 @@
         android:title="@string/action_nova_partida"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_backup"
+        android:id="@+id/action_limpar_hitorico"
         android:orderInCategory="100"
-        android:title="@string/action_backup"
+        android:title="@string/action_limpar_hitorico"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_restore"
+        android:id="@+id/action_limpar_estatistica"
         android:orderInCategory="100"
-        android:title="@string/action_restore"
+        android:title="@string/action_limpar_estatisticas"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_limpar"

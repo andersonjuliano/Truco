@@ -62,4 +62,8 @@ public interface PartidaDAO {
 
     @Query("DELETE FROM Partida")
     int deleteAll();
+
+    @Query("DELETE FROM Partida WHERE (PontosTime1 + PontosTime2 + VitoriaTime1 + VitoriaTime2) = 0 AND PartidaID != :partidaID")
+    int deleteNull(long partidaID);
+
 }

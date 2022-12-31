@@ -14,8 +14,12 @@ import br.com.aj.truco.classe.Jogador;
 @Dao
 public interface JogadorDAO     {
 
-    @Query("SELECT * FROM Jogador")
+    @Query("SELECT * FROM Jogador ORDER BY  Ordem")
     List<Jogador> getAll();
+
+    @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem , Nome " +
+            "FROM Jogador ORDER BY  Ordem1")
+    List<Jogador> getAllOrdem();
 
     @Query("SELECT * FROM Jogador WHERE Ordem > 0")
     List<Jogador> getJogadoresAtivos();
@@ -29,7 +33,7 @@ public interface JogadorDAO     {
  @Query("SELECT * FROM Jogador WHERE Ordem = :ordem")
     Jogador getJogadorByOrdem(int ordem);
 
-    @Query("SELECT * FROM Jogador ORDER BY Ordem")
+    @Query("SELECT * FROM Jogador WHERE Ordem > 0 ORDER BY Ordem")
     Jogador getFirstJogador();
 
     @Query("SELECT MAX(Ordem) FROM Jogador")

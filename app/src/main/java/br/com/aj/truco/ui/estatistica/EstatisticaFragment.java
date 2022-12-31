@@ -3,6 +3,7 @@ package br.com.aj.truco.ui.estatistica;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.PartidaSelecao;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
+import br.com.aj.truco.generic.RecyclerViewListenerHack;
+import br.com.aj.truco.ui.EstatisticaJogadorGrafico;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 public class EstatisticaFragment extends Fragment {
@@ -62,6 +65,16 @@ public class EstatisticaFragment extends Fragment {
             binding.estatisticaPartidaText.setText("Partida: " + partida.getTitulo());
         }
 
+//        binding.estatisticaButtonGrafico.setOnClickListener(new View.OnClickListener() {
+//                                                                @Override
+//                                                                public void onClick(View v) {
+//                                                                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGrafico.class);
+//                                                                    startActivity(intent);
+//
+//                                                                }
+//                                                            }
+//        );
+
         List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
@@ -70,7 +83,7 @@ public class EstatisticaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 //        recyclerView.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL));
 
-        adapter = new PartidaJogadoresAdapter(activity, partidaJogadores, null, null);
+        adapter = new PartidaJogadoresAdapter(activity, partidaJogadores, listClickListener, null);
         recyclerView.setAdapter(adapter);
 
         binding.estatisticaPartidaText.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +161,7 @@ public class EstatisticaFragment extends Fragment {
                         //somente carrega a tela se tiver registros
                         if (partidaJogadores != null && partidaJogadores.stream().count() > 0) {
                             binding.estatisticaPartidaText.setText(titulo);
-                            adapter = new PartidaJogadoresAdapter(activity, partidaJogadores, null, null);
+                            adapter = new PartidaJogadoresAdapter(activity, partidaJogadores, listClickListener, null);
                             recyclerView.setAdapter(adapter);
                         }
                     }
@@ -198,6 +211,21 @@ public class EstatisticaFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private RecyclerViewListenerHack.OnClickListener listClickListener = new RecyclerViewListenerHack.OnClickListener<Object>() {
+        @Override
+        public void onClickListener(View view, int position, Object object) {
+
+            if (object instanceof PartidaJogador) {
+
+                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGrafico.class);
+                    intent.putExtra(Jogador.EXTRA_KEY,  ((PartidaJogador) object).getJogadorID());
+                startActivity(intent);
+
+
+            }
+        }
+    };
 
 
 }

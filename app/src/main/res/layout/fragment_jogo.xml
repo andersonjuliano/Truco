@@ -234,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:padding="18dp"
+                android:padding="28dp"
                 android:backgroundTint="@color/botoesPadraoShape"
                 android:src="@drawable/ic_baseline_add_24"
                 android:text="Vitória"></ImageButton>
@@ -276,7 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="18dp"
-                android:padding="18dp"
+                android:padding="28dp"
                 android:backgroundTint="@color/botoesPadraoShape"
                 android:src="@drawable/ic_baseline_add_24"></ImageButton>
 

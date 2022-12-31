@@ -1,12 +1,14 @@
 package br.com.aj.truco.classe;
 
 
-
 import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -23,6 +25,7 @@ public class Partida {
     //pé
     private long JogadorID = 0;
 
+    //region get/set
     public long getPartidaID() {
         return PartidaID;
     }
@@ -71,33 +74,6 @@ public class Partida {
         VitoriaTime2 = vitoriaTime2;
     }
 
-    public void SomarPontoTime1(Integer ponto){
-        if (ponto == null) {
-            PontosTime1 += 1;
-        }
-        else{
-            PontosTime1 += ponto;
-        }
-        if(PontosTime1 >= 12){
-            PontosTime2 = 0;
-            PontosTime1 = 0;
-            VitoriaTime1 +=1;
-        }
-
-    }
-    public void SomarPontoTime2(Integer ponto){
-        if(ponto == null) {
-            PontosTime2 += 1;
-        }else{
-            PontosTime2 += ponto;
-        }
-        if(PontosTime2 >= 12){
-            PontosTime2 = 0;
-            PontosTime1 = 0;
-            VitoriaTime2 +=1;
-        }
-    }
-
     public long getJogadorID() {
         return JogadorID;
     }
@@ -105,10 +81,71 @@ public class Partida {
     public void setJogadorID(long jogadorID) {
         JogadorID = jogadorID;
     }
+    //endregion get/set
 
-    public String getTitulo(){
+    //region Métodos auxiliares
+
+    public void SomarPontoTime1(Integer ponto) {
+        if (ponto == null) {
+            PontosTime1 += 1;
+        } else {
+            PontosTime1 += ponto;
+        }
+        if (PontosTime1 >= 12) {
+            PontosTime2 = 0;
+            PontosTime1 = 0;
+            VitoriaTime1 += 1;
+        }
+
+    }
+
+    public void SomarPontoTime2(Integer ponto) {
+        if (ponto == null) {
+            PontosTime2 += 1;
+        } else {
+            PontosTime2 += ponto;
+        }
+        if (PontosTime2 >= 12) {
+            PontosTime2 = 0;
+            PontosTime1 = 0;
+            VitoriaTime2 += 1;
+        }
+    }
+
+    public String getTitulo() {
 
         return String.valueOf(PartidaID) + " - " + DateFormat.format("dd/MM/yyyy", new Date(DataPartida)).toString();
 
     }
+
+    public String getDiaMes() {
+
+        return  DateFormat.format("dd/MM", new Date(DataPartida)).toString();
+
+    }
+public int getDia() {
+
+        return Integer.parseInt(DateFormat.format("dd", new Date(DataPartida)).toString());
+
+    }
+
+    public String toString() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("PartidaID", PartidaID);
+            jsonObject.put("DataPartida", DataPartida);
+            jsonObject.put("PontosTime1", PontosTime1);
+            jsonObject.put("PontosTime2", PontosTime2);
+            jsonObject.put("VitoriaTime1", VitoriaTime1);
+            jsonObject.put("VitoriaTime2", VitoriaTime2);
+            jsonObject.put("JogadorID", JogadorID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    //endregion
+
+
 }

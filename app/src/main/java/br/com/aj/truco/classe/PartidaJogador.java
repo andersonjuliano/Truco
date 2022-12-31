@@ -105,4 +105,11 @@ public class PartidaJogador {
     public void somarPontosPerdidos(int pontosPerdidos) {
         PontosPerdidos += pontosPerdidos;
     }
+
+    public int SaldoPontos(){
+        return PontosGanhos - PontosPerdidos;
+    }
+    public int SaldoVitorias(){
+        return  Vitoria - Derrota;
+    }
 }

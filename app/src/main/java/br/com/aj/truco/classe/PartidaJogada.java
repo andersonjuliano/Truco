@@ -20,7 +20,6 @@ public class PartidaJogada {
     private int VitoriasTime2;
     private boolean Vitoria;
 
-
     public long getPartidaJogadaID() {
         return PartidaJogadaID;
     }
