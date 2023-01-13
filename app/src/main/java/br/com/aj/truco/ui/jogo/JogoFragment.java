@@ -50,6 +50,7 @@ public class JogoFragment extends Fragment {
     private PartidaJogador partidaJogador;
     //private UltimaPartida ultimaPartida;
     private int QtdeJogadores;
+    private long partidaID;
 
     AppRoomDatabase dbs;
 
@@ -82,7 +83,7 @@ public class JogoFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).registerReceiver(mNovaPartidaReceiver, intentFilterNovaPartida);
 
 
-        long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+        partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
         QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
         if (partida == null)
             partida = dbs.partidaDAO().getPartida(partidaID);
@@ -242,12 +243,14 @@ public class JogoFragment extends Fragment {
         public void onClick(View view) {
 
             //List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getAll();
-            PartidaJogada partidaJogada = dbs.partidaJogadaDAO().getLast();
+            PartidaJogada partidaJogada = dbs.partidaJogadaDAO().getLast(partidaID);
 
 
             //desfaz o ponto
             if (partidaJogada != null && partidaJogada.getJogadorID() > 0) {
                 partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(partidaJogada.getJogadorID(), partida.getPartidaID());   //partidaJogadores.stream().filter(x -> x.getJogadorID() == partidaJogada.getJogadorID()).findFirst().orElse(null);
+
+
                 if (partidaJogada.isVitoria()) {
                     partidaJogador.somarPontosGanhos(partidaJogada.getPontos() * -1);
                     partidaJogador.deduzirVitoria();
@@ -272,49 +275,26 @@ public class JogoFragment extends Fragment {
 
                 CarregarTela();
 
+
+            } else {
+                Toast.makeText(getContext(), "Não foi possível desfazer a jogada.", Toast.LENGTH_LONG).show();
             }
-
-
         }
     };
-//    private View.OnClickListener buttonNovaPartidaClick = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//
-////                                List<Partida> partidaList = dbs.partidaDAO().getAll();
-////
-////                    Calendar c = Calendar.getInstance();
-////
-////                    Partida partida = new Partida();
-////                    partida.setDataPartida(c.getTime().getTime());
-////                    long id = dbs.partidaDAO().insert(partida);
-////
-////                    SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).edit();
-////                    editor.putLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, id);
-////                    editor.commit();
-////
-////                    carregarPartidaJogador(id);
-////
-////                    Toast.makeText(getBaseContext(), "Nova partida iniciada", Toast.LENGTH_LONG).show();
-//
-//
-//        }
-//    }     ;
-
 
     private BroadcastReceiver mNovaPartidaReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Constantes.ACTION_NOVA_PARTIDA)) {
 
-                long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+                partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
 
                 QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
                 partida = dbs.partidaDAO().getPartida(partidaID);
 
 //                jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
 //                if (jogadorPe == null)
-                    jogadorPe = dbs.jogadorDAO().getFirstJogador();
+                jogadorPe = dbs.jogadorDAO().getFirstJogador();
 
                 CarregarTela();
             }
@@ -461,7 +441,7 @@ public class JogoFragment extends Fragment {
             partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogadorPe.getJogadorID(), partida.getPartidaID());
 
             //inclui se não achar
-            if (partidaJogador == null){
+            if (partidaJogador == null) {
                 partidaJogador = new PartidaJogador();
                 partidaJogador.setJogadorID(jogadorPe.getJogadorID());
                 partidaJogador.setPartidaID(partida.getPartidaID());
@@ -504,72 +484,5 @@ public class JogoFragment extends Fragment {
         dbs.partidaDAO().update(partida);
 
     }
-
-//
-//    private List<Jogador> cargaInicialJogadores() {
-//
-//
-//        Jogador jogador = new Jogador();
-//        jogador.setOrdem(1);
-//        jogador.setTimeID(1);
-//        jogador.setNome("Juliano");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//        jogador = new Jogador();
-//        jogador.setOrdem(2);
-//        jogador.setTimeID(2);
-//        jogador.setNome("Nelson");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//        jogador = new Jogador();
-//        jogador.setOrdem(3);
-//        jogador.setTimeID(1);
-//        jogador.setNome("Eder");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//        jogador = new Jogador();
-//        jogador.setOrdem(4);
-//        jogador.setTimeID(2);
-//        jogador.setNome("Genêsio");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//        jogador = new Jogador();
-//        jogador.setOrdem(5);
-//        jogador.setTimeID(1);
-//        jogador.setNome("Gustavo");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//        jogador = new Jogador();
-//        jogador.setOrdem(6);
-//        jogador.setTimeID(2);
-//        jogador.setNome("Zé");
-//        dbs.jogadorDAO().insert(jogador);
-//
-//
-//        return dbs.jogadorDAO().getAll();
-//
-//    }
-//
-//    private void carregarPartidaJogador(long partidaID) {
-//
-//        List<Jogador> jogadorList = dbs.jogadorDAO().getAll();
-//        if (jogadorList == null || jogadorList.stream().count() == 0)
-//            jogadorList = cargaInicialJogadores();
-//
-////        SharedPreferences sharedPreferences = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext());
-//        //int partidaID = sharedPreferences.getInt(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-//
-//
-//        for (Jogador jogador : jogadorList) {
-//
-//            PartidaJogador partidaJogador = new PartidaJogador();
-//            partidaJogador.setTimeJogadorID(jogador.getTimeID());
-//            partidaJogador.setJogadorID(jogador.getJogadorID());
-//            partidaJogador.setPartidaID(partidaID);
-//            dbs.partidaJogadorDAO().insert(partidaJogador);
-//
-//        }
-//    }
-
 
 }

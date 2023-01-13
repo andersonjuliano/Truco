@@ -5,6 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 import br.com.aj.truco.R;
@@ -18,16 +21,18 @@ import br.com.aj.truco.generic.RecyclerViewListenerHack;
 
 public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.ViewHolder> {
 
-
     AppRoomDatabase dbs;
+    Context mcontext;
 
     public PartidasAdapter(Context context, List<Partida> objects) {
         super(context, objects);
+        mcontext = context;
         dbs = AppRoomDatabase.getDatabase(context);
     }
 
     public PartidasAdapter(Context context, List<Partida> objects, RecyclerViewListenerHack.OnClickListener clickListener, RecyclerViewListenerHack.OnLongClickListener longClickListener) {
         super(context, objects, clickListener, longClickListener);
+        mcontext = context;
         dbs = AppRoomDatabase.getDatabase(context);
     }
 
@@ -43,9 +48,28 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
 
         holder.viewPartida.setText(partida.getTitulo());
         holder.viewNomeTime1.setText(dbs.timeDAO().getTime(1).getNome() + ":");
-        holder.viewNomeTime2.setText(dbs.timeDAO().getTime(2).getNome() +":");
+        holder.viewNomeTime2.setText(dbs.timeDAO().getTime(2).getNome() + ":");
         holder.viewVitoriaTime1.setText(String.valueOf(partida.getVitoriaTime1()));
         holder.viewVitoriaTime2.setText(String.valueOf(partida.getVitoriaTime2()));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mcontext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        holder.rvJogadoresTime1.setLayoutManager(linearLayoutManager);
+        holder.rvJogadoresTime1.setHasFixedSize(true);
+
+        List<Jogador> jogadorList = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 1);
+        JogadoresTimesAdapter jtaTime1 = new JogadoresTimesAdapter(mcontext, jogadorList, null, null);
+        holder.rvJogadoresTime1.setAdapter(jtaTime1);
+
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(mcontext);
+        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+        holder.rvJogadoresTime2.setLayoutManager(linearLayoutManager2);
+        holder.rvJogadoresTime2.setHasFixedSize(true);
+
+        List<Jogador> jogadorList2 = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 2);
+        JogadoresTimesAdapter jtaTime2 = new JogadoresTimesAdapter(mcontext, jogadorList2, null, null);
+        holder.rvJogadoresTime2.setAdapter(jtaTime2);
 
     }
 
@@ -58,6 +82,7 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
 
         private TextView viewPartida, viewNomeTime1, viewNomeTime2, viewVitoriaTime1, viewVitoriaTime2;
 
+        private RecyclerView rvJogadoresTime1, rvJogadoresTime2;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,6 +92,8 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
             viewVitoriaTime1 = itemView.findViewById(R.id.item_partida_time1_vitorias);
             viewNomeTime2 = itemView.findViewById(R.id.item_partida_time2);
             viewVitoriaTime2 = itemView.findViewById(R.id.item_partida_time2_vitorias);
+            rvJogadoresTime1 = itemView.findViewById(R.id.recycleview_jogador_time1);
+            rvJogadoresTime2 = itemView.findViewById(R.id.recycleview_jogador_time2);
 
         }
 
@@ -74,5 +101,6 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
         public void onClick(View view) {
             PartidasAdapter.this.onClick(view, getAdapterPosition());
         }
+
     }
 }

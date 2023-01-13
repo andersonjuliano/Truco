@@ -5,6 +5,7 @@ import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import org.json.JSONException;
@@ -14,6 +15,10 @@ import java.util.Date;
 
 @Entity
 public class Partida {
+
+    @Ignore
+    public static final String EXTRA_KEY = Partida.class.getName();
+
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private long PartidaID;

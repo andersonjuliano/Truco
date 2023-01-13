@@ -12,7 +12,7 @@ import java.util.List;
 import br.com.aj.truco.classe.Jogador;
 
 @Dao
-public interface JogadorDAO     {
+public interface JogadorDAO {
 
     @Query("SELECT * FROM Jogador ORDER BY  Ordem")
     List<Jogador> getAll();
@@ -30,11 +30,14 @@ public interface JogadorDAO     {
     @Query("SELECT * FROM Jogador WHERE Nome = :Nome")
     Jogador getJogadorByNome(String Nome);
 
- @Query("SELECT * FROM Jogador WHERE Ordem = :ordem")
+    @Query("SELECT * FROM Jogador WHERE Ordem = :ordem")
     Jogador getJogadorByOrdem(int ordem);
 
     @Query("SELECT * FROM Jogador WHERE Ordem > 0 ORDER BY Ordem")
     Jogador getFirstJogador();
+
+    @Query("SELECT * FROM Jogador WHERE JogadorID in (SELECT JogadorID FROM PartidaJogador WHERE PartidaID = :partidaID AND TimeJogadorID = :timeID)")
+    List<Jogador> getJogadoresByPartidaTime(long partidaID, long timeID);
 
     @Query("SELECT MAX(Ordem) FROM Jogador")
     int getMaxOrdem();

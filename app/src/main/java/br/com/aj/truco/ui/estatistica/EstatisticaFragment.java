@@ -5,12 +5,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
@@ -32,7 +29,7 @@ import br.com.aj.truco.classe.PartidaSelecao;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
-import br.com.aj.truco.ui.EstatisticaJogadorGrafico;
+import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 public class EstatisticaFragment extends Fragment {
@@ -218,7 +215,7 @@ public class EstatisticaFragment extends Fragment {
 
             if (object instanceof PartidaJogador) {
 
-                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGrafico.class);
+                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGraficoActivity.class);
                     intent.putExtra(Jogador.EXTRA_KEY,  ((PartidaJogador) object).getJogadorID());
                 startActivity(intent);
 

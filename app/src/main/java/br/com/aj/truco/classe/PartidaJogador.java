@@ -2,10 +2,14 @@ package br.com.aj.truco.classe;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class PartidaJogador {
+
+    @Ignore public static final String EXTRA_KEY = PartidaJogador.class.getName();
+
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -17,6 +21,8 @@ public class PartidaJogador {
     private int Derrota;
     private int PontosGanhos;
     private int PontosPerdidos;
+
+
 
     public long getPartidaJogadorID() {
         return PartidaJogadorID;
@@ -109,7 +115,10 @@ public class PartidaJogador {
     public int SaldoPontos(){
         return PontosGanhos - PontosPerdidos;
     }
+
     public int SaldoVitorias(){
         return  Vitoria - Derrota;
     }
+
+
 }

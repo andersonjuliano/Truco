@@ -1,6 +1,7 @@
 package br.com.aj.truco.ui.partidas;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,11 +18,15 @@ import java.util.List;
 import br.com.aj.truco.R;
 import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
 import br.com.aj.truco.adapter.PartidasAdapter;
+import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.databinding.FragmentPartidasBinding;
+import br.com.aj.truco.generic.RecyclerViewListenerHack;
+import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
+import br.com.aj.truco.ui.PartidaPontosActivity;
 import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
@@ -52,6 +57,7 @@ public class PartidasFragment extends Fragment {
 
         recyclerView = binding.partidasRecycleview;
 
+
         AppRoomDatabase dbs = AppRoomDatabase.getDatabase(getContext());
 
         List<Partida> partidaList = dbs.partidaDAO().getAll();
@@ -61,7 +67,7 @@ public class PartidasFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new PartidasAdapter(activity, partidaList, null, null);
+        adapter = new PartidasAdapter(activity, partidaList, listClickListener, null);
         recyclerView.setAdapter(adapter);
 
 
@@ -83,7 +89,7 @@ public class PartidasFragment extends Fragment {
 
                 List<Partida> partidaList = dbs.partidaDAO().getAll();
 
-                adapter = new PartidasAdapter(activity, partidaList, null, null);
+                adapter = new PartidasAdapter(activity, partidaList, listClickListener, null);
                 recyclerView.setAdapter(adapter);
 
             }
@@ -111,5 +117,20 @@ public class PartidasFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private RecyclerViewListenerHack.OnClickListener listClickListener = new RecyclerViewListenerHack.OnClickListener<Object>() {
+        @Override
+        public void onClickListener(View view, int position, Object object) {
+
+            if (object instanceof Partida && ((Partida) object).getPartidaID() != 0) {
+
+                Intent intent = new Intent(getActivity(), PartidaPontosActivity.class);
+                intent.putExtra(Partida.EXTRA_KEY,  ((Partida) object).getPartidaID());
+                startActivity(intent);
+
+
+            }
+        }
+    };
 
 }

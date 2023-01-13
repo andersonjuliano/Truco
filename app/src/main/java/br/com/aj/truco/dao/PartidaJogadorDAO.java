@@ -9,7 +9,9 @@ import androidx.room.Update;
 import java.util.List;
 
 
+import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.PartidaJogador;
+import br.com.aj.truco.classe.TimesPartida;
 
 
 @Dao
@@ -23,10 +25,13 @@ public interface PartidaJogadorDAO {
 
 
     @Query("SELECT * FROM PartidaJogador " +
-            "WHERE PartidaID = :partidaid "
-    )
-        //"AND JogadorID in (SELECT JogadorID FROM JogadorDados WHERE MostrarEstatistica = 1) "
+            "WHERE PartidaID = :partidaid ")
     List<PartidaJogador> getByPartida(long partidaid);
+
+
+    @Query("SELECT MIN(TimeJogadorID) as Time1ID, MAX(TimeJogadorID) as Time2ID  FROM PartidaJogador WHERE PartidaID = :partidaid AND TimeJogadorID > 0")
+    TimesPartida geTimesByPartida(long partidaid);
+
 
     @Query("SELECT * FROM PartidaJogador WHERE PartidaID = :partidaid AND JogadorID = :jogadorid")
     PartidaJogador getByJogadorPartida(long jogadorid, long partidaid);
@@ -63,7 +68,6 @@ public interface PartidaJogadorDAO {
 //            "  AND JogadorID in (SELECT JogadorID FROM JogadorDados WHERE MostrarEstatistica = 1) " +
     List<PartidaJogador> getByPartidas(List<Long> partidasID);
 
-
     @Insert
     long insert(PartidaJogador partidajogador);
 
@@ -78,6 +82,9 @@ public interface PartidaJogadorDAO {
 
     @Query("DELETE FROM PartidaJogador WHERE JogadorID = :jogadorID")
     int deleteByJogador(long jogadorID);
+
+    @Query("DELETE FROM PartidaJogador WHERE PartidaID = :partidaID")
+    int deleteByPartida(long partidaID);
 
     @Query("DELETE FROM PartidaJogador WHERE JogadorID NOT IN (SELECT JogadorID  FROM Jogador)")
     int deleteJogadorExcluido();

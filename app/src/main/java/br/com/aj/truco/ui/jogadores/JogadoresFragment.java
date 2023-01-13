@@ -22,6 +22,7 @@ import java.util.List;
 
 import br.com.aj.truco.adapter.JogadoresAdapter;
 import br.com.aj.truco.classe.Jogador;
+import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentJogadoresBinding;
@@ -43,7 +44,8 @@ public class JogadoresFragment extends Fragment {
     private int Ordem;
     private int Time;
     private boolean alterar = false;
-
+    private long partidaID;
+    private Partida partida;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class JogadoresFragment extends Fragment {
         binding.jogadoresGravar.setOnClickListener(jogadoresGravarClick);
         binding.jogadoresDeletar.setOnClickListener(jogadoresDeletarClick);
 
+        partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+        partida = dbs.partidaDAO().getPartida(partidaID);
 
         jogadoresViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -117,20 +121,30 @@ public class JogadoresFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            ordenarJogadores = true;
-            for (Jogador jogador : jogadores) {
-                jogador.setOrdem(0);
-                jogador.setTimeID(0);
-                dbs.jogadorDAO().update(jogador);
+
+            if ((partida.getPontosTime1() + partida.getPontosTime2() + partida.getVitoriaTime1() + partida.getVitoriaTime2()) > 0) {
+                Toast.makeText(getContext(), "Partida já iniciada, não é possível alterar os jogadores", Toast.LENGTH_LONG).show();
+            } else {
+
+
+                ordenarJogadores = true;
+                for (Jogador jogador : jogadores) {
+                    jogador.setOrdem(0);
+                    jogador.setTimeID(0);
+                    dbs.jogadorDAO().update(jogador);
+                }
+
+                //deleta a estatisticas dos jogadoresna partida corrente
+                dbs.partidaJogadorDAO().deleteByPartida(partidaID);
+
+                binding.buttonReordenar.setVisibility(View.GONE);
+                binding.buttonReordenarOk.setVisibility(View.VISIBLE);
+
+                Ordem = 1;
+                Time = 1;
+                adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
+                recyclerView.setAdapter(adapter);
             }
-
-            binding.buttonReordenar.setVisibility(View.GONE);
-            binding.buttonReordenarOk.setVisibility(View.VISIBLE);
-
-            Ordem = 1;
-            Time = 1;
-            adapter = new JogadoresAdapter(activity, jogadores, listClickListener, null);
-            recyclerView.setAdapter(adapter);
         }
     };
     private View.OnClickListener buttonReordenarOkClick = new View.OnClickListener() {
@@ -141,8 +155,8 @@ public class JogadoresFragment extends Fragment {
             binding.buttonReordenarOk.setVisibility(View.GONE);
             carregar();
 
-            ordenarJogadores=false;
-            alterar=false;
+            ordenarJogadores = false;
+            alterar = false;
 
         }
     };
@@ -150,18 +164,26 @@ public class JogadoresFragment extends Fragment {
     private View.OnClickListener buttonNovoClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            jogadorNovo = new Jogador();
-            binding.jogadoresNome.setText("");
-            binding.jogadoresNovoJogador.setVisibility(View.VISIBLE);
-            binding.jogadoresDeletar.setVisibility(View.GONE);
+            if ((partida.getPontosTime1() + partida.getPontosTime2() + partida.getVitoriaTime1() + partida.getVitoriaTime2()) > 0) {
+                Toast.makeText(getContext(), "Partida já iniciada, não é possível alterar os jogadores", Toast.LENGTH_LONG).show();
+            } else {
+                jogadorNovo = new Jogador();
+                binding.jogadoresNome.setText("");
+                binding.jogadoresNovoJogador.setVisibility(View.VISIBLE);
+                binding.jogadoresDeletar.setVisibility(View.GONE);
+            }
         }
     };
 
     private View.OnClickListener buttonAlterarClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            alterar = true;
-            Toast.makeText(getContext(), "Clique no jogador a ser alterado", Toast.LENGTH_LONG).show();
+            if ((partida.getPontosTime1() + partida.getPontosTime2() + partida.getVitoriaTime1() + partida.getVitoriaTime2()) > 0) {
+                Toast.makeText(getContext(), "Partida já iniciada, não é possível alterar os jogadores", Toast.LENGTH_LONG).show();
+            } else {
+                alterar = true;
+                Toast.makeText(getContext(), "Clique no jogador a ser alterado", Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -177,16 +199,15 @@ public class JogadoresFragment extends Fragment {
             if (jogadorNovo.getJogadorID() == 0) {
                 dbs.jogadorDAO().insert(jogadorNovo);
 
-                long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-                if (partidaID > 0) {
-
-                    PartidaJogador partidaJogador = new PartidaJogador();
-                    partidaJogador.setTimeJogadorID(jogadorNovo.getTimeID());
-                    partidaJogador.setJogadorID(jogadorNovo.getJogadorID());
-                    partidaJogador.setPartidaID(partidaID);
-                    dbs.partidaJogadorDAO().insert(partidaJogador);
-
-                }
+                //só inclui a estatistica para jogadores ativos
+                //long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+//                if (partidaID > 0) {
+//                    PartidaJogador partidaJogador = new PartidaJogador();
+//                    partidaJogador.setTimeJogadorID(jogadorNovo.getTimeID());
+//                    partidaJogador.setJogadorID(jogadorNovo.getJogadorID());
+//                    partidaJogador.setPartidaID(partidaID);
+//                    dbs.partidaJogadorDAO().insert(partidaJogador);
+//                }
 
             } else {
                 dbs.jogadorDAO().update(jogadorNovo);
@@ -194,8 +215,8 @@ public class JogadoresFragment extends Fragment {
             carregar();
             jogadorNovo = new Jogador();
             binding.jogadoresNovoJogador.setVisibility(View.GONE);
-            alterar=false;
-            ordenarJogadores=false;
+            alterar = false;
+            ordenarJogadores = false;
 
         }
     };
@@ -207,7 +228,7 @@ public class JogadoresFragment extends Fragment {
 
                 dbs.jogadorDAO().delete(jogadorNovo);
                 dbs.partidaJogadorDAO().deleteByJogador(jogadorNovo.getJogadorID());
-
+                dbs.partidaJogadaDAO().deleteByJogador(jogadorNovo.getJogadorID());
 
                 carregar();
                 jogadorNovo = new Jogador();
@@ -234,7 +255,7 @@ public class JogadoresFragment extends Fragment {
                 jogador.setOrdem(Ordem);
                 jogador.setTimeID(Time);
                 dbs.jogadorDAO().update(jogador);
-                long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+                //long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
                 if (partidaID > 0) {
                     PartidaJogador partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogador.getJogadorID(), partidaID);
                     if (partidaJogador != null) {

@@ -20,7 +20,7 @@ public interface PartidaDAO {
     @Query("SELECT * FROM Partida ORDER BY PartidaID DESC")
     List<Partida> getAll();
 
-    @Query("SELECT MAX(PartidaID) as PartidaID, " +
+    @Query("SELECT 0 as PartidaID, " +
             "MAX(DataPartida) as DataPartida, " +
             "0 as JogadorID, " +
             "SUM(PontosTime1) as PontosTime1," +
@@ -31,7 +31,7 @@ public interface PartidaDAO {
     List<Partida> getLastPartidas(int limit);
 
 
-    @Query("SELECT MAX(PartidaID) as PartidaID, " +
+    @Query("SELECT 0 as PartidaID, " +
             "MAX(DataPartida) as DataPartida, " +
             "0 as JogadorID, " +
             "SUM(PontosTime1) as PontosTime1," +

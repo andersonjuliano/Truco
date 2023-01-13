@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                     //ao iniciar uma nova partida, remove o histórico
                                     //dbs.partidaJogadaDAO().deleteAll();
 
+
                                     SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).edit();
                                     editor.putLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, id);
                                     editor.commit();

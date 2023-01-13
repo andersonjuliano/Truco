@@ -2,6 +2,7 @@ package br.com.aj.truco.classe;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "PartidaJogada")
@@ -101,4 +102,5 @@ public class PartidaJogada {
     public void setVitoria(boolean vitoria) {
         Vitoria = vitoria;
     }
+
 }

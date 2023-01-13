@@ -7,6 +7,9 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Jogador {
+
+    @Ignore public static final String EXTRA_KEY = Jogador.class.getName();
+
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private long JogadorID;
@@ -46,7 +49,6 @@ public class Jogador {
         Nome = nome;
     }
 
-   @Ignore public static final String EXTRA_KEY = Jogador.class.getName();
 
 
 }

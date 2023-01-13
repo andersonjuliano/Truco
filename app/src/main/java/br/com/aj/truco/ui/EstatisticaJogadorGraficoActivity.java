@@ -1,43 +1,27 @@
 package br.com.aj.truco.ui;
 
-import androidx.core.content.ContextCompat;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
 //import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import br.com.aj.truco.BaseActivity;
 import br.com.aj.truco.R;
@@ -47,10 +31,10 @@ import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.dao.AppRoomDatabase;
 
 
-public class EstatisticaJogadorGrafico extends BaseActivity implements SeekBar.OnSeekBarChangeListener,
+public class EstatisticaJogadorGraficoActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
-    private static final String TAG = EstatisticaJogadorGrafico.class.getSimpleName();
+    private static final String TAG = EstatisticaJogadorGraficoActivity.class.getSimpleName();
 
     private long jogadorID;
     private LineChart chart;
@@ -268,8 +252,9 @@ public class EstatisticaJogadorGrafico extends BaseActivity implements SeekBar.O
 
             // create a data object with the data sets
             LineData data = new LineData(dataSets);
-//            data.setValueTextColor(Color.BLACK);
-//            data.setValueTextSize(9f);
+            data.setValueTextColor(Color.BLACK);
+
+            data.setValueTextSize(9f);
             chart.setData(data);
             chart.invalidate();
 
