@@ -17,6 +17,11 @@
         android:orderInCategory="100"
         android:title="@string/action_limpar_estatisticas"
         app:showAsAction="never" />
+   <item
+        android:id="@+id/action_corrigir_estatistica"
+        android:orderInCategory="100"
+        android:title="@string/action_corrigir_estatisticas"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_limpar"
         android:orderInCategory="100"

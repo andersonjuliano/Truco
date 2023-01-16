@@ -52,7 +52,7 @@ public class EstatisticaFragment extends Fragment {
 
         activity = getActivity();
 
-        recyclerView = binding.estatisticaJogadoresRecycleview;
+        recyclerView = binding.estatisticaRecycleview;
 
         AppRoomDatabase dbs = AppRoomDatabase.getDatabase(getContext());
         long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
@@ -62,15 +62,6 @@ public class EstatisticaFragment extends Fragment {
             binding.estatisticaPartidaText.setText("Partida: " + partida.getTitulo());
         }
 
-//        binding.estatisticaButtonGrafico.setOnClickListener(new View.OnClickListener() {
-//                                                                @Override
-//                                                                public void onClick(View v) {
-//                                                                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGrafico.class);
-//                                                                    startActivity(intent);
-//
-//                                                                }
-//                                                            }
-//        );
 
         List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
 
@@ -78,7 +69,6 @@ public class EstatisticaFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-//        recyclerView.addItemDecoration(new DividerItemDecoration(activity, DividerItemDecoration.VERTICAL));
 
         adapter = new PartidaJogadoresAdapter(activity, partidaJogadores, listClickListener, null);
         recyclerView.setAdapter(adapter);

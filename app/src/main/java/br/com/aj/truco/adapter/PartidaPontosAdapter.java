@@ -28,6 +28,7 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
 
     AppRoomDatabase dbs;
     Context mcontext;
+    private long jogadorID;
 
     public PartidaPontosAdapter(Context context, List<PartidaPontos> objects) {
         super(context, objects);
@@ -39,6 +40,16 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
         super(context, objects, clickListener, longClickListener);
         mcontext = context;
         dbs = AppRoomDatabase.getDatabase(context);
+    }
+
+    public PartidaPontosAdapter(Context context, List<PartidaPontos> objects,
+                                RecyclerViewListenerHack.OnClickListener clickListener,
+                                RecyclerViewListenerHack.OnLongClickListener longClickListener,
+                                long _jogadorID) {
+        super(context, objects, clickListener, longClickListener);
+        mcontext = context;
+        dbs = AppRoomDatabase.getDatabase(context);
+        jogadorID = _jogadorID;
     }
 
     @Override
@@ -90,7 +101,9 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
         else
             holder.viewJogadorPartidas.setTextColor(Color.BLACK);
 
-        if (partidaPontos.TimeID == 1) {
+        if (partidaPontos.JogadorID == jogadorID) {
+            holder.viewItem.setBackgroundColor(Color.parseColor("#ffff00"));
+        } else if (partidaPontos.TimeID == 1) {
             holder.viewItem.setBackgroundColor(Color.parseColor("#d6d6d6"));
         } else {
             holder.viewItem.setBackgroundColor(Color.parseColor("#ffffff"));

@@ -13,6 +13,7 @@ import br.com.aj.truco.BaseActivity;
 import br.com.aj.truco.R;
 import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
 import br.com.aj.truco.adapter.PartidaPontosAdapter;
+import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
@@ -27,6 +28,7 @@ public class PartidaPontosActivity extends BaseActivity {
     private PartidaPontosAdapter adapter;
     private AppRoomDatabase dbs;
     private long partidaID;
+    private long jogadorID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class PartidaPontosActivity extends BaseActivity {
 
         setDisplayHomeAsUpEnabled(true, true);
         partidaID = getIntent().getLongExtra(Partida.EXTRA_KEY, 0);
+        jogadorID = getIntent().getLongExtra(Jogador.EXTRA_KEY, 0);
 
         dbs = AppRoomDatabase.getDatabase(getBaseContext());
 
@@ -49,7 +52,7 @@ public class PartidaPontosActivity extends BaseActivity {
         TimesPartida timesPartida = dbs.partidaJogadorDAO().geTimesByPartida(partidaID);
         List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartida(partidaID);
         List<PartidaPontos> partidaPontosList = dbs.partidaJogadaDAO().getCompleteByPartida(partidaID, timesPartida.Time1ID, timesPartida.Time2ID);
-        adapter = new PartidaPontosAdapter(PartidaPontosActivity.this, partidaPontosList, null, null);
+        adapter = new PartidaPontosAdapter(PartidaPontosActivity.this, partidaPontosList, null, null,jogadorID);
         recyclerView.setAdapter(adapter);
 
 

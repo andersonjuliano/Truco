@@ -29,6 +29,34 @@ public interface PartidaJogadorDAO {
     List<PartidaJogador> getByPartida(long partidaid);
 
 
+  @Query("SELECT 0 as PartidaJogadorID," +
+          " 0 as TimeJogadorID, " +
+          " PartidaID, " +
+          " JogadorID, " +
+          " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
+          " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
+          " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
+          " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
+          " FROM PartidaJogada " +
+          " WHERE PartidaID = :partidaid " +
+          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID ")
+    List<PartidaJogador> getFromPartidaJogadaByPartida(long partidaid);
+
+ @Query("SELECT 0 as PartidaJogadorID," +
+          " 0 as TimeJogadorID, " +
+          " PartidaID, " +
+          " JogadorID, " +
+          " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
+          " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
+          " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
+          " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
+          " FROM PartidaJogada " +
+          " WHERE PartidaID = :partidaid " +
+          "   AND JogadorID = :jogadorid " +
+          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID ")
+    PartidaJogador getFromPartidaJogadaByPartidaJogador(long partidaid, long jogadorid);
+
+
     @Query("SELECT MIN(TimeJogadorID) as Time1ID, MAX(TimeJogadorID) as Time2ID  FROM PartidaJogador WHERE PartidaID = :partidaid AND TimeJogadorID > 0")
     TimesPartida geTimesByPartida(long partidaid);
 

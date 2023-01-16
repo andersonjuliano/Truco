@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_jogar, R.id.nav_times, R.id.nav_jogadores, R.id.nav_estatistica, R.id.nav_partidas)
+                R.id.nav_jogar, R.id.nav_times, R.id.nav_jogadores, R.id.nav_estatistica, R.id.nav_partidas, R.id.nav_estatistica_jogadores)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -153,31 +153,15 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 return true;
             }
         });
 
-        MenuItem mSobre = menu.findItem(R.id.action_sobre);
-        mSobre.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("some_int", 0);
-
-//                getSupportFragmentManager().beginTransaction()
-//                        .add(R.id.nav_host_fragment_content_main, SobreFragment.class, bundle)
-//                        .commit();
-
-
-                return false;
-            }
-        });
-
-
-        MenuItem mBackup = menu.findItem(R.id.action_limpar_hitorico);
-        mBackup.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem mLimparHistorico = menu.findItem(R.id.action_limpar_hitorico);
+        mLimparHistorico.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
 
@@ -202,14 +186,15 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 return false;
             }
         });
 
-        MenuItem mRestore = menu.findItem(R.id.action_limpar_estatistica);
-        mRestore.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        MenuItem mLimparEstatitica = menu.findItem(R.id.action_limpar_estatistica);
+        mLimparEstatitica.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
 
@@ -246,6 +231,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        MenuItem mCorrigirEstatitica = menu.findItem(R.id.action_corrigir_estatistica);
+        mCorrigirEstatitica.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_corrigir_estatisticas_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+
+                                    List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
+
+                                    int qtde = 0;
+                                    for (PartidaJogador partidaJogador: partidaJogadorList                                         ) {
+
+                                        PartidaJogador partidaJogadorNova = dbs.partidaJogadorDAO().getFromPartidaJogadaByPartidaJogador(partidaID, partidaJogador.getJogadorID());
+                                        partidaJogador.setVitoria(partidaJogadorNova.getVitoria());
+                                        partidaJogador.setDerrota(partidaJogadorNova.getDerrota());
+                                        partidaJogador.setPontosPerdidos(partidaJogadorNova.getPontosPerdidos());
+                                        partidaJogador.setPontosGanhos(partidaJogadorNova.getPontosGanhos());
+                                        dbs.partidaJogadorDAO().update(partidaJogador);
+                                        qtde ++;
+                                    }
+
+                                    Toast.makeText(getBaseContext(), String.valueOf(qtde) + " estatísticas corrigidas.", Toast.LENGTH_LONG).show();
+
+                                }
+                            }).show();
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
+
         MenuItem mLimparBase = menu.findItem(R.id.action_limpar);
         mLimparBase.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -276,11 +311,34 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
                 return false;
             }
         });
+
+        MenuItem mSobre = menu.findItem(R.id.action_sobre);
+        mSobre.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("some_int", 0);
+
+                try {
+
+//                getSupportFragmentManager().beginTransaction()
+//                        .add(R.id.nav_host_fragment_content_main, SobreFragment.class, bundle)
+//                        .commit();
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
+
 
         return true;
     }

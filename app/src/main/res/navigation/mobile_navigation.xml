@@ -28,6 +28,11 @@
         android:name="br.com.aj.truco.ui.estatistica.EstatisticaFragment"
         android:label="@string/menu_estatistica"
         tools:layout="@layout/fragment_estatistica" />
+ <fragment
+        android:id="@+id/nav_estatistica_jogadores"
+        android:name="br.com.aj.truco.ui.estatisticajogadores.EstatisticaJogadoresFragment"
+        android:label="@string/menu_estatistica_jogadores"
+        tools:layout="@layout/fragment_estatistica_jogadores" />
 
     <fragment
         android:id="@+id/nav_partidas"

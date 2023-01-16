@@ -10,6 +10,8 @@
     <string name="action_limpar_hitorico_confirmar">Confirma a limpeza do histórico?</string>
     <string name="action_limpar_estatisticas">Limpar Estatísticas</string>
     <string name="action_limpar_estatisticas_confirmar">Será apagado todas as estatísticas de todos os jogadores excluídos, sem pontos e partidas sem movimentação, confirma?</string>
+    <string name="action_corrigir_estatisticas">Corrigir Estatísticas</string>
+    <string name="action_corrigir_estatisticas_confirmar">Todas as estatísticas da partida será corrigida conforme o histórico de jogadas, confirma?</string>
     <string name="action_apagar">Limpar Base</string>
     <string name="action_apagar_confirmar">TODA A BASE DE DADOS SERÁ APAGADA, CONFIRMA?</string>
     <string name="action_sobre">Sobre</string>
@@ -17,7 +19,8 @@
     <string name="menu_jogar">Jogar</string>
     <string name="menu_times">Times</string>
     <string name="menu_jogadores">Jogadores</string>
-    <string name="menu_estatistica">Estatísticas</string>
+    <string name="menu_estatistica">Estatísticas da Partida</string>
+    <string name="menu_estatistica_jogadores">Estatísticas dos Jogadores</string>
     <string name="menu_partidas">Partidas</string>
 
 
@@ -36,6 +39,8 @@
     <string name="app_error_view_oops">Oops</string>
     <string name="app_error_view_retry">Tente Novamente</string>
     <string name="app_error_view_retry_no">Não, obrigado</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
