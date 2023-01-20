@@ -27,6 +27,11 @@
          <item
             android:id="@+id/nav_estatistica_jogadores"
             android:icon="@drawable/ic_baseline_stacked_bar_chart_24"
-            android:title="@string/menu_estatistica_jogadores" />
+            android:title="@string/menu_estatistica_jogadores"
+             android:visible="false"/>
+         <item
+            android:id="@+id/nav_estatistica_jogador_partidas"
+            android:icon="@drawable/ic_baseline_ssid_chart_24"
+            android:title="@string/menu_estatistica_jogador_partidas" />
       </group>
 </menu>

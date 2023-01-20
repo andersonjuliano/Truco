@@ -1,5 +1,6 @@
 package br.com.aj.truco.ui.times;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentJogadoresBinding;
 import br.com.aj.truco.databinding.FragmentTimesBinding;
+
 
 
 public class TimesFragment extends Fragment {
@@ -65,6 +67,8 @@ public class TimesFragment extends Fragment {
         //Ordenar();
         adapter = new TimesAdapter(getActivity(), times, null, null);
         recyclerView.setAdapter(adapter);
+
+
 
 
 

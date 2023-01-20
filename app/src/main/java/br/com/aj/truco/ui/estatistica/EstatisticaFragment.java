@@ -30,6 +30,7 @@ import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
 import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
+import br.com.aj.truco.ui.PartidaPontosActivity;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 public class EstatisticaFragment extends Fragment {
@@ -130,7 +131,9 @@ public class EstatisticaFragment extends Fragment {
                             }
                         }
                         if (!todos) {
-                            if (partidas.stream().count() > 0) {
+                            if (partidas.stream().count() == 1) {
+                                partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidas.get(0));
+                            } else if (partidas.stream().count() > 0) {
                                 partidaJogadores = dbs.partidaJogadorDAO().getByPartidas(partidas);
                                 if (partidas.stream().count() > 1) {
                                     titulo = "Partidas Selecionadas";
@@ -205,10 +208,14 @@ public class EstatisticaFragment extends Fragment {
 
             if (object instanceof PartidaJogador) {
 
-                    Intent intent = new Intent(getActivity(), EstatisticaJogadorGraficoActivity.class);
-                    intent.putExtra(Jogador.EXTRA_KEY,  ((PartidaJogador) object).getJogadorID());
-                startActivity(intent);
+//               Intent intent = new Intent(getActivity(), EstatisticaJogadorGraficoActivity.class);
+//               intent.putExtra(Jogador.EXTRA_KEY,  ((PartidaJogador) object).getJogadorID());
+//                startActivity(intent);
 
+                Intent intent = new Intent(getActivity(), PartidaPontosActivity.class);
+                intent.putExtra(Partida.EXTRA_KEY, ((PartidaJogador) object).getPartidaID());
+                intent.putExtra(Jogador.EXTRA_KEY, ((PartidaJogador) object).getJogadorID());
+                startActivity(intent);
 
             }
         }

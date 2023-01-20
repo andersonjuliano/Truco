@@ -78,7 +78,6 @@ public interface PartidaJogadorDAO {
             "      SUM(PontosPerdidos) AS PontosPerdidos" +
             " FROM PartidaJogador " +
             "GROUP BY JogadorID")
-        //    "WHERE JogadorID in (SELECT JogadorID FROM JogadorDados WHERE MostrarEstatistica = 1) " +
     List<PartidaJogador> getAllConsolidado();
 
 
@@ -93,7 +92,6 @@ public interface PartidaJogadorDAO {
             " FROM PartidaJogador " +
             "WHERE PartidaID in (:partidasID) " +
             "GROUP BY JogadorID")
-//            "  AND JogadorID in (SELECT JogadorID FROM JogadorDados WHERE MostrarEstatistica = 1) " +
     List<PartidaJogador> getByPartidas(List<Long> partidasID);
 
     @Insert

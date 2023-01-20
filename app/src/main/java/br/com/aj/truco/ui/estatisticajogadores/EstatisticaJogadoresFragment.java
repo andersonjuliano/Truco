@@ -63,15 +63,7 @@ public class EstatisticaJogadoresFragment extends Fragment {
 
         AppRoomDatabase dbs = AppRoomDatabase.getDatabase(getContext());
         long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-
-//        Partida partida = dbs.partidaDAO().getPartida(partidaID);
-//        if (partida != null) {
-//            binding.estatisticaPartidaText.setText("Partida: " + partida.getTitulo());
-//        }
-
-
         List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
