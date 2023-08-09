@@ -1,4 +1,4 @@
-package br.com.aj.truco.ui.jogo;
+package br.com.aj.truco.ui;
 
 import static br.com.aj.truco.R.id;
 import static br.com.aj.truco.R.layout;
@@ -9,36 +9,48 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.List;
 import java.util.Objects;
 
+import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
+import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
-import br.com.aj.truco.databinding.FragmentJogoBinding;
 import br.com.aj.truco.util.Constantes;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 public class JogoFragment extends Fragment {
 
-    private JogoViewModel jogoViewModel;
-    private FragmentJogoBinding binding;
+    private static final String TAG = JogoFragment.class.getSimpleName();
+
+
+    //private JogoViewModel jogoViewModel;
+    //private FragmentJogoBinding binding;
+
 
     //private List<Time> times;
     //private List<Jogador> jogadores;
@@ -54,29 +66,63 @@ public class JogoFragment extends Fragment {
 
     AppRoomDatabase dbs;
 
+    private ImageButton buttonVitoriaTime1, buttonVitoriaTime2, buttonDesfazer;
+    private Button buttonTrucar;
+    private TextView textPlacar1, textPlacar2, textPartidas1, textPartidas2, textJogadorPe, textTime1Nome, textTime2Nome, textPontosPartida, textTimePe;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        jogoViewModel = new ViewModelProvider(this).get(JogoViewModel.class);
+        //jogoViewModel = new ViewModelProvider(this).get(JogoViewModel.class);
 
+        final View root = inflater.inflate(layout.fragment_jogo, container, false);
         dbs = AppRoomDatabase.getDatabase(getContext());
 
 
-        binding = FragmentJogoBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        //binding = FragmentJogoinflate(inflater, container, false);
+        //View root = getRoot();
 
-        binding.buttonVitoriaTime1.setOnClickListener(btnVitoriaTime1);
-        binding.buttonVitoriaTime2.setOnClickListener(btnVitoriaTime2);
-        binding.buttonTrucar.setOnClickListener(btnTruco);
-        binding.buttonDesfazer.setOnClickListener(btnDesfazer);
+        try {
 
-        binding.textPlacar1.setOnLongClickListener(txtPlacar1LongClick);
-        binding.textPlacar2.setOnLongClickListener(txtPlacar2LongClick);
-        binding.textPartidas1.setOnLongClickListener(txtVitoria1LongClick);
-        binding.textPartidas2.setOnLongClickListener(txtVitoria2LongClick);
+            buttonVitoriaTime1 = root.findViewById(R.id.button_vitoria_time_1);
+            buttonVitoriaTime2 = root.findViewById(R.id.button_vitoria_time_2);
+            buttonTrucar = root.findViewById(R.id.button_trucar);
+            buttonDesfazer = root.findViewById(R.id.button_desfazer);
 
-        binding.textJogadorPe.setOnLongClickListener(textJogadorPeLongClick);
-        //binding.buttonNovaPartida.setOnClickListener(buttonNovaPartidaClick);
+            textPlacar1 = root.findViewById(R.id.text_placar_1);
+            textPlacar2 = root.findViewById(R.id.text_placar_2);
+            textPartidas1 = root.findViewById(R.id.text_partidas_1);
+            textPartidas2 = root.findViewById(R.id.text_partidas_2);
+            textJogadorPe = root.findViewById(R.id.text_jogador_pe);
+            textTime1Nome = root.findViewById(R.id.text_time1_nome);
+            textTime2Nome = root.findViewById(R.id.text_time2_nome);
+            textPontosPartida = root.findViewById(R.id.text_pontosPartida);
+            textTimePe = root.findViewById(R.id.text_time_pe);
+
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+
+
+        buttonVitoriaTime1.setOnClickListener(btnVitoriaTime1);
+        buttonVitoriaTime2.setOnClickListener(btnVitoriaTime2);
+        buttonTrucar.setOnClickListener(btnTruco);
+        buttonDesfazer.setOnClickListener(btnDesfazer);
+
+        textPlacar1.setOnLongClickListener(txtPlacar1LongClick);
+        textPlacar2.setOnLongClickListener(txtPlacar2LongClick);
+        textPartidas1.setOnLongClickListener(txtVitoria1LongClick);
+        textPartidas2.setOnLongClickListener(txtVitoria2LongClick);
+
+        textJogadorPe.setOnLongClickListener(textJogadorPeLongClick);
+        //buttonNovaPartida.setOnClickListener(buttonNovaPartidaClick);
+
+        Time time = dbs.timeDAO().getTime(1);
+        if (time != null)
+            textTime1Nome.setText(time.getNome());
+        time = dbs.timeDAO().getTime(2);
+        if (time != null)
+            textTime2Nome.setText(time.getNome());
 
 
         IntentFilter intentFilterNovaPartida = new IntentFilter(Constantes.ACTION_NOVA_PARTIDA);
@@ -113,6 +159,7 @@ public class JogoFragment extends Fragment {
 
             PartidaJogada partidaJogada = new PartidaJogada();
             partidaJogada.setPartidaID(partida.getPartidaID());
+            partidaJogada.setTimeID(jogadorPe.getTimeID());
             partidaJogada.setJogadorID(jogadorPe.getJogadorID());
             partidaJogada.setPontos(PontoPartida);
             partidaJogada.setVitoriasTime1(partida.getVitoriaTime1());
@@ -146,6 +193,7 @@ public class JogoFragment extends Fragment {
 
             PartidaJogada partidaJogada = new PartidaJogada();
             partidaJogada.setPartidaID(partida.getPartidaID());
+            partidaJogada.setTimeID(jogadorPe.getTimeID());
             partidaJogada.setJogadorID(jogadorPe.getJogadorID());
             partidaJogada.setPontos(PontoPartida);
             partidaJogada.setVitoriasTime1(partida.getVitoriaTime1());
@@ -178,23 +226,23 @@ public class JogoFragment extends Fragment {
 
             if (PontoPartida == 1) {
                 PontoPartida = 3;
-                binding.buttonTrucar.setText("Seis");
+                buttonTrucar.setText("Seis");
             } else if (PontoPartida == 3) {
                 PontoPartida = 6;
-                binding.buttonTrucar.setText("Nove");
+                buttonTrucar.setText("Nove");
             } else if (PontoPartida == 6) {
                 PontoPartida = 9;
-                binding.buttonTrucar.setText("Doze");
+                buttonTrucar.setText("Doze");
             } else if (PontoPartida == 9) {
                 PontoPartida = 12;
-                binding.buttonTrucar.setText("Voltar");
+                buttonTrucar.setText("Voltar");
             } else if (PontoPartida == 12) {
                 PontoPartida = 1;
-                binding.buttonTrucar.setText("Truco");
+                buttonTrucar.setText("Truco");
             }
 
-//            binding.buttonDesfazer.setVisibility(View.VISIBLE);
-            binding.textPontosPartida.setText(String.valueOf(PontoPartida));
+//            buttonDesfazer.setVisibility(View.VISIBLE);
+            textPontosPartida.setText(String.valueOf(PontoPartida));
 
         }
     };
@@ -325,11 +373,11 @@ public class JogoFragment extends Fragment {
                 //Log.d(TAG, "onClick: " + numberPicker.getValue());
                 if (time == 1) {
                     partida.setPontosTime1(numberPicker.getValue());
-                    binding.textPlacar1.setText(String.valueOf(partida.getPontosTime1()));
+                    textPlacar1.setText(String.valueOf(partida.getPontosTime1()));
                 }
                 if (time == 2) {
                     partida.setPontosTime2(numberPicker.getValue());
-                    binding.textPlacar2.setText(String.valueOf(partida.getPontosTime2()));
+                    textPlacar2.setText(String.valueOf(partida.getPontosTime2()));
                 }
             }
         });
@@ -368,11 +416,11 @@ public class JogoFragment extends Fragment {
                 //Log.d(TAG, "onClick: " + numberPicker.getValue());
                 if (time == 1) {
                     partida.setVitoriaTime1(numberPicker.getValue());
-                    binding.textPartidas1.setText(String.valueOf(partida.getVitoriaTime1()));
+                    textPartidas1.setText(String.valueOf(partida.getVitoriaTime1()));
                 }
                 if (time == 2) {
                     partida.setVitoriaTime2(numberPicker.getValue());
-                    binding.textPartidas2.setText(String.valueOf(partida.getVitoriaTime2()));
+                    textPartidas2.setText(String.valueOf(partida.getVitoriaTime2()));
                 }
             }
         });
@@ -391,7 +439,7 @@ public class JogoFragment extends Fragment {
         //builderSingle.setIcon(R.drawable.ic_launcher);
         builderSingle.setTitle("Selecione o jogador");
 
-        List<Jogador> jogadores = dbs.jogadorDAO().getJogadoresAtivos();
+        List<Jogador> jogadores = dbs.jogadorDAO().getJogadoresNaPartida();
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_singlechoice);
         for (Jogador jogador : jogadores) {
@@ -412,7 +460,12 @@ public class JogoFragment extends Fragment {
                 String strName = arrayAdapter.getItem(which);
                 jogadorPe = jogadores.stream().filter(x -> x.getNome() == strName).findFirst().orElse(null);
                 if (jogadorPe != null) {
-                    binding.textJogadorPe.setText(jogadorPe.getNome());
+                    textJogadorPe.setText(jogadorPe.getNome());
+                    Time time = dbs.timeDAO().getTime(jogadorPe.getTimeID());
+                    if (time != null)
+                        textTimePe.setText(time.getNome());
+
+
                 }
             }
         });
@@ -429,8 +482,12 @@ public class JogoFragment extends Fragment {
         jogadorPe = dbs.jogadorDAO().getJogadorByOrdem(_ordem);
 
         if (jogadorPe != null) {
-            binding.textJogadorPe.setText(jogadorPe.getNome());
+            textJogadorPe.setText(jogadorPe.getNome());
             partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogadorPe.getJogadorID(), partida.getPartidaID());
+
+            Time time = dbs.timeDAO().getTime(jogadorPe.getTimeID());
+            if (time != null)
+                textTimePe.setText(time.getNome());
         }
     }
 
@@ -445,36 +502,49 @@ public class JogoFragment extends Fragment {
                 partidaJogador = new PartidaJogador();
                 partidaJogador.setJogadorID(jogadorPe.getJogadorID());
                 partidaJogador.setPartidaID(partida.getPartidaID());
-                partidaJogador.setTimeJogadorID(jogadorPe.getTimeID());
+                //partidaJogador.setTimeJogadorID(jogadorPe.getTimeID());
                 dbs.partidaJogadorDAO().insert(partidaJogador);
             }
 
             partida.setJogadorID(jogadorPe.getJogadorID());
 
 
-            binding.textJogadorPe.setText(jogadorPe.getNome());
-            binding.textPontosPartida.setText(String.valueOf(PontoPartida));
+            textJogadorPe.setText(jogadorPe.getNome());
+            Time time = dbs.timeDAO().getTime(jogadorPe.getTimeID());
+            if (time != null)
+                textTimePe.setText(time.getNome());
 
-            binding.textPlacar1.setText(Objects.toString(partida.getPontosTime1(), null));
-            binding.textPartidas1.setText(Objects.toString(partida.getVitoriaTime1(), null));
-            binding.textPlacar2.setText(Objects.toString(partida.getPontosTime2(), null));
-            binding.textPartidas2.setText(Objects.toString(partida.getVitoriaTime2(), null));
-            binding.textPlacar1.setText(Objects.toString(partida.getPontosTime1(), null));
+            textPontosPartida.setText(String.valueOf(PontoPartida));
+
+            textPlacar1.setText(Objects.toString(partida.getPontosTime1(), null));
+            textPartidas1.setText(Objects.toString(partida.getVitoriaTime1(), null));
+            textPlacar2.setText(Objects.toString(partida.getPontosTime2(), null));
+            textPartidas2.setText(Objects.toString(partida.getVitoriaTime2(), null));
+            textPlacar1.setText(Objects.toString(partida.getPontosTime1(), null));
 
 
-            binding.textPlacar1.setTextColor(Color.WHITE);
-            binding.textPlacar2.setTextColor(Color.WHITE);
+            TypedValue typedValue = new TypedValue();
+            getContext().getTheme().resolveAttribute(R.attr.textColor, typedValue, true);
+            int color = ContextCompat.getColor(getContext(), typedValue.resourceId);
+
+            getContext().getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+            int textColorNegativo = ContextCompat.getColor(getContext(), typedValue.resourceId);
+
+
+            textPlacar1.setTextColor(color);
+            textPlacar2.setTextColor(color);
+
 
             if (partida.getPontosTime1() == 11)
-                binding.textPlacar1.setTextColor(Color.RED);
+                textPlacar1.setTextColor(textColorNegativo);
             if (partida.getPontosTime2() == 11)
-                binding.textPlacar2.setTextColor(Color.RED);
+                textPlacar2.setTextColor(textColorNegativo);
         }
     }
 
     private void FinalizaRodada() {
         PontoPartida = 1;
-        binding.buttonTrucar.setText("Truco");
+        buttonTrucar.setText("Truco");
 
         dbs.partidaJogadorDAO().update(partidaJogador);
 

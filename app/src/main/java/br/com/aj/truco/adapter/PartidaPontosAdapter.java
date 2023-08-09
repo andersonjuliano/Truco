@@ -3,10 +3,12 @@ package br.com.aj.truco.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -84,29 +86,50 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
         holder.viewJogadorPontos.setText(String.valueOf(partidaPontos.JogadorPontos));
         holder.viewJogadorPartidas.setText(String.valueOf(partidaPontos.JogadorPartidas));
 
+        TypedValue typedValue = new TypedValue();
+        mcontext.getTheme().resolveAttribute(R.attr.textColor, typedValue, true);
+        int textColor =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+  mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
+        int textColorPositivo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+        int textColorNegativo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+
+        mcontext.getTheme().resolveAttribute(R.attr.fundoPrincipal, typedValue, true);
+        int fundoPrincipal =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+mcontext.getTheme().resolveAttribute(R.attr.fundoAlternativo, typedValue, true);
+        int fundoAlternativo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+mcontext.getTheme().resolveAttribute(R.attr.fundoDestacado, typedValue, true);
+        int fundoDestacado =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+
         if (partidaPontos.Vitoria) {
             holder.viewPonto.setText("+" + String.valueOf(partidaPontos.Pontos));
-            holder.viewPonto.setTextColor(Color.BLUE);
+            holder.viewPonto.setTextColor(textColorPositivo);
         } else {
             holder.viewPonto.setText("-" + String.valueOf(partidaPontos.Pontos));
-            holder.viewPonto.setTextColor(Color.RED);
+            holder.viewPonto.setTextColor(textColorNegativo);
         }
         if (partidaPontos.JogadorPontos < 0)
-            holder.viewJogadorPontos.setTextColor(Color.RED);
+            holder.viewJogadorPontos.setTextColor(textColorNegativo);
         else
-            holder.viewJogadorPontos.setTextColor(Color.BLACK);
+            holder.viewJogadorPontos.setTextColor(textColor);
 
         if (partidaPontos.JogadorPartidas < 0)
-            holder.viewJogadorPartidas.setTextColor(Color.RED);
+            holder.viewJogadorPartidas.setTextColor(textColorNegativo);
         else
-            holder.viewJogadorPartidas.setTextColor(Color.BLACK);
+            holder.viewJogadorPartidas.setTextColor(textColor);
 
         if (partidaPontos.JogadorID == jogadorID) {
-            holder.viewItem.setBackgroundColor(Color.parseColor("#ffff00"));
+            holder.viewItem.setBackgroundColor(fundoDestacado);
         } else if (partidaPontos.TimeID == 1) {
-            holder.viewItem.setBackgroundColor(Color.parseColor("#d6d6d6"));
+            holder.viewItem.setBackgroundColor(fundoAlternativo);
         } else {
-            holder.viewItem.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.viewItem.setBackgroundColor(fundoPrincipal);
         }
 
         if (partidaPontos.PontosTime1 >= 12 || partidaPontos.PontosTime2 >= 12) {
@@ -128,37 +151,37 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
             if (partidaPontos.PontosTime1 >= 12) {
                 holder.viewTime1Partidas.setText(String.valueOf(partidaPontos.VitoriasTime1 + 1));
 
-                holder.viewTime1Nome.setTextColor(Color.BLUE);
-                holder.viewTime1Pontos.setTextColor(Color.BLUE);
-                holder.viewTime1Partidas.setTextColor(Color.BLUE);
+                holder.viewTime1Nome.setTextColor(textColorPositivo);
+                holder.viewTime1Pontos.setTextColor(textColorPositivo);
+                holder.viewTime1Partidas.setTextColor(textColorPositivo);
 
-                holder.viewTime2Nome.setTextColor(Color.RED);
-                holder.viewTime2Pontos.setTextColor(Color.RED);
-                holder.viewTime2Partidas.setTextColor(Color.RED);
+                holder.viewTime2Nome.setTextColor(textColorNegativo);
+                holder.viewTime2Pontos.setTextColor(textColorNegativo);
+                holder.viewTime2Partidas.setTextColor(textColorNegativo);
 
             } else {
                 holder.viewTime2Partidas.setText(String.valueOf(partidaPontos.VitoriasTime2 + 1));
 
-                holder.viewTime2Nome.setTextColor(Color.BLUE);
-                holder.viewTime2Pontos.setTextColor(Color.BLUE);
-                holder.viewTime2Partidas.setTextColor(Color.BLUE);
+                holder.viewTime2Nome.setTextColor(textColorPositivo);
+                holder.viewTime2Pontos.setTextColor(textColorPositivo);
+                holder.viewTime2Partidas.setTextColor(textColorPositivo);
 
-                holder.viewTime1Nome.setTextColor(Color.RED);
-                holder.viewTime1Pontos.setTextColor(Color.RED);
-                holder.viewTime1Partidas.setTextColor(Color.RED);
+                holder.viewTime1Nome.setTextColor(textColorNegativo);
+                holder.viewTime1Pontos.setTextColor(textColorNegativo);
+                holder.viewTime1Partidas.setTextColor(textColorNegativo);
 
             }
         } else {
             //reset
             holder.viewLinha.setVisibility(View.GONE);
 
-            holder.viewTime1Nome.setTextColor(Color.BLACK);
-            holder.viewTime1Pontos.setTextColor(Color.BLACK);
-            holder.viewTime1Partidas.setTextColor(Color.BLACK);
+            holder.viewTime1Nome.setTextColor(textColor);
+            holder.viewTime1Pontos.setTextColor(textColor);
+            holder.viewTime1Partidas.setTextColor(textColor);
 
-            holder.viewTime2Nome.setTextColor(Color.BLACK);
-            holder.viewTime2Pontos.setTextColor(Color.BLACK);
-            holder.viewTime2Partidas.setTextColor(Color.BLACK);
+            holder.viewTime2Nome.setTextColor(textColor);
+            holder.viewTime2Pontos.setTextColor(textColor);
+            holder.viewTime2Partidas.setTextColor(textColor);
 
             holder.viewTime1Nome.setTypeface(null, Typeface.NORMAL);
             holder.viewTime1Pontos.setTypeface(null, Typeface.NORMAL);
@@ -171,37 +194,6 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
             holder.viewJogadorPartidas.setTypeface(null, Typeface.NORMAL);
             holder.viewPonto.setTypeface(null, Typeface.NORMAL);
         }
-
-//        if (partidaPontos.PontosTime1 >= 12 || partidaPontos.PontosTime2 >= 12) {
-////            holder.viewLinha.setVisibility(View.VISIBLE);
-//            if (partidaPontos.PontosTime1 >= 12) {
-//                holder.viewTime1Partidas.setText(String.valueOf(partidaPontos.VitoriasTime1 + 1));
-//                holder.viewTime1Partidas.setTextColor(Color.BLUE);
-//                holder.viewTime1Nome.setTextColor(Color.BLUE);
-//                holder.viewTime1Pontos.setTextColor(Color.BLUE);
-//            } else {
-//                holder.viewTime2Partidas.setText(String.valueOf(partidaPontos.VitoriasTime2 + 1));
-//                holder.viewTime2Partidas.setTextColor(Color.BLUE);
-//                holder.viewTime2Nome.setTextColor(Color.BLUE);
-//                holder.viewTime2Partidas.setTextColor(Color.BLUE);
-//            }
-//
-//            holder.viewID.setTypeface(null, Typeface.BOLD);
-//            holder.viewID.setPadding(0, 0, 8, 16);
-//            holder.viewTime1Nome.setTypeface(null, Typeface.BOLD);
-//            holder.viewTime1Pontos.setTypeface(null, Typeface.BOLD);
-//            holder.viewTime1Partidas.setTypeface(null, Typeface.BOLD);
-//
-//            holder.viewTime2Nome.setTypeface(null, Typeface.BOLD);
-//            holder.viewTime2Pontos.setTypeface(null, Typeface.BOLD);
-//            holder.viewTime2Partidas.setTypeface(null, Typeface.BOLD);
-//
-//            holder.viewJogadorNome.setTypeface(null, Typeface.BOLD);
-//            holder.viewJogadorPontos.setTypeface(null, Typeface.BOLD);
-//            holder.viewJogadorPartidas.setTypeface(null, Typeface.BOLD);
-//            holder.viewPonto.setTypeface(null, Typeface.BOLD);
-//        }
-
     }
 
     @Override

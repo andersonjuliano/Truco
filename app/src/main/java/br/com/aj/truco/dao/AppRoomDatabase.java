@@ -32,21 +32,26 @@ import br.com.aj.truco.classe.Time;
         Partida.class,
         PartidaJogador.class},
         version = AppRoomDatabase.DBVERSION
-        //,autoMigrations = {@AutoMigration(from = 6, to = 7)}
+        //verificar se precisa mesmo de autoMigrations
+        //, autoMigrations = {@AutoMigration(from = 6, to = 7), @AutoMigration(from = 7, to = 8)}
 )
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     public abstract JogadorDAO jogadorDAO();
+
     public abstract PartidaJogadaDAO partidaJogadaDAO();
+
     public abstract TimeDAO timeDAO();
+
     public abstract PartidaDAO partidaDAO();
+
     public abstract PartidaJogadorDAO partidaJogadorDAO();
 
     private static volatile AppRoomDatabase INSTANCE;
     //static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
 
-    public static final int DBVERSION = 6;
+    public static final int DBVERSION = 8;
     public static final String DATABASE_NAME = "truco-db.db";
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
@@ -74,8 +79,9 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     AppRoomDatabase.class, "app_database")
-                            //.addMigrations(MIGRATION_1_2)
-                            .fallbackToDestructiveMigration()
+                            .addMigrations(MIGRATION_6_7)
+                            .addMigrations(MIGRATION_7_8)
+                            // .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();
                 }
@@ -84,24 +90,19 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    static final Migration MIGRATION_6_7 = new Migration(6, 7) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
-        }
+            database.execSQL("ALTER TABLE PartidaJogada ADD COLUMN TimeID INTEGER NULL");
+          }
     };
 
-//    public static void truncateTable(Context context, SupportSQLiteOpenHelper openHelper, String tableName) {
-//        SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(
-//                context.getDatabasePath(openHelper.getDatabaseName()),
-//                null
-//        );
-//
-//        if (database != null) {
-//            database.execSQL(String.format("DELETE FROM %s;", tableName));
-//            database.execSQL("UPDATE sqlite_sequence SET seq = 0 WHERE name = ?;", new String[]{tableName});
-//        }
-//    }
-
+    static final Migration MIGRATION_7_8 = new Migration( 7, 8) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+           database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
+        }
+    };
 }
-

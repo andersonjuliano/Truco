@@ -1,26 +1,22 @@
-package br.com.aj.truco.ui.times;
+package br.com.aj.truco.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import java.util.List;
 
-import br.com.aj.truco.R;
-import br.com.aj.truco.adapter.JogadoresAdapter;
 import br.com.aj.truco.adapter.TimesAdapter;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
-import br.com.aj.truco.databinding.FragmentJogadoresBinding;
 import br.com.aj.truco.databinding.FragmentTimesBinding;
-
+import br.com.aj.truco.generic.RecyclerViewListenerHack;
 
 
 public class TimesFragment extends Fragment {
@@ -28,16 +24,14 @@ public class TimesFragment extends Fragment {
     private FragmentTimesBinding binding;
     private RecyclerView recyclerView;
     private TimesAdapter adapter;
-
-
     private AppRoomDatabase dbs;
     private List<Time> times;
+    private Time timeNovo;
 
 
     public TimesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,16 +57,51 @@ public class TimesFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        times = dbs.timeDAO().getAll();
-        //Ordenar();
-        adapter = new TimesAdapter(getActivity(), times, null, null);
-        recyclerView.setAdapter(adapter);
+        binding.timesGravar.setOnClickListener(timesGravarClick);
 
+        carregar();
 
-
-
-
-        return  binding.getRoot();
+        return binding.getRoot();
 
     }
+
+
+    private void carregar() {
+        times = dbs.timeDAO().getAll();
+        adapter = new TimesAdapter(getActivity(), times, listClickListener, null);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private View.OnClickListener timesGravarClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (timeNovo == null)
+                timeNovo = new Time();
+
+            timeNovo.setNome(binding.timesNome.getText().toString());
+
+            if (timeNovo.getTimeID() == 0) {
+                dbs.timeDAO().insert(timeNovo);
+            } else {
+                dbs.timeDAO().update(timeNovo);
+            }
+            carregar();
+            timeNovo = new Time();
+            binding.timesNovoTime.setVisibility(View.GONE);
+
+        }
+    };
+    private RecyclerViewListenerHack.OnClickListener listClickListener = new RecyclerViewListenerHack.OnClickListener<Time>() {
+        @Override
+        public void onClickListener(View view, int position, Time time) {
+
+
+            timeNovo = time;
+            binding.timesNovoTime.setVisibility(View.VISIBLE);
+            binding.timesNome.setText(timeNovo.getNome());
+
+
+        }
+    };
 }

@@ -1,9 +1,8 @@
-package br.com.aj.truco.ui.estatisticajogadorpartidas;
+package br.com.aj.truco.ui;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;

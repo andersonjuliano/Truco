@@ -16,6 +16,7 @@ public class Jogador {
     private long TimeID;
     private int Ordem;
     private String Nome;
+    private Boolean Ativo;
 
     public long getTimeID() {
         return TimeID;
@@ -49,6 +50,13 @@ public class Jogador {
         Nome = nome;
     }
 
+    public Boolean isAtivo() {
+        return Ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        Ativo = ativo;
+    }
 
 
 }

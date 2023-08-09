@@ -12,7 +12,7 @@ public class PartidaJogada {
     @NonNull
     private long PartidaJogadaID;
     private long PartidaID;
-    //private int TimeID;
+    private Long TimeID;
     private long JogadorID;
     private int Pontos;
     private int PontosTime1;
@@ -37,13 +37,12 @@ public class PartidaJogada {
         PartidaID = partidaID;
     }
 
-//    public int getTimeID() {
-//        return TimeID;
-//    }
-//
-//    public void setTimeID(int timeID) {
-//        TimeID = timeID;
-//    }
+    public Long getTimeID() {
+        return TimeID;
+    }
+    public void setTimeID(Long timeID) {
+        TimeID = timeID;
+    }
 
     public long getJogadorID() {
         return JogadorID;

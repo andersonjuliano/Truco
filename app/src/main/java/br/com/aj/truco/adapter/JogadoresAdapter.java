@@ -14,7 +14,7 @@ import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
 import br.com.aj.truco.generic.GenericViewHolder;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
-import br.com.aj.truco.util.AppUtil;
+
 
 public class JogadoresAdapter extends GenericAdapter<Jogador, JogadoresAdapter.ViewHolder> {
 

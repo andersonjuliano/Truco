@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.estatisticajogadores.EstatisticaJogadoresFragment">
+    tools:context=".ui.EstatisticaJogadoresFragment">
 
     <LinearLayout
         android:id="@+id/estatistica_jogadores_partida"
@@ -18,7 +18,6 @@
 <!--            android:id="@+id/estatistica_jogadores_partida_text"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/black"-->
 <!--            android:text="Partida:"-->
 <!--            android:textSize="24dp"-->
 <!--            android:textStyle="bold" />-->

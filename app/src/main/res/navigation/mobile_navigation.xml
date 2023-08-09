@@ -6,37 +6,37 @@
     app:startDestination="@+id/nav_jogar">
     <fragment
         android:id="@+id/nav_jogar"
-        android:name="br.com.aj.truco.ui.jogo.JogoFragment"
+        android:name="br.com.aj.truco.ui.JogoFragment"
         android:label="@string/menu_jogar"
         tools:layout="@layout/fragment_jogo" />
     <fragment
         android:id="@+id/nav_times"
-        android:name="br.com.aj.truco.ui.times.TimesFragment"
+        android:name="br.com.aj.truco.ui.TimesFragment"
         android:label="@string/menu_times"
         tools:layout="@layout/fragment_times" />
     <fragment
         android:id="@+id/nav_jogadores"
-        android:name="br.com.aj.truco.ui.jogadores.JogadoresFragment"
+        android:name="br.com.aj.truco.ui.JogadoresFragment"
         android:label="@string/menu_jogadores"
         tools:layout="@layout/fragment_jogadores" />
     <fragment
         android:id="@+id/nav_estatistica"
-        android:name="br.com.aj.truco.ui.estatistica.EstatisticaFragment"
-        android:label="@string/menu_estatistica"
+        android:name="br.com.aj.truco.ui.EstatisticaFragment"
+        android:label="@string/menu_partidas"
         tools:layout="@layout/fragment_estatistica" />
     <fragment
         android:id="@+id/nav_estatistica_jogadores"
-        android:name="br.com.aj.truco.ui.estatisticajogadores.EstatisticaJogadoresFragment"
+        android:name="br.com.aj.truco.ui.EstatisticaJogadoresFragment"
         android:label="@string/menu_estatistica_jogadores"
         tools:layout="@layout/fragment_estatistica_jogadores" />
     <fragment
         android:id="@+id/nav_estatistica_jogador_partidas"
-        android:name="br.com.aj.truco.ui.estatisticajogadorpartidas.EstatisticaJogadorPartidasFragment"
+        android:name="br.com.aj.truco.ui.EstatisticaJogadorPartidasFragment"
         android:label="@string/menu_estatistica_jogador_partidas"
         tools:layout="@layout/fragment_estatistica_jogador_partidas" />
     <fragment
         android:id="@+id/nav_partidas"
-        android:name="br.com.aj.truco.ui.partidas.PartidasFragment"
+        android:name="br.com.aj.truco.ui.PartidasFragment"
         android:label="@string/menu_partidas"
         tools:layout="@layout/fragment_partidas" />
 </navigation>

@@ -1,34 +1,24 @@
-package br.com.aj.truco.ui.partidas;
+package br.com.aj.truco.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
-import br.com.aj.truco.R;
-import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
 import br.com.aj.truco.adapter.PartidasAdapter;
-import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
-import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.dao.AppRoomDatabase;
-import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.databinding.FragmentPartidasBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
-import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
 import br.com.aj.truco.ui.PartidaPontosActivity;
-import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
-import br.com.aj.truco.util.SharedPreferencesUtil;
 
 
 public class PartidasFragment extends Fragment {
@@ -83,7 +73,7 @@ public class PartidasFragment extends Fragment {
             }
         });
 
- binding.partidasButtomTodas.setOnClickListener(new View.OnClickListener() {
+        binding.partidasButtomTodas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -95,7 +85,7 @@ public class PartidasFragment extends Fragment {
             }
         });
 
- binding.partidasButtomUltimas.setOnClickListener(new View.OnClickListener() {
+        binding.partidasButtomUltimas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -125,7 +115,7 @@ public class PartidasFragment extends Fragment {
             if (object instanceof Partida && ((Partida) object).getPartidaID() != 0) {
 
                 Intent intent = new Intent(getActivity(), PartidaPontosActivity.class);
-                intent.putExtra(Partida.EXTRA_KEY,  ((Partida) object).getPartidaID());
+                intent.putExtra(Partida.EXTRA_KEY, ((Partida) object).getPartidaID());
                 startActivity(intent);
 
 

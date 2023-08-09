@@ -12,12 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Truco">
         <activity
-            android:name="br.com.aj.truco.ui.EstatisticaJogadorPartidasActivity"
-            android:exported="false">
+            android:name="br.com.aj.truco.ui.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
 
         <meta-data
             android:name="com.google.android.actions"

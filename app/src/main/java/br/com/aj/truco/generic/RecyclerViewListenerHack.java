@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
-import br.com.aj.truco.util.AppUtil;
+
 
 public class RecyclerViewListenerHack {
 
@@ -33,13 +33,17 @@ public class RecyclerViewListenerHack {
     public static DividerItemDecoration createDivider(Context context, int orientation, int insetLeft, int insetTop, int insetRight, int insetBottom) {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, orientation);
         InsetDrawable insetDrawable = new InsetDrawable(dividerItemDecoration.getDrawable(),
-                insetLeft == 0 ? 0 : AppUtil.convertDpToPx(context, insetLeft),
-                insetTop == 0 ? 0 : AppUtil.convertDpToPx(context, insetTop),
-                insetRight == 0 ? 0 : AppUtil.convertDpToPx(context, insetRight),
-                insetBottom == 0 ? 0 : AppUtil.convertDpToPx(context, insetBottom));
+                insetLeft == 0 ? 0 : convertDpToPx(context, insetLeft),
+                insetTop == 0 ? 0 : convertDpToPx(context, insetTop),
+                insetRight == 0 ? 0 : convertDpToPx(context, insetRight),
+                insetBottom == 0 ? 0 : convertDpToPx(context, insetBottom));
 
         dividerItemDecoration.setDrawable(insetDrawable);
         return dividerItemDecoration;
+    }
+
+        public static int convertDpToPx(Context context, float dp) {
+        return Math.round(dp * context.getResources().getDisplayMetrics().density);
     }
 
 }

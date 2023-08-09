@@ -3,11 +3,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.times.TimesFragment">
+    tools:context=".ui.TimesFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:orientation="horizontal"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/times_novo_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome:"></TextView>
+
+                <EditText
+                    android:id="@+id/times_nome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </EditText>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/times_gravar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="8dp"
+                    android:text="Salvar">
+
+                </Button>
+
+
+            </LinearLayout>
+        </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/times_recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
                 tools:listitem="@layout/item_times" />
+
+    </LinearLayout>
 </FrameLayout>

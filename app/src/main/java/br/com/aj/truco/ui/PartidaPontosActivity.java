@@ -49,7 +49,7 @@ public class PartidaPontosActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        TimesPartida timesPartida = dbs.partidaJogadorDAO().geTimesByPartida(partidaID);
+        TimesPartida timesPartida = dbs.partidaJogadaDAO().geTimesByPartida(partidaID);
         List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartida(partidaID);
         List<PartidaPontos> partidaPontosList = dbs.partidaJogadaDAO().getCompleteByPartida(partidaID, timesPartida.Time1ID, timesPartida.Time2ID);
         adapter = new PartidaPontosAdapter(PartidaPontosActivity.this, partidaPontosList, null, null,jogadorID);

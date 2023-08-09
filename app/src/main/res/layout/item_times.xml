@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        app:cardBackgroundColor="#CDEFF1"
         app:cardCornerRadius="10dp">
-        <!--        android:background="@drawable/my_custom_background"-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,12 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="18dp"
-                android:textColor="@color/black"
                 android:textSize="32dp"
                 android:textStyle="bold"
                 tools:text="Time Nome" />
-
-
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

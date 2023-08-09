@@ -1,4 +1,4 @@
-package br.com.aj.truco.ui.estatisticajogadores;
+package br.com.aj.truco.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,7 +24,7 @@ import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
 import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
 import br.com.aj.truco.ui.PartidaPontosActivity;
-import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
+//import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 
@@ -63,7 +63,7 @@ public class EstatisticaJogadoresFragment extends Fragment {
 
         AppRoomDatabase dbs = AppRoomDatabase.getDatabase(getContext());
         long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-        List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
+        List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getEstatisticaByPartida(partidaID);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);

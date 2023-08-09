@@ -4,11 +4,14 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 import br.com.aj.truco.classe.PartidaJogada;
+import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.PartidaPontos;
+import br.com.aj.truco.classe.TimesPartida;
 
 
 @Dao
@@ -18,7 +21,7 @@ public interface PartidaJogadaDAO {
     List<PartidaJogada> getAll();
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaJogadaID = :partidajogadaid")
-    List<PartidaJogada> getByID(long partidajogadaid);
+    PartidaJogada getByID(long partidajogadaid);
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid ORDER BY PartidaJogadaID")
     List<PartidaJogada> getByPartida(long partidaid);
@@ -27,15 +30,14 @@ public interface PartidaJogadaDAO {
             " p.PartidaID, " +
             " p.JogadorID, " +
             " p.Pontos, " +
-            " pj.TimeJogadorID as TimeID, " +
+            " p.TimeID, " +
             " (p.PontosTime1 + (" +
-            "  CASE WHEN (pj.TimeJogadorID = 1 AND p.Vitoria) OR (pj.TimeJogadorID = 2 AND NOT p.Vitoria)  THEN" +
+            "  CASE WHEN (p.TimeID = 1 AND p.Vitoria) OR (p.TimeID = 2 AND NOT p.Vitoria)  THEN" +
             "    Pontos " +
             "   ELSE " +
             "     0 END) ) as PontosTime1, " +
-            " pj.TimeJogadorID as TimeID, " +
             " (p.PontosTime2 + (" +
-            "  CASE WHEN (pj.TimeJogadorID = 2 AND p.Vitoria) OR (pj.TimeJogadorID = 1 AND NOT p.Vitoria) THEN" +
+            "  CASE WHEN (p.TimeID = 2 AND p.Vitoria) OR (p.TimeID = 1 AND NOT p.Vitoria) THEN" +
             "    Pontos " +
             "   ELSE " +
             "     0 END)) as PontosTime2, " +
@@ -48,7 +50,6 @@ public interface PartidaJogadaDAO {
             " (SELECT SUM(CASE WHEN pj2.Vitoria THEN pj2.Pontos ELSE pj2.Pontos * -1 END) FROM PartidaJogada pj2 WHERE pj2.PartidaID = p.PartidaID AND pj2.JogadorID = p.JogadorID and pj2.PartidaJogadaID <= p.PartidaJogadaID ) as JogadorPontos, " +
             " (SELECT SUM(CASE WHEN pj2.Vitoria THEN 1 ELSE -1 END) FROM PartidaJogada pj2 WHERE pj2.PartidaID = p.PartidaID AND pj2.JogadorID = p.JogadorID and pj2.PartidaJogadaID <= p.PartidaJogadaID ) as JogadorPartidas " +
             "  FROM PartidaJogada p " +
-            "  LEFT JOIN PartidaJogador pj on (p.JogadorID = pj.JogadorID AND p.PartidaID = pj.PartidaID) " +
             " WHERE p.PartidaID = :partidaid " +
             "  ORDER BY p.PartidaJogadaID")
     List<PartidaPontos> getCompleteByPartida(long partidaid, long time1id, long time2id);
@@ -58,13 +59,17 @@ public interface PartidaJogadaDAO {
 //    List<PartidaJogada> getByTime(int timeid);
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid AND JogadorID = :jogadorid")
-    List<PartidaJogada> getByTimeJogador(long partidaid, long jogadorid);
+    List<PartidaJogada> getByPartidaJogador(long partidaid, long jogadorid);
 
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid ORDER BY PartidaJogadaID DESC")
     PartidaJogada getLast(long partidaid);
 
     @Insert
     long insert(PartidaJogada partidajogada);
+
+    @Update
+    void update(PartidaJogada partidajogada);
+
 
     @Delete
     void delete(PartidaJogada partidajogada);
@@ -81,5 +86,7 @@ public interface PartidaJogadaDAO {
     @Query("DELETE FROM PartidaJogada WHERE PartidaID = :partidaID AND JogadorID = :jogadorID")
     int deleteByPartidaJogador(long partidaID,long jogadorID);
 
+    @Query("SELECT MIN(TimeID) as Time1ID, MAX(TimeID) as Time2ID  FROM PartidaJogada WHERE PartidaID = :partidaid")
+    TimesPartida geTimesByPartida(long partidaid);
 
 }

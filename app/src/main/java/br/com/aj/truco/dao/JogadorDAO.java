@@ -14,19 +14,28 @@ import br.com.aj.truco.classe.Jogador;
 @Dao
 public interface JogadorDAO {
 
-    @Query("SELECT * FROM Jogador ORDER BY  Ordem")
+    @Query("SELECT * FROM Jogador ORDER BY JogadorID")
     List<Jogador> getAll();
 
-    @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem , Nome " +
+    @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem, Nome, Ativo " +
             "FROM Jogador ORDER BY  Ordem1")
     List<Jogador> getAllOrdem();
+    @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem, Nome, Ativo " +
+            "FROM Jogador WHERE Ativo == 1 ORDER BY  Ordem1")
+    List<Jogador> getAllAtivosOrdem();
 
-    @Query("SELECT * FROM Jogador WHERE Ordem > 0")
+    @Query("SELECT * FROM Jogador WHERE Ativo == 1")
     List<Jogador> getJogadoresAtivos();
 
     @Query("SELECT * FROM Jogador WHERE JogadorID = :JogadorID")
     Jogador getJogador(long JogadorID);
 
+    @Query("SELECT JogadorID, TimeID, Ordem, Nome, Ativo " +
+            "FROM Jogador WHERE Ordem > 0 ORDER BY  Ordem")
+    List<Jogador> getJogadoresNaPartida();
+
+    @Query("SELECT COUNT(*) FROM Jogador")
+    int CountAll();
     @Query("SELECT * FROM Jogador WHERE Nome = :Nome")
     Jogador getJogadorByNome(String Nome);
 
@@ -36,7 +45,7 @@ public interface JogadorDAO {
     @Query("SELECT * FROM Jogador WHERE Ordem > 0 ORDER BY Ordem")
     Jogador getFirstJogador();
 
-    @Query("SELECT * FROM Jogador WHERE JogadorID in (SELECT JogadorID FROM PartidaJogador WHERE PartidaID = :partidaID AND TimeJogadorID = :timeID)")
+    @Query("SELECT * FROM Jogador WHERE JogadorID in (SELECT JogadorID FROM PartidaJogada WHERE PartidaID = :partidaID AND TimeID = :timeID GROUP BY JogadorID)")
     List<Jogador> getJogadoresByPartidaTime(long partidaID, long timeID);
 
     @Query("SELECT MAX(Ordem) FROM Jogador")

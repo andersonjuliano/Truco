@@ -28,6 +28,11 @@ public interface PartidaJogadorDAO {
             "WHERE PartidaID = :partidaid ")
     List<PartidaJogador> getByPartida(long partidaid);
 
+  @Query("SELECT * FROM PartidaJogador " +
+         " WHERE PartidaID = :partidaid " +
+         "   AND (Vitoria > 0 OR Derrota>0) ")
+    List<PartidaJogador> getEstatisticaByPartida(long partidaid);
+
 
   @Query("SELECT 0 as PartidaJogadorID," +
           " 0 as TimeJogadorID, " +
@@ -57,8 +62,8 @@ public interface PartidaJogadorDAO {
     PartidaJogador getFromPartidaJogadaByPartidaJogador(long partidaid, long jogadorid);
 
 
-    @Query("SELECT MIN(TimeJogadorID) as Time1ID, MAX(TimeJogadorID) as Time2ID  FROM PartidaJogador WHERE PartidaID = :partidaid AND TimeJogadorID > 0")
-    TimesPartida geTimesByPartida(long partidaid);
+//    @Query("SELECT MIN(TimeJogadorID) as Time1ID, MAX(TimeJogadorID) as Time2ID  FROM PartidaJogador WHERE PartidaID = :partidaid AND TimeJogadorID > 0")
+//    TimesPartida geTimesByPartida(long partidaid);
 
 
     @Query("SELECT * FROM PartidaJogador WHERE PartidaID = :partidaid AND JogadorID = :jogadorid")

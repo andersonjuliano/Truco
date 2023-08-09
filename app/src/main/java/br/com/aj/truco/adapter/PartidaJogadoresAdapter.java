@@ -42,15 +42,15 @@ public class PartidaJogadoresAdapter extends GenericAdapter<PartidaJogador, Part
     public void onBindViewHolder(ViewHolder holder, int position) {
         PartidaJogador partidaJogador = mList.get(position);
         Jogador jogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
-if (jogador != null)
-        holder.viewNomeJogador.setText(jogador.getNome());
-else
-    holder.viewNomeJogador.setText("Jogador excluido");
+        if (jogador != null)
+            holder.viewNomeJogador.setText(jogador.getNome());
+        else
+            holder.viewNomeJogador.setText("Jogador excluido");
 
         holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
         holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
         holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
-        if ((partidaJogador.SaldoPontos() ) < 0)
+        if ((partidaJogador.SaldoPontos()) < 0)
             holder.viewPontosSaldo.setTextColor(Color.RED);
         else if ((partidaJogador.SaldoPontos()) > 0)
             holder.viewPontosSaldo.setTextColor(Color.BLUE);

@@ -12,6 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
+        <item name="textColor">@color/black</item>
+        <item name="textColorPositivo">@color/blue</item>
+        <item name="textColorNegativo">@color/red</item>
+        <item name="fundoPrincipal">@color/white</item>
+        <item name="fundoAlternativo">@color/cinza_84</item>
+        <item name="fundoDestacado">@color/amarelo</item>
     </style>
 
     <style name="Theme.Truco.NoActionBar">

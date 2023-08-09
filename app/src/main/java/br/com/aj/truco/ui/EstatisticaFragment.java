@@ -1,4 +1,4 @@
-package br.com.aj.truco.ui.estatistica;
+package br.com.aj.truco.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,7 +35,7 @@ import br.com.aj.truco.util.SharedPreferencesUtil;
 
 public class EstatisticaFragment extends Fragment {
 
-    private EstatisticaViewModel estatisticaViewModel;
+    //private EstatisticaViewModel estatisticaViewModel;
     private FragmentEstatisticaBinding binding;
 
     private RecyclerView recyclerView;
@@ -45,8 +45,8 @@ public class EstatisticaFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        estatisticaViewModel =
-                new ViewModelProvider(this).get(EstatisticaViewModel.class);
+
+        //estatisticaViewModel = new ViewModelProvider(this).get(EstatisticaViewModel.class);
 
         binding = FragmentEstatisticaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -187,12 +187,12 @@ public class EstatisticaFragment extends Fragment {
         });
 
 //        final TextView textView = binding.textSlideshow;
-        estatisticaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-            }
-        });
+//        estatisticaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//
+//            }
+//        });
         return root;
     }
 
