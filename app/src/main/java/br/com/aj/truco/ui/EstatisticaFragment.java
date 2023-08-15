@@ -64,7 +64,7 @@ public class EstatisticaFragment extends Fragment {
         }
 
 
-        List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
+        List<PartidaJogador> partidaJogadores = dbs.partidaJogadorDAO().getEstatisticaByPartida(partidaID);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -132,7 +132,7 @@ public class EstatisticaFragment extends Fragment {
                         }
                         if (!todos) {
                             if (partidas.stream().count() == 1) {
-                                partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidas.get(0));
+                                partidaJogadores = dbs.partidaJogadorDAO().getEstatisticaByPartida(partidas.get(0));
                             } else if (partidas.stream().count() > 0) {
                                 partidaJogadores = dbs.partidaJogadorDAO().getByPartidas(partidas);
                                 if (partidas.stream().count() > 1) {
@@ -144,7 +144,7 @@ public class EstatisticaFragment extends Fragment {
                                 if (partida != null)
                                     titulo = "Partida: " + partida.getTitulo();
 
-                                partidaJogadores = dbs.partidaJogadorDAO().getByPartida(partidaID);
+                                partidaJogadores = dbs.partidaJogadorDAO().getEstatisticaByPartida(partidaID);
                             }
                         }
 

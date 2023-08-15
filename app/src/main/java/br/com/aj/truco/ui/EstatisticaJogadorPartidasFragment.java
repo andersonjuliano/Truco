@@ -54,7 +54,7 @@ public class EstatisticaJogadorPartidasFragment extends Fragment {
         viewPager2 = rootView.findViewById(R.id.viewpager);
 
 
-        List<Jogador>jogadorList = dbs.jogadorDAO().getAll();
+        List<Jogador>jogadorList = dbs.jogadorDAO().getAllAtivos();
 
         EstatisticasPorJogadorAdapter estatisticasPorJogadorAdapter = new EstatisticasPorJogadorAdapter(getActivity(), jogadorList, null, null);
 

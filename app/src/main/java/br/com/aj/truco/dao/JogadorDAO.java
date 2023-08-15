@@ -16,6 +16,8 @@ public interface JogadorDAO {
 
     @Query("SELECT * FROM Jogador ORDER BY JogadorID")
     List<Jogador> getAll();
+    @Query("SELECT * FROM Jogador WHERE Ativo == 1 ORDER BY JogadorID")
+    List<Jogador> getAllAtivos();
 
     @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem, Nome, Ativo " +
             "FROM Jogador ORDER BY  Ordem1")
