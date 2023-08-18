@@ -1,6 +1,7 @@
 package br.com.aj.truco.adapter;
 
 import android.content.Context;
+import android.provider.Telephony;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.security.PublicKey;
 import java.util.List;
 
 import br.com.aj.truco.R;
@@ -100,6 +102,12 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
         @Override
         public void onClick(View view) {
             PartidasAdapter.this.onClick(view, getAdapterPosition());
+        }
+
+
+        @Override
+        public boolean onLongClick(View view){
+            return   PartidasAdapter.this.onLongClick(view, getAdapterPosition());
         }
 
     }

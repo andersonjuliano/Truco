@@ -3,9 +3,12 @@ package br.com.aj.truco.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.provider.Telephony;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.List;
 
@@ -21,14 +24,16 @@ import br.com.aj.truco.generic.RecyclerViewListenerHack;
 public class PartidasDoJogadorAdapter extends GenericAdapter<PartidaJogador, PartidasDoJogadorAdapter.ViewHolder> {
 
     AppRoomDatabase dbs;
-
+    Context mcontext;
     public PartidasDoJogadorAdapter(Context context, List<PartidaJogador> objects) {
         super(context, objects);
+        mcontext= context;
         dbs = AppRoomDatabase.getDatabase(context);
     }
 
     public PartidasDoJogadorAdapter(Context context, List<PartidaJogador> objects, RecyclerViewListenerHack.OnClickListener clickListener, RecyclerViewListenerHack.OnLongClickListener longClickListener) {
         super(context, objects, clickListener, longClickListener);
+        mcontext= context;
         dbs = AppRoomDatabase.getDatabase(context);
 
     }
@@ -49,18 +54,27 @@ public class PartidasDoJogadorAdapter extends GenericAdapter<PartidaJogador, Par
         holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
         holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
         holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
+
+        TypedValue typedValue = new TypedValue();
+        mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
+        int textColorPositivo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+        mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+        int textColorNegativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+
         if ((partidaJogador.SaldoPontos() ) < 0)
-            holder.viewPontosSaldo.setTextColor(Color.RED);
+            holder.viewPontosSaldo.setTextColor(textColorNegativo);
         else if ((partidaJogador.SaldoPontos()) > 0)
-            holder.viewPontosSaldo.setTextColor(Color.BLUE);
+            holder.viewPontosSaldo.setTextColor(textColorPositivo);
 
         holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
         holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
         holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.SaldoVitorias()));
         if ((partidaJogador.SaldoVitorias()) < 0)
-            holder.viewPartidasSaldo.setTextColor(Color.RED);
+            holder.viewPartidasSaldo.setTextColor(textColorNegativo);
         else if ((partidaJogador.SaldoVitorias()) > 0)
-            holder.viewPartidasSaldo.setTextColor(Color.BLUE);
+            holder.viewPartidasSaldo.setTextColor(textColorPositivo);
 
 
     }

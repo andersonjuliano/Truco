@@ -62,6 +62,7 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         PartidaPontos partidaPontos = mList.get(position);
 
         holder.viewID.setText(String.valueOf(partidaPontos.PartidaJogadaID));
@@ -70,17 +71,9 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
         holder.viewTime1Pontos.setText(String.valueOf(partidaPontos.PontosTime1));
         holder.viewTime1Partidas.setText(String.valueOf(partidaPontos.VitoriasTime1));
 
-
-//        if (partidaPontos.PontosTime1 >= 12)
-//            holder.viewTime1Partidas.setText(String.valueOf(partidaPontos.VitoriasTime1 + 1));
-
-
         holder.viewTime2Nome.setText(partidaPontos.Time2Nome + ": ");
         holder.viewTime2Pontos.setText(String.valueOf(partidaPontos.PontosTime2));
         holder.viewTime2Partidas.setText(String.valueOf(partidaPontos.VitoriasTime2));
-//        if (partidaPontos.PontosTime2 >= 12)
-//            holder.viewTime2Partidas.setText(String.valueOf(partidaPontos.VitoriasTime2 + 1));
-
 
         holder.viewJogadorNome.setText(String.valueOf(partidaPontos.JogadorNome));
         holder.viewJogadorPontos.setText(String.valueOf(partidaPontos.JogadorPontos));
@@ -88,23 +81,22 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
 
         TypedValue typedValue = new TypedValue();
         mcontext.getTheme().resolveAttribute(R.attr.textColor, typedValue, true);
-        int textColor =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+        int textColor = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
-  mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
-        int textColorPositivo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+        mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
+        int textColorPositivo = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
-mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
-        int textColorNegativo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
-
+        mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+        int textColorNegativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
         mcontext.getTheme().resolveAttribute(R.attr.fundoPrincipal, typedValue, true);
-        int fundoPrincipal =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+        int fundoPrincipal = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
-mcontext.getTheme().resolveAttribute(R.attr.fundoAlternativo, typedValue, true);
-        int fundoAlternativo =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+        mcontext.getTheme().resolveAttribute(R.attr.fundoAlternativo, typedValue, true);
+        int fundoAlternativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
-mcontext.getTheme().resolveAttribute(R.attr.fundoDestacado, typedValue, true);
-        int fundoDestacado =  ContextCompat.getColor(mcontext, typedValue.resourceId);
+        mcontext.getTheme().resolveAttribute(R.attr.fundoDestacado, typedValue, true);
+        int fundoDestacado = ContextCompat.getColor(mcontext, typedValue.resourceId);
 
 
         if (partidaPontos.Vitoria) {

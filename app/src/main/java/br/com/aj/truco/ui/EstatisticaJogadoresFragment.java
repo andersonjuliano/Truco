@@ -25,10 +25,11 @@ import br.com.aj.truco.generic.RecyclerViewListenerHack;
 import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
 import br.com.aj.truco.ui.PartidaPontosActivity;
 //import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
+import br.com.aj.truco.util.BaseFragment;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
 
-public class EstatisticaJogadoresFragment extends Fragment {
+public class EstatisticaJogadoresFragment extends BaseFragment {
 
 
     private RecyclerView recyclerView;

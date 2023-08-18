@@ -40,10 +40,12 @@ import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
+import br.com.aj.truco.util.BaseFragment;
 import br.com.aj.truco.util.Constantes;
+import br.com.aj.truco.util.LogUtil;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
-public class JogoFragment extends Fragment {
+public class JogoFragment extends BaseFragment {
 
     private static final String TAG = JogoFragment.class.getSimpleName();
 
@@ -335,16 +337,21 @@ public class JogoFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Constantes.ACTION_NOVA_PARTIDA)) {
 
-                partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+                try {
 
-                QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
-                partida = dbs.partidaDAO().getPartida(partidaID);
+                    partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+
+                    QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
+                    partida = dbs.partidaDAO().getPartida(partidaID);
 
 //                jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
 //                if (jogadorPe == null)
-                jogadorPe = dbs.jogadorDAO().getFirstJogador();
+                    jogadorPe = dbs.jogadorDAO().getFirstJogador();
 
-                CarregarTela();
+                    CarregarTela();
+                } catch (Exception e) {
+                    LogUtil.d(TAG, e.toString());
+                }
             }
         }
     };
