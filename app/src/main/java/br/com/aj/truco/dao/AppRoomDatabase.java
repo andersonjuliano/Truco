@@ -51,7 +51,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     //static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
 
-    public static final int DBVERSION = 8;
+    public static final int DBVERSION = 9;
     public static final String DATABASE_NAME = "truco-db.db";
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
@@ -81,6 +81,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                                     AppRoomDatabase.class, "app_database")
                             .addMigrations(MIGRATION_6_7)
                             .addMigrations(MIGRATION_7_8)
+                            .addMigrations(MIGRATION_8_9)
                             // .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();
@@ -103,6 +104,16 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
            database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
+        }
+    };
+    static final Migration MIGRATION_8_9 = new Migration( 7, 8) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 STRING");
+           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 STRING");
+            database.execSQL("UPDATE Partida SET NomeTime1 = 'Novos', NomeTime2 = 'Velhos'");
+
         }
     };
 }

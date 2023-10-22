@@ -29,6 +29,8 @@ public class Partida {
     private int VitoriaTime2 = 0;
     //pé
     private long JogadorID = 0;
+    private String NomeTime1;
+    private String NomeTime2;
 
     //region get/set
     public long getPartidaID() {
@@ -86,6 +88,23 @@ public class Partida {
     public void setJogadorID(long jogadorID) {
         JogadorID = jogadorID;
     }
+
+    public String getNomeTime1() {
+        return NomeTime1;
+    }
+
+    public void setNomeTime1(String pNomeTime1) {
+        NomeTime1 = pNomeTime1;
+    }
+
+    public String getNomeTime2() {
+        return NomeTime2;
+    }
+
+    public void setNomeTime2(String pNomeTime2) {
+        NomeTime2 = pNomeTime2;
+    }
+
     //endregion get/set
 
     //region Métodos auxiliares
