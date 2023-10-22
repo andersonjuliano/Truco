@@ -44,7 +44,8 @@ public interface PartidaJogadorDAO {
           " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
           " FROM PartidaJogada " +
           " WHERE PartidaID = :partidaid " +
-          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID ")
+          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
+          "  HAVING (Vitoria > 0 OR Derrota>0) ")
     List<PartidaJogador> getFromPartidaJogadaByPartida(long partidaid);
 
  @Query("SELECT 0 as PartidaJogadorID," +
@@ -58,7 +59,9 @@ public interface PartidaJogadorDAO {
           " FROM PartidaJogada " +
           " WHERE PartidaID = :partidaid " +
           "   AND JogadorID = :jogadorid " +
-          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID ")
+         " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
+         "  HAVING (Vitoria > 0 OR Derrota>0) "
+ )
     PartidaJogador getFromPartidaJogadaByPartidaJogador(long partidaid, long jogadorid);
 
 
@@ -82,6 +85,7 @@ public interface PartidaJogadorDAO {
             "      SUM(PontosGanhos) AS PontosGanhos," +
             "      SUM(PontosPerdidos) AS PontosPerdidos" +
             " FROM PartidaJogador " +
+            " WHERE (Vitoria > 0 OR Derrota>0) " +
             "GROUP BY JogadorID")
     List<PartidaJogador> getAllConsolidado();
 
@@ -95,7 +99,8 @@ public interface PartidaJogadorDAO {
             "      SUM(PontosGanhos) AS PontosGanhos," +
             "      SUM(PontosPerdidos) AS PontosPerdidos" +
             " FROM PartidaJogador " +
-            "WHERE PartidaID in (:partidasID) " +
+            " WHERE PartidaID in (:partidasID) " +
+            " AND (Vitoria > 0 OR Derrota>0) " +
             "GROUP BY JogadorID")
     List<PartidaJogador> getByPartidas(List<Long> partidasID);
 

@@ -47,35 +47,39 @@ public class PartidaJogadoresAdapter extends GenericAdapter<PartidaJogador, Part
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PartidaJogador partidaJogador = mList.get(position);
-        Jogador jogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
-        if (jogador != null)
-            holder.viewNomeJogador.setText(jogador.getNome());
-        else
-            holder.viewNomeJogador.setText("Jogador excluido");
 
-        holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
-        holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
-        holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
 
-        TypedValue typedValue = new TypedValue();
-        mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
-        int textColorPositivo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+            Jogador jogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
 
-        mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
-        int textColorNegativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+            if (jogador != null)
+                holder.viewNomeJogador.setText(jogador.getNome());
+            else
+                holder.viewNomeJogador.setText("Jogador excluido");
 
-        if ((partidaJogador.SaldoPontos()) < 0)
-            holder.viewPontosSaldo.setTextColor(textColorNegativo);
-        else if ((partidaJogador.SaldoPontos()) > 0)
-            holder.viewPontosSaldo.setTextColor(textColorPositivo);
+            holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
+            holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
+            holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
 
-        holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
-        holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
-        holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.SaldoVitorias()));
-        if ((partidaJogador.SaldoVitorias()) < 0)
-            holder.viewPartidasSaldo.setTextColor(textColorNegativo);
-        else if ((partidaJogador.SaldoVitorias()) > 0)
-            holder.viewPartidasSaldo.setTextColor(textColorPositivo);
+            TypedValue typedValue = new TypedValue();
+            mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
+            int textColorPositivo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+            mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+            int textColorNegativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+            if ((partidaJogador.SaldoPontos()) < 0)
+                holder.viewPontosSaldo.setTextColor(textColorNegativo);
+            else if ((partidaJogador.SaldoPontos()) > 0)
+                holder.viewPontosSaldo.setTextColor(textColorPositivo);
+
+            holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
+            holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
+            holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.SaldoVitorias()));
+            if ((partidaJogador.SaldoVitorias()) < 0)
+                holder.viewPartidasSaldo.setTextColor(textColorNegativo);
+            else if ((partidaJogador.SaldoVitorias()) > 0)
+                holder.viewPartidasSaldo.setTextColor(textColorPositivo);
+
 
 
     }

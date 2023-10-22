@@ -9,8 +9,8 @@ android {
         applicationId "br.com.aj.truco2"
         minSdk 30
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -78,11 +78,7 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:2.4.1"
 
-    //implementation 'de.raphaelebner:roomdatabasebackup:1.0.0-beta11'
-
-    //implementation 'com.github.AnyChart:AnyChart-Android:0.0.3'
-
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+   implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'tr.xip.errorview:library:3.0.0'
 
