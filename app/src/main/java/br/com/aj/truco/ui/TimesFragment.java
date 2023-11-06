@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import br.com.aj.truco.adapter.TimesAdapter;
+import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentTimesBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
+import br.com.aj.truco.util.SharedPreferencesUtil;
 
 
 public class TimesFragment extends Fragment {
@@ -86,6 +88,23 @@ public class TimesFragment extends Fragment {
             } else {
                 dbs.timeDAO().update(timeNovo);
             }
+            long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+
+            if (partidaID > 0) {
+
+                Partida partida = dbs.partidaDAO().getPartida(partidaID);
+                if (partida != null) {
+                    if (timeNovo.getTimeID() == 1) {
+                        partida.setNomeTime1(timeNovo.getNome());
+                        dbs.partidaDAO().update(partida);
+                    }else if (timeNovo.getTimeID() == 2) {
+                        partida.setNomeTime2(timeNovo.getNome());
+                        dbs.partidaDAO().update(partida);
+                    }
+                }
+            }
+
+
             carregar();
             timeNovo = new Time();
             binding.timesNovoTime.setVisibility(View.GONE);

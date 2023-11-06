@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,9 +31,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.aj.truco.MainActivity;
 import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
@@ -119,12 +122,18 @@ public class JogoFragment extends BaseFragment {
         textJogadorPe.setOnLongClickListener(textJogadorPeLongClick);
         //buttonNovaPartida.setOnClickListener(buttonNovaPartidaClick);
 
-        Time time = dbs.timeDAO().getTime(1);
-        if (time != null)
-            textTime1Nome.setText(time.getNome());
-        time = dbs.timeDAO().getTime(2);
-        if (time != null)
-            textTime2Nome.setText(time.getNome());
+//        textTime1Nome.setText(partida.getNomeTime1());
+//        textTime2Nome.setText(partida.getNomeTime2());
+//        if (textTime1Nome.getTextColors().equals("")) {
+//            Time time = dbs.timeDAO().getTime(1);
+//            if (time != null)
+//                textTime1Nome.setText(time.getNome());
+//        }
+//        if (textTime2Nome.getTextColors().equals("")) {
+//            Time time = dbs.timeDAO().getTime(2);
+//            if (time != null)
+//                textTime2Nome.setText(time.getNome());
+//        }
 
 
         IntentFilter intentFilterNovaPartida = new IntentFilter(Constantes.ACTION_NOVA_PARTIDA);
@@ -142,6 +151,21 @@ public class JogoFragment extends BaseFragment {
 
             if (jogadorPe == null)
                 jogadorPe = dbs.jogadorDAO().getFirstJogador();
+        }
+
+        if (partida != null) {
+            textTime1Nome.setText(partida.getNomeTime1());
+            textTime2Nome.setText(partida.getNomeTime2());
+        }
+        if (textTime1Nome.getTextColors().equals("")) {
+            Time time = dbs.timeDAO().getTime(1);
+            if (time != null)
+                textTime1Nome.setText(time.getNome());
+        }
+        if (textTime2Nome.getTextColors().equals("")) {
+            Time time = dbs.timeDAO().getTime(2);
+            if (time != null)
+                textTime2Nome.setText(time.getNome());
         }
 
         if (jogadorPe == null || QtdeJogadores == 0)
@@ -292,43 +316,70 @@ public class JogoFragment extends BaseFragment {
         @Override
         public void onClick(View view) {
 
-            //List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getAll();
-            PartidaJogada partidaJogada = dbs.partidaJogadaDAO().getLast(partidaID);
+            try {
+
+                new android.app.AlertDialog.Builder(getActivity())
+                        .setMessage(getString(R.string.msg_dialog_desfazer))
+                        .setCancelable(false)
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                //List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getAll();
+                                PartidaJogada partidaJogada = dbs.partidaJogadaDAO().getLast(partidaID);
 
 
-            //desfaz o ponto
-            if (partidaJogada != null && partidaJogada.getJogadorID() > 0) {
-                partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(partidaJogada.getJogadorID(), partida.getPartidaID());   //partidaJogadores.stream().filter(x -> x.getJogadorID() == partidaJogada.getJogadorID()).findFirst().orElse(null);
+                                //desfaz o ponto
+                                if (partidaJogada != null && partidaJogada.getJogadorID() > 0) {
+                                    partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(partidaJogada.getJogadorID(), partida.getPartidaID());   //partidaJogadores.stream().filter(x -> x.getJogadorID() == partidaJogada.getJogadorID()).findFirst().orElse(null);
 
 
-                if (partidaJogada.isVitoria()) {
-                    partidaJogador.somarPontosGanhos(partidaJogada.getPontos() * -1);
-                    partidaJogador.deduzirVitoria();
-                } else {
-                    partidaJogador.somarPontosPerdidos(partidaJogada.getPontos() * -1);
-                    partidaJogador.deduzirDerrota();
-                }
+                                    if (partidaJogada.isVitoria()) {
+                                        partidaJogador.somarPontosGanhos(partidaJogada.getPontos() * -1);
+                                        partidaJogador.deduzirVitoria();
+                                    } else {
+                                        partidaJogador.somarPontosPerdidos(partidaJogada.getPontos() * -1);
+                                        partidaJogador.deduzirDerrota();
+                                    }
 
-                partida.setPontosTime1(partidaJogada.getPontosTime1());
-                partida.setPontosTime2(partidaJogada.getPontosTime2());
-                partida.setVitoriaTime1(partidaJogada.getVitoriasTime1());
-                partida.setVitoriaTime2(partidaJogada.getVitoriasTime2());
+                                    partida.setPontosTime1(partidaJogada.getPontosTime1());
+                                    partida.setPontosTime2(partidaJogada.getPontosTime2());
+                                    partida.setVitoriaTime1(partidaJogada.getVitoriasTime1());
+                                    partida.setVitoriaTime2(partidaJogada.getVitoriasTime2());
 
-                //grava a partida e estatistica do jogador
-                dbs.partidaJogadorDAO().update(partidaJogador);
-                dbs.partidaDAO().update(partida);
+                                    //grava a partida e estatistica do jogador
+                                    dbs.partidaJogadorDAO().update(partidaJogador);
+                                    dbs.partidaDAO().update(partida);
 
-                jogadorPe = dbs.jogadorDAO().getJogador(partidaJogada.getJogadorID());
+                                    jogadorPe = dbs.jogadorDAO().getJogador(partidaJogada.getJogadorID());
 
-                //deleta o historico
-                dbs.partidaJogadaDAO().delete(partidaJogada);
+                                    //deleta o historico
+                                    dbs.partidaJogadaDAO().delete(partidaJogada);
 
-                CarregarTela();
+                                    CarregarTela();
 
 
-            } else {
-                Toast.makeText(getContext(), "Não foi possível desfazer a jogada.", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Não foi possível desfazer a jogada.", Toast.LENGTH_LONG).show();
+                                }
+
+
+                            }
+                        }).show();
+
+
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
+
+
         }
     };
 

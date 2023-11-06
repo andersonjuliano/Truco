@@ -45,14 +45,14 @@ public interface PartidaJogadaDAO {
             " p.VitoriasTime2, " +
             " p.Vitoria, " +
             " (SELECT j.Nome FROM Jogador j WHERE j.JogadorID = p.JogadorID) as JogadorNome, " +
-            " (SELECT t1.Nome FROM Time t1 WHERE t1.TimeID = :time1id) as Time1Nome, " +
-            " (SELECT t2.Nome FROM Time t2 WHERE t2.TimeID = :time2id) as Time2Nome," +
+            " (SELECT t1.NomeTime1 FROM Partida t1 WHERE t1.PartidaID = :partidaid) as NomeTime1, " +
+            " (SELECT t2.NomeTime2 FROM Partida t2 WHERE t2.PartidaID = :partidaid) as NomeTime2," +
             " (SELECT SUM(CASE WHEN pj2.Vitoria THEN pj2.Pontos ELSE pj2.Pontos * -1 END) FROM PartidaJogada pj2 WHERE pj2.PartidaID = p.PartidaID AND pj2.JogadorID = p.JogadorID and pj2.PartidaJogadaID <= p.PartidaJogadaID ) as JogadorPontos, " +
             " (SELECT SUM(CASE WHEN pj2.Vitoria THEN 1 ELSE -1 END) FROM PartidaJogada pj2 WHERE pj2.PartidaID = p.PartidaID AND pj2.JogadorID = p.JogadorID and pj2.PartidaJogadaID <= p.PartidaJogadaID ) as JogadorPartidas " +
             "  FROM PartidaJogada p " +
             " WHERE p.PartidaID = :partidaid " +
             "  ORDER BY p.PartidaJogadaID")
-    List<PartidaPontos> getCompleteByPartida(long partidaid, long time1id, long time2id);
+    List<PartidaPontos> getCompleteByPartida(long partidaid);
 
 
 //    @Query("SELECT * FROM PartidaJogada WHERE TimeID = :timeid")

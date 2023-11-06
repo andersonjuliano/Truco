@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_jogar, R.id.nav_times, R.id.nav_jogadores, R.id.nav_estatistica,
-                R.id.nav_partidas, R.id.nav_estatistica_jogadores, R.id.nav_estatistica_jogador_partidas)
+                R.id.nav_partidas, R.id.nav_estatistica_jogadores, R.id.nav_estatistica_jogador_partidas,
+                R.id.nav_historico_partida)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -115,11 +116,15 @@ public class MainActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
                                     // dbs = AppRoomDatabase.getDatabase(getBaseContext());
+                                    Time objTime1 = dbs.timeDAO().getTime(1);
+                                    Time objTime2 = dbs.timeDAO().getTime(2);
 
                                     Calendar c = Calendar.getInstance();
 
                                     Partida partida = new Partida();
                                     partida.setDataPartida(c.getTime().getTime());
+                                    partida.setNomeTime1(objTime1.getNome());
+                                    partida.setNomeTime2(objTime2.getNome());
                                     long id = dbs.partidaDAO().insert(partida);
 
                                     //ao iniciar uma nova partida, remove o histórico
@@ -151,6 +156,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        MenuItem mLimparHistorico = menu.findItem(R.id.action_limpar_hitorico);
+        mLimparHistorico.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_limpar_hitorico_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(getBaseContext(), "Limpeza ainda não implementada", Toast.LENGTH_LONG).show();
+                                }
+                            }).show();
+
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
 
 
         MenuItem mTemaEscuro = menu.findItem(R.id.action_tema_escuro);
@@ -189,38 +228,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MenuItem mLimparHistorico = menu.findItem(R.id.action_limpar_hitorico);
-        mLimparHistorico.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item) {
-
-                try {
-
-                    new android.app.AlertDialog.Builder(MainActivity.this)
-                            .setMessage(getString(R.string.action_limpar_hitorico_confirmar))
-                            .setCancelable(false)
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(getBaseContext(), "Limpeza ainda não implementada", Toast.LENGTH_LONG).show();
-                                }
-                            }).show();
-
-
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-                return false;
-            }
-        });
 
         MenuItem mLimparEstatitica = menu.findItem(R.id.action_limpar_estatistica);
         mLimparEstatitica.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -326,9 +333,11 @@ public class MainActivity extends AppCompatActivity {
                                                 dbs.partidaJogadorDAO().insert(partidaJogador);
                                             else
                                                 dbs.partidaJogadorDAO().update(partidaJogador);
+
+                                            qtde++;
+
                                         }
 
-                                        qtde++;
                                     }
 
                                     Toast.makeText(getBaseContext(), String.valueOf(qtde) + " estatísticas corrigidas.", Toast.LENGTH_LONG).show();

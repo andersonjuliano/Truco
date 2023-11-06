@@ -39,6 +39,10 @@
                     android:id="@+id/nav_estatistica_jogador_partidas"
                     android:icon="@drawable/ic_baseline_ssid_chart_24"
                     android:title="@string/menu_estatistica_jogador_partidas" />
+               <item
+                    android:id="@+id/nav_historico_partida"
+                    android:icon="@drawable/baseline_list_alt_24"
+                    android:title="@string/menu_historico_partida" />
             </menu>
         </item>
 

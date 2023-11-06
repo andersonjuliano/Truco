@@ -49,8 +49,8 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
         Partida partida = mList.get(position);
 
         holder.viewPartida.setText(partida.getTitulo());
-        holder.viewNomeTime1.setText(dbs.timeDAO().getTime(1).getNome() + ":");
-        holder.viewNomeTime2.setText(dbs.timeDAO().getTime(2).getNome() + ":");
+        holder.viewNomeTime1.setText(partida.getNomeTime1() + ":");
+        holder.viewNomeTime2.setText(partida.getNomeTime2() + ":");
         holder.viewVitoriaTime1.setText(String.valueOf(partida.getVitoriaTime1()));
         holder.viewVitoriaTime2.setText(String.valueOf(partida.getVitoriaTime2()));
 

@@ -15,7 +15,7 @@
     <string name="action_corrigir_estatisticas">Corrigir Estatísticas</string>
     <string name="action_corrigir_estatisticas_confirmar">Todas as estatísticas da partida será corrigida conforme o histórico de jogadas, confirma?</string>
     <string name="action_apagar">Limpar Base</string>
-    <string name="action_apagar_confirmar">TODA A BASE DE DADOS SERÁ APAGADA, CONFIRMA?</string>
+    <string name="action_apagar_confirmar">TODA A BASE DE DADOS SERÁ APAGADA, ESSA AÇÃO NÃO PODERÁ SER DESFEITA! CONFIRMA?</string>
     <string name="action_sobre">Sobre</string>
     <string name="action_configuracoes">Configurações</string>
 
@@ -26,7 +26,9 @@
     <string name="menu_estatistica_partida">Estatísticas das Partidas</string>
     <string name="menu_estatistica_jogadores">Estatísticas dos Jogadores</string>
     <string name="menu_estatistica_jogador_partidas">Estatísticas dos Jogadores</string>
+    <string name="menu_historico_partida">Histórico da Partida</string>
     <string name="menu_partidas">Partidas</string>
+    <string name="msg_dialog_desfazer">Desfazer a última jogada?</string>
 
 
     <!-- Strings used for fragments for navigation -->

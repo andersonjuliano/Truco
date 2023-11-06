@@ -106,12 +106,12 @@ public abstract class AppRoomDatabase extends RoomDatabase {
            database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
         }
     };
-    static final Migration MIGRATION_8_9 = new Migration( 7, 8) {
+    static final Migration MIGRATION_8_9 = new Migration( 8, 9) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
-           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 STRING");
-           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 STRING");
+           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 VARCHAR2");
+           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 VARCHAR2");
             database.execSQL("UPDATE Partida SET NomeTime1 = 'Novos', NomeTime2 = 'Velhos'");
 
         }

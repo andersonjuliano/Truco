@@ -67,11 +67,11 @@ public class PartidaPontosAdapter extends GenericAdapter<PartidaPontos, PartidaP
 
         holder.viewID.setText(String.valueOf(partidaPontos.PartidaJogadaID));
 
-        holder.viewTime1Nome.setText(partidaPontos.Time1Nome + ": ");
+        holder.viewTime1Nome.setText(partidaPontos.NomeTime1 + ": ");
         holder.viewTime1Pontos.setText(String.valueOf(partidaPontos.PontosTime1));
         holder.viewTime1Partidas.setText(String.valueOf(partidaPontos.VitoriasTime1));
 
-        holder.viewTime2Nome.setText(partidaPontos.Time2Nome + ": ");
+        holder.viewTime2Nome.setText(partidaPontos.NomeTime2 + ": ");
         holder.viewTime2Pontos.setText(String.valueOf(partidaPontos.PontosTime2));
         holder.viewTime2Partidas.setText(String.valueOf(partidaPontos.VitoriasTime2));
 

@@ -15,8 +15,8 @@ public class PartidaPontos {
     public int VitoriasTime1;
     public int VitoriasTime2;
     public boolean Vitoria;
-    public String Time1Nome;
-    public String Time2Nome;
+    public String NomeTime1;
+    public String NomeTime2;
     public String JogadorNome;
     public int JogadorPontos;
     public int JogadorPartidas;
