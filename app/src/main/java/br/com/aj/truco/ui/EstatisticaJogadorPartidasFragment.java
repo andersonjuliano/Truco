@@ -1,13 +1,12 @@
 package br.com.aj.truco.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class EstatisticaJogadorPartidasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =   inflater.inflate(R.layout.fragment_estatistica_jogador_partidas, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_estatistica_jogador_partidas, container, false);
 
 
         dbs = AppRoomDatabase.getDatabase(getContext());
@@ -54,7 +53,7 @@ public class EstatisticaJogadorPartidasFragment extends Fragment {
         viewPager2 = rootView.findViewById(R.id.viewpager);
 
 
-        List<Jogador>jogadorList = dbs.jogadorDAO().getAllAtivos();
+        List<Jogador> jogadorList = dbs.jogadorDAO().getAllAtivos();
 
         EstatisticasPorJogadorAdapter estatisticasPorJogadorAdapter = new EstatisticasPorJogadorAdapter(getActivity(), jogadorList, null, null);
 
@@ -82,7 +81,6 @@ public class EstatisticaJogadorPartidasFragment extends Fragment {
                 super.onPageScrollStateChanged(state);
             }
         });
-
 
 
         return rootView;

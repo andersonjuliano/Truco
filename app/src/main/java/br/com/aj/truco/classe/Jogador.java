@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Jogador {
 
-    @Ignore public static final String EXTRA_KEY = Jogador.class.getName();
+    @Ignore
+    public static final String EXTRA_KEY = Jogador.class.getName();
 
     @PrimaryKey(autoGenerate = true)
     @NonNull

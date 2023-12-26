@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -97,7 +96,7 @@ public class TimesFragment extends Fragment {
                     if (timeNovo.getTimeID() == 1) {
                         partida.setNomeTime1(timeNovo.getNome());
                         dbs.partidaDAO().update(partida);
-                    }else if (timeNovo.getTimeID() == 2) {
+                    } else if (timeNovo.getTimeID() == 2) {
                         partida.setNomeTime2(timeNovo.getNome());
                         dbs.partidaDAO().update(partida);
                     }

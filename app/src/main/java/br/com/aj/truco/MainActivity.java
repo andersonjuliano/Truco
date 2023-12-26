@@ -6,12 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         CarregarIncial();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("jogadores", String.valueOf(jogadores));
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -94,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
 
         MenuItem mNovaPartida = menu.findItem(R.id.action_nova_partida);
         mNovaPartida.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -157,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         MenuItem mLimparHistorico = menu.findItem(R.id.action_limpar_hitorico);
         mLimparHistorico.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -195,8 +188,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem mTemaEscuro = menu.findItem(R.id.action_tema_escuro);
         if (SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getBoolean(SharedPreferencesUtil.KEY_TEMA_ESCURO, false)) {
             mTemaEscuro.setTitle(R.string.action_tema_claro);
-        }
-        else {
+        } else {
             mTemaEscuro.setTitle(R.string.action_tema_escuro);
         }
         mTemaEscuro.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -205,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
 
-                  boolean bTemaEscuro=  !SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getBoolean(SharedPreferencesUtil.KEY_TEMA_ESCURO, false);
+                    boolean bTemaEscuro = !SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getBoolean(SharedPreferencesUtil.KEY_TEMA_ESCURO, false);
                     SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).edit();
                     editor.putBoolean(SharedPreferencesUtil.KEY_TEMA_ESCURO, bTemaEscuro);
                     editor.commit();
@@ -213,8 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     if (bTemaEscuro) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         mTemaEscuro.setTitle(R.string.action_tema_claro);
-                    }
-                    else {
+                    } else {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         mTemaEscuro.setTitle(R.string.action_tema_escuro);
                     }
@@ -283,19 +274,37 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                             })
-//                            .setNeutralButton("Historico", new DialogInterface.OnClickListener() {
+//                            .setNeutralButton("Trocar", new DialogInterface.OnClickListener() {
+//                                //trocar os jogadores de time, e corrigir as estatisticas
 //                                @Override
 //                                public void onClick(DialogInterface dialog, int which) {
 //
-//
-//                                    List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getAll();
+//                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+//                                    List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
 //                                    for (PartidaJogador partidaJogador : partidaJogadorList) {
 //
+//                                        //corrige o time conforme está no cadastro
+//
+//                                        Jogador objJogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
+//
+//                                        partidaJogador.setTimeJogadorID(objJogador.getTimeID());
+//
+//
+//                                        //pega todas as partidas jogadas daquele jogador
 //                                        List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartidaJogador(partidaJogador.getPartidaID(), partidaJogador.getJogadorID());
 //                                        for (PartidaJogada partidaJogada : partidaJogadaList) {
+//                                            //corrige o time
 //                                            partidaJogada.setTimeID(partidaJogador.getTimeJogadorID());
+//
+//                                            //inverte a vitória/derrota
+//                                            partidaJogada.setVitoria(!partidaJogada.isVitoria());
+//
+//                                            //salva as alterações
 //                                            dbs.partidaJogadaDAO().update(partidaJogada);
 //                                        }
+//
+//                                        //faz o update
+//                                        dbs.partidaJogadorDAO().update(partidaJogador);
 //                                    }
 //                                }
 //                            })
@@ -434,49 +443,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-//    private final Calendar dataSelecionada = Calendar.getInstance();
-
-//    public void SelecionaData() {
-//
-//        final AlertDialog.Builder d = new AlertDialog.Builder(getBaseContext());
-//        LayoutInflater inflater = this.getLayoutInflater();
-//        View dialogView = inflater.inflate(R.layout.date_picker_dialog, null);
-//        d.setTitle("Selecione a data");
-//        d.setMessage("Selecione a data");
-//        d.setView(dialogView);
-//        final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
-//
-////        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-////            @Override
-////            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-////                //Log.d(TAG, "onValueChange: ");
-////            }
-////        });
-//        d.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                //Log.d(TAG, "onClick: " + numberPicker.getValue());
-//
-//                dataSelecionada.set(Calendar.DATE, datePicker.getDayOfMonth());
-//                dataSelecionada.set(Calendar.MONTH, datePicker.getMonth());
-//                dataSelecionada.set(Calendar.YEAR, datePicker.getYear());
-//
-//
-//            }
-//        });
-//        d.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//            }
-//        });
-//        AlertDialog alertDialog = d.create();
-//        alertDialog.show();
-//
-//
-//    }
-
-
-    private void CarregarIncial(){
+    private void CarregarIncial() {
 
 
         if (dbs.timeDAO().CountAll() == 0) {
@@ -494,6 +461,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     private List<Jogador> cargaInicialJogadores() {
 
 

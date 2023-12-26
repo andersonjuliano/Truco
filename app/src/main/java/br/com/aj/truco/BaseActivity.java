@@ -20,9 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import br.com.aj.truco.network.ErrorMessage;
 import tr.xip.errorview.ErrorView;
 
-/**
- * Created by Julio on 19/12/2017.
- */
 
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = BaseActivity.class.getSimpleName();
@@ -89,8 +86,8 @@ public class BaseActivity extends AppCompatActivity {
 
         tfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         tfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
-        tfBold= Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
-        tfExtraBold= Typeface.createFromAsset(getAssets(), "OpenSans-ExtraBold.ttf");
+        tfBold = Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
+        tfExtraBold = Typeface.createFromAsset(getAssets(), "OpenSans-ExtraBold.ttf");
     }
 
     @Override
@@ -117,8 +114,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Método necessário para finalizar tarefas antes de executar o onCreate.
      * Em alguns casos o onStop e onDestroy é executado após o onCreate, podendo impedir determinada tasks necessárias.
-     * ex: Cancelar consulta volley que possui a mesma tag.
-     */
+       */
     protected void onPause_onDestroy() {
     }
 

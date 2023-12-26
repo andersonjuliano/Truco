@@ -2,7 +2,6 @@ package br.com.aj.truco.classe;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "PartidaJogada")
@@ -40,6 +39,7 @@ public class PartidaJogada {
     public Long getTimeID() {
         return TimeID;
     }
+
     public void setTimeID(Long timeID) {
         TimeID = timeID;
     }
@@ -59,7 +59,6 @@ public class PartidaJogada {
     public void setPontos(int pontos) {
         Pontos = pontos;
     }
-
 
 
     public int getPontosTime1() {

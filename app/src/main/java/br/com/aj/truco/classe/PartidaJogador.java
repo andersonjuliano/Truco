@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey;
 @Entity
 public class PartidaJogador {
 
-    @Ignore public static final String EXTRA_KEY = PartidaJogador.class.getName();
+    @Ignore
+    public static final String EXTRA_KEY = PartidaJogador.class.getName();
 
 
     @PrimaryKey(autoGenerate = true)
@@ -21,7 +22,6 @@ public class PartidaJogador {
     private int Derrota;
     private int PontosGanhos;
     private int PontosPerdidos;
-
 
 
     public long getPartidaJogadorID() {
@@ -112,12 +112,12 @@ public class PartidaJogador {
         PontosPerdidos += pontosPerdidos;
     }
 
-    public int SaldoPontos(){
+    public int SaldoPontos() {
         return PontosGanhos - PontosPerdidos;
     }
 
-    public int SaldoVitorias(){
-        return  Vitoria - Derrota;
+    public int SaldoVitorias() {
+        return Vitoria - Derrota;
     }
 
 

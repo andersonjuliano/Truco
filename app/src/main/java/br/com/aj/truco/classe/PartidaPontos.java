@@ -1,8 +1,5 @@
 package br.com.aj.truco.classe;
 
-import androidx.navigation.PopUpToBuilder;
-import androidx.room.Ignore;
-
 public class PartidaPontos {
 
     public long PartidaJogadaID;

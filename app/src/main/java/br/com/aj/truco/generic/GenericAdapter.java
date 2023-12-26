@@ -2,11 +2,11 @@ package br.com.aj.truco.generic;
 
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 

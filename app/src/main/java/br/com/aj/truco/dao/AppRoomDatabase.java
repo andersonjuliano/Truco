@@ -1,22 +1,17 @@
 package br.com.aj.truco.dao;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
@@ -96,22 +91,22 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
             database.execSQL("ALTER TABLE PartidaJogada ADD COLUMN TimeID INTEGER NULL");
-          }
-    };
-
-    static final Migration MIGRATION_7_8 = new Migration( 7, 8) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
-           database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
         }
     };
-    static final Migration MIGRATION_8_9 = new Migration( 8, 9) {
+
+    static final Migration MIGRATION_7_8 = new Migration(7, 8) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Since we didn't alter the table, there's nothing else to do here.
-           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 VARCHAR2");
-           database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 VARCHAR2");
+            database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
+        }
+    };
+    static final Migration MIGRATION_8_9 = new Migration(8, 9) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+            database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 VARCHAR2");
+            database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 VARCHAR2");
             database.execSQL("UPDATE Partida SET NomeTime1 = 'Novos', NomeTime2 = 'Velhos'");
 
         }

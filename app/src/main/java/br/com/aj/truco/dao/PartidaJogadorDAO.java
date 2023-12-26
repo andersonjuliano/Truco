@@ -8,10 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-
-import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.PartidaJogador;
-import br.com.aj.truco.classe.TimesPartida;
 
 
 @Dao
@@ -28,40 +25,40 @@ public interface PartidaJogadorDAO {
             "WHERE PartidaID = :partidaid ")
     List<PartidaJogador> getByPartida(long partidaid);
 
-  @Query("SELECT * FROM PartidaJogador " +
-         " WHERE PartidaID = :partidaid " +
-         "   AND (Vitoria > 0 OR Derrota>0) ")
+    @Query("SELECT * FROM PartidaJogador " +
+            " WHERE PartidaID = :partidaid " +
+            "   AND (Vitoria > 0 OR Derrota>0) ")
     List<PartidaJogador> getEstatisticaByPartida(long partidaid);
 
 
-  @Query("SELECT 0 as PartidaJogadorID," +
-          " 0 as TimeJogadorID, " +
-          " PartidaID, " +
-          " JogadorID, " +
-          " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
-          " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
-          " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
-          " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
-          " FROM PartidaJogada " +
-          " WHERE PartidaID = :partidaid " +
-          " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
-          "  HAVING (Vitoria > 0 OR Derrota>0) ")
+    @Query("SELECT 0 as PartidaJogadorID," +
+            " 0 as TimeJogadorID, " +
+            " PartidaID, " +
+            " JogadorID, " +
+            " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
+            " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
+            " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
+            " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
+            " FROM PartidaJogada " +
+            " WHERE PartidaID = :partidaid " +
+            " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
+            "  HAVING (Vitoria > 0 OR Derrota>0) ")
     List<PartidaJogador> getFromPartidaJogadaByPartida(long partidaid);
 
- @Query("SELECT 0 as PartidaJogadorID," +
-          " 0 as TimeJogadorID, " +
-          " PartidaID, " +
-          " JogadorID, " +
-          " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
-          " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
-          " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
-          " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
-          " FROM PartidaJogada " +
-          " WHERE PartidaID = :partidaid " +
-          "   AND JogadorID = :jogadorid " +
-         " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
-         "  HAVING (Vitoria > 0 OR Derrota>0) "
- )
+    @Query("SELECT 0 as PartidaJogadorID," +
+            " 0 as TimeJogadorID, " +
+            " PartidaID, " +
+            " JogadorID, " +
+            " SUM(CASE WHEN Vitoria THEN 1 ELSE 0 END)  as Vitoria," +
+            " SUM(CASE WHEN Vitoria THEN 0 ELSE 1 END) as Derrota," +
+            " SUM(CASE WHEN Vitoria THEN Pontos ELSE 0 END) as PontosGanhos," +
+            " SUM(CASE WHEN Vitoria THEN 0 ELSE Pontos END) as PontosPerdidos" +
+            " FROM PartidaJogada " +
+            " WHERE PartidaID = :partidaid " +
+            "   AND JogadorID = :jogadorid " +
+            " GROUP BY PartidaJogadorID, TimeJogadorID, PartidaID, JogadorID " +
+            "  HAVING (Vitoria > 0 OR Derrota>0) "
+    )
     PartidaJogador getFromPartidaJogadaByPartidaJogador(long partidaid, long jogadorid);
 
 

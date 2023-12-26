@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
 
-
 public class RecyclerViewListenerHack {
 
     public interface OnClickListener<T> {
@@ -42,7 +41,7 @@ public class RecyclerViewListenerHack {
         return dividerItemDecoration;
     }
 
-        public static int convertDpToPx(Context context, float dp) {
+    public static int convertDpToPx(Context context, float dp) {
         return Math.round(dp * context.getResources().getDisplayMetrics().density);
     }
 

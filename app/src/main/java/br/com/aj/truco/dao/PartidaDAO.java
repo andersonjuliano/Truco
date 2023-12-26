@@ -1,14 +1,11 @@
 package br.com.aj.truco.dao;
 
-import android.provider.Telephony;
-
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.util.Date;
 import java.util.List;
 
 import br.com.aj.truco.classe.Partida;

@@ -9,7 +9,6 @@ import androidx.room.Update;
 import java.util.List;
 
 import br.com.aj.truco.classe.PartidaJogada;
-import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.PartidaPontos;
 import br.com.aj.truco.classe.TimesPartida;
 

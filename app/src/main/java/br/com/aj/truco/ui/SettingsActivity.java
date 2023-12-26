@@ -3,7 +3,6 @@ package br.com.aj.truco.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
 import br.com.aj.truco.BaseActivity;

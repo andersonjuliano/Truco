@@ -3,14 +3,12 @@ package br.com.aj.truco.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
@@ -20,11 +18,7 @@ import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.dao.AppRoomDatabase;
-import br.com.aj.truco.databinding.FragmentEstatisticaBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
-import br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity;
-import br.com.aj.truco.ui.PartidaPontosActivity;
-//import br.com.aj.truco.ui.estatistica.EstatisticaViewModel;
 import br.com.aj.truco.util.BaseFragment;
 import br.com.aj.truco.util.SharedPreferencesUtil;
 
@@ -42,7 +36,6 @@ public class EstatisticaJogadoresFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +48,7 @@ public class EstatisticaJogadoresFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_estatistica_jogadores, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_estatistica_jogadores, container, false);
 
         activity = getActivity();
 
@@ -83,8 +76,8 @@ public class EstatisticaJogadoresFragment extends BaseFragment {
             if (object instanceof PartidaJogador) {
 
                 Intent intent = new Intent(getActivity(), PartidaPontosActivity.class);
-                intent.putExtra(Partida.EXTRA_KEY,  ((PartidaJogador) object).getPartidaID());
-                intent.putExtra(Jogador.EXTRA_KEY,  ((PartidaJogador) object).getJogadorID());
+                intent.putExtra(Partida.EXTRA_KEY, ((PartidaJogador) object).getPartidaID());
+                intent.putExtra(Jogador.EXTRA_KEY, ((PartidaJogador) object).getJogadorID());
                 startActivity(intent);
 
             }

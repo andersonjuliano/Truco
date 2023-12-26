@@ -9,9 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,16 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.aj.truco.MainActivity;
 import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
@@ -518,10 +511,19 @@ public class JogoFragment extends BaseFragment {
                 String strName = arrayAdapter.getItem(which);
                 jogadorPe = jogadores.stream().filter(x -> x.getNome() == strName).findFirst().orElse(null);
                 if (jogadorPe != null) {
-                    textJogadorPe.setText(jogadorPe.getNome());
-                    Time time = dbs.timeDAO().getTime(jogadorPe.getTimeID());
-                    if (time != null)
-                        textTimePe.setText(time.getNome());
+//após trocar o pé, carrega os dados do novo pé selecionado
+                    CarregarTela();
+//                    //troca o nome na tela
+//                    textJogadorPe.setText(jogadorPe.getNome());
+//
+//                    //troca o time do pé
+//                    Time time = dbs.timeDAO().getTime(jogadorPe.getTimeID());
+//                    if (time != null)
+//                        textTimePe.setText(time.getNome());
+//
+//                    //troca o jogador ativo na partida atual
+//                    if (partida != null)
+//                        partida.setJogadorID(jogadorPe.getJogadorID());
 
 
                 }
