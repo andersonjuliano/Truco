@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.aj.truco">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Truco">
+        <activity
+            android:name="br.com.aj.truco.ui.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/actions" />
@@ -24,6 +36,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="br.com.aj.truco.ui.PartidaPontosActivity"
+            android:exported="false"
+            android:label="Pontos" />
+        <activity
+            android:name="br.com.aj.truco.ui.EstatisticaJogadorGraficoActivity"
+            android:exported="false"
+            android:label="Estatisticas" />
     </application>
 
 </manifest>

@@ -1,0 +1,12 @@
+<resources>
+    <declare-styleable name="ActionBar">
+        <attr format="color" name="textColor"/>
+        <attr format="color" name="textColorPositivo"/>
+        <attr format="color" name="textColorNegativo"/>
+        <attr format="color" name="fundoPrincipal"/>
+        <attr format="color" name="fundoAlternativo"/>
+        <attr format="color" name="fundoDestacado"/>
+        <attr format="color" name="borderAtivo"/>
+        <attr format="color" name="borderInativo"/>
+    </declare-styleable>
+</resources>

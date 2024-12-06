@@ -1,13 +1,93 @@
 <resources>
-    <string name="app_name">Truco</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="app_name">Truco v2</string>
     <string name="nav_header_title">Truco</string>
     <string name="nav_header_subtitle">Marcador &amp; Estatísticas</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Configurações</string>
 
-    <string name="menu_home">Jogar</string>
+    <string name="action_nova_partida">Nova Partida</string>
+    <string name="action_nova_partida_confirmar">Inicia uma nova partida?</string>
+    <string name="action_limpar_hitorico">Limpar Histórico</string>
+    <string name="action_tema_escuro">Tema escuro</string>
+    <string name="action_tema_claro">Tema claro</string>
+    <string name="action_limpar_hitorico_confirmar">Confirma a limpeza do histórico?</string>
+    <string name="action_limpar_estatisticas">Limpar Estatísticas</string>
+    <string name="action_limpar_estatisticas_confirmar">Será apagado todas as estatísticas de todos os jogadores excluídos, sem pontos e partidas sem movimentação, confirma?</string>
+    <string name="action_corrigir_estatisticas">Corrigir Estatísticas</string>
+    <string name="action_corrigir_estatisticas_confirmar">Todas as estatísticas da partida será corrigida conforme o histórico de jogadas, confirma?</string>
+    <string name="action_apagar">Limpar Base</string>
+    <string name="action_apagar_confirmar">TODA A BASE DE DADOS SERÁ APAGADA, ESSA AÇÃO NÃO PODERÁ SER DESFEITA! CONFIRMA?</string>
+    <string name="action_sobre">Sobre</string>
+    <string name="action_configuracoes">Configurações</string>
+
+    <string name="menu_jogar">Jogar</string>
+    <string name="menu_times">Times</string>
     <string name="menu_jogadores">Jogadores</string>
-    <string name="menu_slideshow">Estatísticas</string>
+    <string name="menu_estatistica">Estatísticas</string>
+    <string name="menu_estatistica_partida">Resumo da Partida</string>
+    <string name="menu_estatistica_jogadores">Estatísticas dos Jogadores</string>
+    <string name="menu_estatistica_jogador_partidas">Estatísticas dos Jogadores</string>
+    <string name="menu_historico_partida">Histórico da Partida</string>
+    <string name="menu_partidas">Partidas</string>
+    <string name="msg_dialog_desfazer">Desfazer a última jogada?</string>
+
+    <string name="msg_dialog_times_ativos">Já tem 2 times ativos. Inative um antes de continuar</string>
+    <string name="msg_dialog_exclusao_jogador_registro">Este jogador já tem registros de jogadas. Confirma a exclusão?</string>
+    <string name="msg_dialog_exclusao_jogador">Confirma a exclusão?</string>
+ <string name="msg_dialog_exclusao_time_registro">Este time já tem registros de jogadas. Confirma a exclusão?</string>
+    <string name="msg_dialog_exclusao_time">Confirma a exclusão?</string>
+    <string name="msg_dialog_alterar_time">Altera nome do time na partida atual?</string>
+
+
+    <!-- Strings used for fragments for navigation -->
+
+
+    <!-- Error View -->
+    <string name="app_error_view_retry">Tente Novamente</string>
+    <string name="app_error_view_retry_no">Não, obrigado</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="x">x</string>
+    <string name="barra">/</string>
+    <string name="pontos">Pontos</string>
+    <string name="vitorias">Vitórias:</string>
+    <string name="derrotas">Derrotas:</string>
+    <string name="saldo">Saldo:</string>
+    <string name="partidas">Partidas</string>
+    <string name="time">Time:</string>
+    <string name="posicao">Posição:</string>
+    <string name="nome">Nome:</string>
+    <string name="salvar">Salvar</string>
+    <string name="todas">Todas</string>
+    <string name="total">Total</string>
+    <string name="ultimas">Últimas</string>
+    <string name="truco">Truco</string>
+    <string name="vitoria">Vitória</string>
+    <string name="partidas_">Partidas:</string>
+    <string name="pontos_">Pontos:</string>
+    <string name="ponto_da_partida">Ponto da Partida:</string>
+    <string name="pe">Pé:</string>
+    <string name="somente_jogadores_ativos">Somente Jogadores Ativos</string>
+    <string name="deletar">Deletar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="ativo">Ativo</string>
+    <string name="novo">Novo</string>
+    <string name="ok">OK</string>
+    <string name="reordenar">Reordenar</string>
+    <string name="desfazer">Desfazer</string>
+
+
 </resources>

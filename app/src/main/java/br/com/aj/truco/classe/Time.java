@@ -1,14 +1,21 @@
 package br.com.aj.truco.classe;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Time {
-    private int TimeID;
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private long TimeID;
     private String Nome;
 
-    public int getTimeID() {
+    public long getTimeID() {
         return TimeID;
     }
 
-    public void setTimeID(int timeID) {
+    public void setTimeID(long timeID) {
         TimeID = timeID;
     }
 
@@ -19,4 +26,17 @@ public class Time {
     public void setNome(String nome) {
         Nome = nome;
     }
+
+    //region versão 10
+    private Boolean Ativo;
+    public Boolean isAtivo() {
+        if (Ativo == null) {
+            Ativo = false;
+        }
+        return Ativo;
+    }
+    public void setAtivo(Boolean ativo) {
+        Ativo = ativo;
+    }
+    //endregion
 }

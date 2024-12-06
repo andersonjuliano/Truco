@@ -1,129 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#CDEFF1"
-        app:cardCornerRadius="10dp"
-        android:layout_marginHorizontal="10dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:orientation="vertical">
-<!--        android:background="@drawable/my_custom_background"-->
-
-
-    <TextView
-        android:id="@+id/item_partida_nome_jogador"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        tools:text="Juliano"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:textSize="18dp"
-        android:text="Pontos"/>
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                android:text="Vitórias:"/>
-            <TextView
-                android:id="@+id/item_partida_pontos_vitoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                tools:text="12" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="10dp"
-                android:text="Derrotas:"/>
-            <TextView
-                android:id="@+id/item_partida_pontos_derrota"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                tools:text="12" />
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"
-            android:text="Partidas"/>
+            android:orientation="vertical"
+            android:padding="12dp">
+            <!--        android:background="@drawable/my_custom_background"-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/item_partida_nome_jogador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                android:text="Vitórias:"/>
-            <TextView
-                android:id="@+id/item_partida_partidas_vitoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                tools:text="12" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Juliano" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="10dp"
-                android:text="Derrotas:"/>
+                android:layout_marginTop="8dp"
+                android:text="@string/pontos"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/vitorias"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_pontos_vitoria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/derrotas"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_pontos_derrota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/saldo"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_pontos_saldo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
             <TextView
-                android:id="@+id/item_partida_partidas_derrota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="18dp"
-                android:layout_marginEnd="10dp"
-                tools:text="12" />
+                android:layout_marginTop="10dp"
+                android:text="@string/partidas"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/vitorias"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_partidas_vitoria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/derrotas"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_partidas_derrota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="28dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/saldo"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/item_partida_partidas_saldo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textSize="18sp"
+                        tools:text="12" />
+                </LinearLayout>
+            </RelativeLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

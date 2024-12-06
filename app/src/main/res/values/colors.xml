@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#BB86FC</color>
+    <color name="purple_300">#7600ee</color>
     <color name="purple_500">#6200EE</color>
     <color name="purple_700">#3700B3</color>
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="red">#AE0001</color>
+    <color name="cinza_20">#333333</color>
+    <color name="cinza_84">#d6d6d6</color>
+
+    <color name="red">#FF0000</color>
+    <color name="red_66">#FF6666</color>
+    <color name="red_93">#FF9393</color>
+
+    <color name="amarelo">#ffff00</color>
+    <color name="amarelo_7a">#7a7a00 </color>
+    <color name="amarelo_3d">#3D3D00 </color>
+
+    <color name="green">#008000</color>
+    <color name="green_33">#003300</color>
+
+    <color name="blue">#0000FF</color>
+    <color name="blue_66">#6666FF</color>
+    <color name="blue_bebe">#89cff0</color>
 
     <color name="principal_centro">#009688</color>
     <color name="principal_fim">#00695C</color>
     <color name="principal_inicio">#4DB6AC</color>
 
-    <color name="botoesPadrao">#101E59</color>
     <color name="botoesPadraoShape">#273469</color>
+
+    <color name="borderInativo">@color/cinza_20</color>
+    <color name="borderAtivo">@color/purple_500</color>
+
+
 
 
 </resources>

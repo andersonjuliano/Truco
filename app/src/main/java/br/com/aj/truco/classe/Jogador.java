@@ -1,25 +1,37 @@
 package br.com.aj.truco.classe;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Jogador {
 
-    private int JogadorID;
+    @Ignore
+    public static final String EXTRA_KEY = Jogador.class.getName();
+
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private long JogadorID;
+    private long TimeID;
     private int Ordem;
     private String Nome;
-    private int TimeID;
+    private Boolean Ativo;
 
-    public int getTimeID() {
+    public long getTimeID() {
         return TimeID;
     }
 
-    public void setTimeID(int timeID) {
+    public void setTimeID(long timeID) {
         TimeID = timeID;
     }
 
-    public int getJogadorID() {
+    public long getJogadorID() {
         return JogadorID;
     }
 
-    public void setJogadorID(int jogadorID) {
+    public void setJogadorID(long jogadorID) {
         JogadorID = jogadorID;
     }
 
@@ -38,4 +50,13 @@ public class Jogador {
     public void setNome(String nome) {
         Nome = nome;
     }
+
+    public Boolean isAtivo() {
+        return Ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        Ativo = ativo;
+    }
+
 }

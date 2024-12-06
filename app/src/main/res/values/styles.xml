@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="button_back">
-        <item name="background">@drawable/round_button</item>
-        <item name="color">@color/black</item>
-    </style>
+
+<!--    <style name="Widget.Theme.Truco.ButtonBar.Fullscreen" parent="">-->
+<!--        <item name="android:background">@color/black_overlay</item>-->
+<!--        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>-->
+<!--    </style>-->
 </resources>

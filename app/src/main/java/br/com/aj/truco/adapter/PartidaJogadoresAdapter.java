@@ -1,50 +1,86 @@
 package br.com.aj.truco.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.List;
 
 import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
-import br.com.aj.truco.classe.MySingletonClass;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.Time;
+import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
 import br.com.aj.truco.generic.GenericViewHolder;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
 
 public class PartidaJogadoresAdapter extends GenericAdapter<PartidaJogador, PartidaJogadoresAdapter.ViewHolder> {
 
-    private List<Jogador> jogadores;
+    AppRoomDatabase dbs;
+    Context mcontext;
 
     public PartidaJogadoresAdapter(Context context, List<PartidaJogador> objects) {
         super(context, objects);
+        mcontext = context;
+        dbs = AppRoomDatabase.getDatabase(context);
     }
 
     public PartidaJogadoresAdapter(Context context, List<PartidaJogador> objects, RecyclerViewListenerHack.OnClickListener clickListener, RecyclerViewListenerHack.OnLongClickListener longClickListener) {
         super(context, objects, clickListener, longClickListener);
+        mcontext = context;
+        dbs = AppRoomDatabase.getDatabase(context);
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mLayoutInflater.inflate(R.layout.item_partida_jogador, parent, false);
-        jogadores = MySingletonClass.getInstance().getJogadores();
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PartidaJogador partidaJogador = mList.get(position);
-        Jogador jogador = jogadores.stream().filter(x -> x.getJogadorID() == partidaJogador.getJogadorID()).findFirst().orElse(null);
 
-        holder.viewNomeJogador.setText(jogador.getNome());
-        holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
-        holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
-        holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
-        holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
+
+            Jogador jogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
+
+            if (jogador != null)
+                holder.viewNomeJogador.setText(jogador.getNome());
+            else
+                holder.viewNomeJogador.setText("Jogador excluido");
+
+            holder.viewPontosVitoria.setText(String.valueOf(partidaJogador.getPontosGanhos()));
+            holder.viewPontosDerrota.setText(String.valueOf(partidaJogador.getPontosPerdidos()));
+            holder.viewPontosSaldo.setText(String.valueOf(partidaJogador.SaldoPontos()));
+
+            TypedValue typedValue = new TypedValue();
+            mcontext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
+            int textColorPositivo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+            mcontext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
+            int textColorNegativo = ContextCompat.getColor(mcontext, typedValue.resourceId);
+
+            if ((partidaJogador.SaldoPontos()) < 0)
+                holder.viewPontosSaldo.setTextColor(textColorNegativo);
+            else if ((partidaJogador.SaldoPontos()) > 0)
+                holder.viewPontosSaldo.setTextColor(textColorPositivo);
+
+            holder.viewPartidasVitoria.setText(String.valueOf(partidaJogador.getVitoria()));
+            holder.viewPartidasDerrota.setText(String.valueOf(partidaJogador.getDerrota()));
+            holder.viewPartidasSaldo.setText(String.valueOf(partidaJogador.SaldoVitorias()));
+            if ((partidaJogador.SaldoVitorias()) < 0)
+                holder.viewPartidasSaldo.setTextColor(textColorNegativo);
+            else if ((partidaJogador.SaldoVitorias()) > 0)
+                holder.viewPartidasSaldo.setTextColor(textColorPositivo);
+
+
 
     }
 
@@ -55,17 +91,21 @@ public class PartidaJogadoresAdapter extends GenericAdapter<PartidaJogador, Part
 
     public class ViewHolder extends GenericViewHolder {
 
-        private TextView viewNomeJogador, viewPontosVitoria, viewPontosDerrota, viewPartidasVitoria, viewPartidasDerrota;
+        private TextView viewNomeJogador, viewPontosVitoria, viewPontosDerrota, viewPontosSaldo, viewPartidasVitoria, viewPartidasDerrota, viewPartidasSaldo;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             viewNomeJogador = itemView.findViewById(R.id.item_partida_nome_jogador);
+
             viewPontosVitoria = itemView.findViewById(R.id.item_partida_pontos_vitoria);
-            viewPontosDerrota = itemView.findViewById(R.id.item_partida_partidas_derrota);
+            viewPontosDerrota = itemView.findViewById(R.id.item_partida_pontos_derrota);
+            viewPontosSaldo = itemView.findViewById(R.id.item_partida_pontos_saldo);
+
             viewPartidasVitoria = itemView.findViewById(R.id.item_partida_partidas_vitoria);
-            viewPartidasDerrota = itemView.findViewById(R.id.item_partida_pontos_derrota);
+            viewPartidasDerrota = itemView.findViewById(R.id.item_partida_partidas_derrota);
+            viewPartidasSaldo = itemView.findViewById(R.id.item_partida_partidas_saldo);
 
         }
 
