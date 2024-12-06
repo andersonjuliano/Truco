@@ -1,0 +1,276 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 7,
+    "identityHash": "8d705236c206b55e0853c183e36a22f5",
+    "entities": [
+      {
+        "tableName": "Jogador",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`JogadorID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `TimeID` INTEGER NOT NULL, `Ordem` INTEGER NOT NULL, `Nome` TEXT, `Ativo` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "JogadorID",
+            "columnName": "JogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TimeID",
+            "columnName": "TimeID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Ordem",
+            "columnName": "Ordem",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Nome",
+            "columnName": "Nome",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "Ativo",
+            "columnName": "Ativo",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "JogadorID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PartidaJogada",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PartidaJogadaID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `PartidaID` INTEGER NOT NULL, `JogadorID` INTEGER NOT NULL, `Pontos` INTEGER NOT NULL, `PontosTime1` INTEGER NOT NULL, `PontosTime2` INTEGER NOT NULL, `VitoriasTime1` INTEGER NOT NULL, `VitoriasTime2` INTEGER NOT NULL, `Vitoria` INTEGER NOT NULL, `TimeID` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "PartidaJogadaID",
+            "columnName": "PartidaJogadaID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PartidaID",
+            "columnName": "PartidaID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "JogadorID",
+            "columnName": "JogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Pontos",
+            "columnName": "Pontos",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosTime1",
+            "columnName": "PontosTime1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosTime2",
+            "columnName": "PontosTime2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VitoriasTime1",
+            "columnName": "VitoriasTime1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VitoriasTime2",
+            "columnName": "VitoriasTime2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Vitoria",
+            "columnName": "Vitoria",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TimeID",
+            "columnName": "TimeID",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PartidaJogadaID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Time",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`TimeID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Nome` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "TimeID",
+            "columnName": "TimeID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Nome",
+            "columnName": "Nome",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "TimeID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Partida",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PartidaID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `DataPartida` INTEGER NOT NULL, `PontosTime1` INTEGER NOT NULL, `PontosTime2` INTEGER NOT NULL, `VitoriaTime1` INTEGER NOT NULL, `VitoriaTime2` INTEGER NOT NULL, `JogadorID` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "PartidaID",
+            "columnName": "PartidaID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "DataPartida",
+            "columnName": "DataPartida",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosTime1",
+            "columnName": "PontosTime1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosTime2",
+            "columnName": "PontosTime2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VitoriaTime1",
+            "columnName": "VitoriaTime1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VitoriaTime2",
+            "columnName": "VitoriaTime2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "JogadorID",
+            "columnName": "JogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PartidaID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PartidaJogador",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`PartidaJogadorID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `TimeJogadorID` INTEGER NOT NULL, `PartidaID` INTEGER NOT NULL, `JogadorID` INTEGER NOT NULL, `Vitoria` INTEGER NOT NULL, `Derrota` INTEGER NOT NULL, `PontosGanhos` INTEGER NOT NULL, `PontosPerdidos` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "PartidaJogadorID",
+            "columnName": "PartidaJogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TimeJogadorID",
+            "columnName": "TimeJogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PartidaID",
+            "columnName": "PartidaID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "JogadorID",
+            "columnName": "JogadorID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Vitoria",
+            "columnName": "Vitoria",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Derrota",
+            "columnName": "Derrota",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosGanhos",
+            "columnName": "PontosGanhos",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "PontosPerdidos",
+            "columnName": "PontosPerdidos",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "PartidaJogadorID"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d705236c206b55e0853c183e36a22f5')"
+    ]
+  }
+}
