@@ -60,7 +60,6 @@ public class PartidaJogada {
         Pontos = pontos;
     }
 
-
     public int getPontosTime1() {
         return PontosTime1;
     }
@@ -100,5 +99,6 @@ public class PartidaJogada {
     public void setVitoria(boolean vitoria) {
         Vitoria = vitoria;
     }
+
 
 }

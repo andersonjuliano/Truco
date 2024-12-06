@@ -27,7 +27,9 @@ public class Partida {
     private int PontosTime2 = 0;
     private int VitoriaTime1 = 0;
     private int VitoriaTime2 = 0;
-    //pé
+    /**
+     * Jogador Pé (Ativo)
+     */
     private long JogadorID = 0;
     private String NomeTime1;
     private String NomeTime2;
@@ -105,6 +107,27 @@ public class Partida {
         NomeTime2 = pNomeTime2;
     }
 
+    //region versão 10
+    private long Time1ID;
+    private long Time2ID;
+
+    public long getTime1ID() {
+        return Time1ID;
+    }
+
+    public void setTime1ID(long pTime1ID) {
+        Time1ID = pTime1ID;
+    }
+
+    public long getTime2ID() {
+        return Time2ID;
+    }
+
+    public void setTime2ID(long pTime2ID) {
+        Time2ID = pTime2ID;
+    }
+    //endregion
+
     //endregion get/set
 
     //region Métodos auxiliares
@@ -144,10 +167,11 @@ public class Partida {
 
     public String getDiaMes() {
 
-        return  DateFormat.format("dd/MM", new Date(DataPartida)).toString();
+        return DateFormat.format("dd/MM", new Date(DataPartida)).toString();
 
     }
-public int getDia() {
+
+    public int getDia() {
 
         return Integer.parseInt(DateFormat.format("dd", new Date(DataPartida)).toString());
 

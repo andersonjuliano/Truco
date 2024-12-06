@@ -24,13 +24,16 @@
 
     <color name="blue">#0000FF</color>
     <color name="blue_66">#6666FF</color>
+    <color name="blue_bebe">#89cff0</color>
 
     <color name="principal_centro">#009688</color>
     <color name="principal_fim">#00695C</color>
     <color name="principal_inicio">#4DB6AC</color>
 
-    <color name="botoesPadrao">#101E59</color>
     <color name="botoesPadraoShape">#273469</color>
+
+    <color name="borderInativo">@color/cinza_20</color>
+    <color name="borderAtivo">@color/purple_500</color>
 
 
 

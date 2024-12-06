@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.PartidasFragment">
+    tools:context=".ui.PartidasFragment"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/partidas_recycleview"
@@ -29,22 +26,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Todas"></Button>
+                android:text="@string/todas"/>
 
             <Button
                 android:id="@+id/partidas_buttom_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Total"></Button>
+                android:text="@string/total"/>
 
             <Button
                 android:id="@+id/partidas_buttom_ultimas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Últimas"></Button>
+                android:text="@string/ultimas"/>
         </LinearLayout>
-    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

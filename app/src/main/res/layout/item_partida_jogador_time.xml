@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -7,8 +8,8 @@
         android:id="@+id/item_nome_jogador_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginEnd="10dp"
-        android:text="Juliano"/>
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        tools:text="Juliano" />
 
 </LinearLayout>

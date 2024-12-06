@@ -17,26 +17,34 @@ public interface PartidaDAO {
     @Query("SELECT * FROM Partida ORDER BY PartidaID DESC")
     List<Partida> getAll();
 
-    @Query("SELECT 0 as PartidaID, " +
-            "MAX(DataPartida) as DataPartida, " +
-            "0 as JogadorID, " +
-            "SUM(PontosTime1) as PontosTime1," +
-            "SUM(PontosTime2) as PontosTime2," +
-            "SUM(VitoriaTime1) as VitoriaTime1," +
-            "SUM(VitoriaTime2) as VitoriaTime2" +
-            " FROM (SELECT PartidaID, DataPartida, PontosTime1, PontosTime2, VitoriaTime1, VitoriaTime2 FROM Partida ORDER BY PartidaID DESC LIMIT :limit)")
+    @Query("SELECT 0 as PartidaID " +
+            ",MAX(DataPartida) as DataPartida" +
+            ",0 as JogadorID" +
+            ",SUM(PontosTime1) as PontosTime1" +
+            ",SUM(PontosTime2) as PontosTime2" +
+            ",SUM(VitoriaTime1) as VitoriaTime1" +
+            ",SUM(VitoriaTime2) as VitoriaTime2" +
+            ",0 as Ativo" +
+            ",MAX(Time1ID) as Time1ID" +
+            ",MAX(Time2ID) as Time2ID" +
+            " FROM (SELECT * FROM Partida ORDER BY PartidaID DESC LIMIT :limit)")
     List<Partida> getLastPartidas(int limit);
 
 
-    @Query("SELECT 0 as PartidaID, " +
-            "MAX(DataPartida) as DataPartida, " +
-            "0 as JogadorID, " +
-            "SUM(PontosTime1) as PontosTime1," +
-            "SUM(PontosTime2) as PontosTime2," +
-            "SUM(VitoriaTime1) as VitoriaTime1," +
-            "SUM(VitoriaTime2) as VitoriaTime2" +
+    @Query("SELECT 0 as PartidaID" +
+            ",MAX(DataPartida) as DataPartida" +
+            ",0 as JogadorID" +
+            ",SUM(PontosTime1) as PontosTime1" +
+            ",SUM(PontosTime2) as PontosTime2" +
+            ",SUM(VitoriaTime1) as VitoriaTime1" +
+            ",SUM(VitoriaTime2) as VitoriaTime2" +
+            ",0 as Ativo" +
+            ",MAX(Time1ID) as Time1ID" +
+            ",MAX(Time2ID) as Time2ID" +
             " FROM Partida ")
     List<Partida> getTotalPartidas();
+
+
 
 
     @Query("SELECT * FROM Partida WHERE PartidaID = :id")

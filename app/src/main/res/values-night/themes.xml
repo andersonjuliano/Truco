@@ -20,6 +20,8 @@
         <item name="fundoPrincipal">@color/black</item>
         <item name="fundoAlternativo">@color/cinza_20</item>
         <item name="fundoDestacado">@color/amarelo_3d</item>
+        <item name="borderAtivo">@color/blue</item>
+        <item name="borderInativo">@color/cinza_20</item>
     </style>
 
 

@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "br.com.aj.truco2"
         minSdk 30
-        targetSdk 31
+        targetSdk 33
         versionCode 3
         versionName "3.0"
 
@@ -80,7 +80,7 @@ dependencies {
 
    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation 'tr.xip.errorview:library:3.0.0'
+   // implementation 'tr.xip.errorview:library:3.0.0'
 
 
 

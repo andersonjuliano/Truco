@@ -275,63 +275,61 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                             })
-//                            .setNeutralButton("Corrigir", new DialogInterface.OnClickListener() {
-//                                //trocar os jogadores de time, e corrigir as estatisticas
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
+                            .setNeutralButton("Corrigir", new DialogInterface.OnClickListener() {
+                                //trocar os jogadores de time, e corrigir as estatisticas
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    //corrige a situação que os times estavam corretos, porém marquei os pontos invertidos
+                                    //tipo eu ganhei, mas marquei vitória dos velhos
+                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+                                    List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartida(partidaID);
+                                    for (PartidaJogada partidaJogada : partidaJogadaList) {
+                                        int PontosTime1 = partidaJogada.getPontosTime1();
+                                        int PontosTime2 = partidaJogada.getPontosTime2();
+                                        int VitoriasTime1 = partidaJogada.getVitoriasTime1();
+                                        int VitoriasTime2 = partidaJogada.getVitoriasTime2();
+
+                                        //inverte os pontos e a vitória e corrige a partidaID
+                                        partidaJogada.setVitoria(!partidaJogada.isVitoria());
+                                        partidaJogada.setPontosTime1(PontosTime2);
+                                        partidaJogada.setPontosTime2(PontosTime1);
+                                        partidaJogada.setVitoriasTime1(VitoriasTime2);
+                                        partidaJogada.setVitoriasTime2(VitoriasTime1);
+                                        //salva as alterações
+                                        dbs.partidaJogadaDAO().update(partidaJogada);
+                                    }
+
+
+//                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+//                                    List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
+//                                    for (PartidaJogador partidaJogador : partidaJogadorList) {
 //
-////                                    //corrige a situação que os times estavam corretos, porém marquei os pontos invertidos
-////                                    //tipo eu ganhei, mas marquei vitória dos velhos
-////                                    //opção de mudar a partida, pois geralmente quando ocorre isso, eu costumo criar uma nova
-////                                    long partidaID = 67;
-////                                    long newpartidaID = 68;
-////                                        List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartida(partidaID);
-////                                        for (PartidaJogada partidaJogada : partidaJogadaList) {
-////                                            int PontosTime1 = partidaJogada.getPontosTime1();
-////                                            int PontosTime2 = partidaJogada.getPontosTime2();
-////                                            int VitoriasTime1 = partidaJogada.getVitoriasTime1();
-////                                            int VitoriasTime2=partidaJogada.getVitoriasTime2();
-////
-////                                            //inverte os pontos e a vitória e corrige a partidaID
-////                                            partidaJogada.setPartidaID(newpartidaID);
-////                                            partidaJogada.setVitoria(!partidaJogada.isVitoria());
-////                                            partidaJogada.setPontosTime1(PontosTime2);
-////                                            partidaJogada.setPontosTime2(PontosTime1);
-////                                            partidaJogada.setVitoriasTime1(VitoriasTime2);
-////                                            partidaJogada.setVitoriasTime2(VitoriasTime1);
-////                                            //salva as alterações
-////                                            dbs.partidaJogadaDAO().update(partidaJogada);
-////                                        }
+//                                        //corrige o time conforme está no cadastro
 //
-////                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-////                                    List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
-////                                    for (PartidaJogador partidaJogador : partidaJogadorList) {
-////
-////                                        //corrige o time conforme está no cadastro
-////
-////                                        Jogador objJogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
-////
-////                                        partidaJogador.setTimeJogadorID(objJogador.getTimeID());
-////
-////
-////                                        //pega todas as partidas jogadas daquele jogador
-////                                        List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartidaJogador(partidaJogador.getPartidaID(), partidaJogador.getJogadorID());
-////                                        for (PartidaJogada partidaJogada : partidaJogadaList) {
-////                                            //corrige o time
-////                                            partidaJogada.setTimeID(partidaJogador.getTimeJogadorID());
-////
-////                                            //inverte a vitória/derrota
-////                                            partidaJogada.setVitoria(!partidaJogada.isVitoria());
-////
-////                                            //salva as alterações
-////                                            dbs.partidaJogadaDAO().update(partidaJogada);
-////                                        }
-////
-////                                        //faz o update
-////                                        dbs.partidaJogadorDAO().update(partidaJogador);
-////                                    }
-//                                }
-//                            })
+//                                        Jogador objJogador = dbs.jogadorDAO().getJogador(partidaJogador.getJogadorID());
+//
+//                                        partidaJogador.setTimeJogadorID(objJogador.getTimeID());
+//
+//
+//                                        //pega todas as partidas jogadas daquele jogador
+//                                        List<PartidaJogada> partidaJogadaList = dbs.partidaJogadaDAO().getByPartidaJogador(partidaJogador.getPartidaID(), partidaJogador.getJogadorID());
+//                                        for (PartidaJogada partidaJogada : partidaJogadaList) {
+//                                            //corrige o time
+//                                            partidaJogada.setTimeID(partidaJogador.getTimeJogadorID());
+//
+//                                            //inverte a vitória/derrota
+//                                            partidaJogada.setVitoria(!partidaJogada.isVitoria());
+//
+//                                            //salva as alterações
+//                                            dbs.partidaJogadaDAO().update(partidaJogada);
+//                                        }
+//
+//                                        //faz o update
+//                                        dbs.partidaJogadorDAO().update(partidaJogador);
+//                                    }
+                                }
+                            })
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -512,6 +510,20 @@ public class MainActivity extends AppCompatActivity {
 
         jogador = new Jogador();
         jogador.setOrdem(4);
+        jogador.setTimeID(2);
+        jogador.setNome("Marrequinho");
+        jogador.setAtivo(true);
+        dbs.jogadorDAO().insert(jogador);
+
+        jogador = new Jogador();
+        jogador.setOrdem(5);
+        jogador.setTimeID(1);
+        jogador.setNome("Patão");
+        jogador.setAtivo(true);
+        dbs.jogadorDAO().insert(jogador);
+
+        jogador = new Jogador();
+        jogador.setOrdem(6);
         jogador.setTimeID(2);
         jogador.setNome("Marrecão");
         jogador.setAtivo(true);

@@ -1,7 +1,6 @@
 package br.com.aj.truco.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.View;
@@ -9,18 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import br.com.aj.truco.R;
-import br.com.aj.truco.classe.Jogador;
-import br.com.aj.truco.classe.Partida;
-import br.com.aj.truco.classe.PartidaJogada;
-import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.PartidaPontos;
-import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
 import br.com.aj.truco.generic.GenericViewHolder;

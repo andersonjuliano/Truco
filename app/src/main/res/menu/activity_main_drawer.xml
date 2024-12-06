@@ -6,38 +6,38 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_jogar"
-            android:icon="@drawable/ic_jogar"
+            android:icon="@drawable/jogar"
             android:title="@string/menu_jogar" />
         <item
             android:id="@+id/nav_times"
-            android:icon="@drawable/ic_baseline_groups_24"
+            android:icon="@drawable/baseline_groups_24"
             android:title="@string/menu_times" />
         <item
             android:id="@+id/nav_jogadores"
-            android:icon="@drawable/ic_baseline_person_24"
+            android:icon="@drawable/baseline_person_24"
             android:title="@string/menu_jogadores" />
 
         <item
             android:id="@+id/nav_menu_estatistica"
-            android:icon="@drawable/ic_baseline_show_chart_24"
+            android:icon="@drawable/baseline_show_chart_24"
             android:title="@string/menu_estatistica" >
             <menu>
                 <item
                     android:id="@+id/nav_partidas"
-                    android:icon="@drawable/ic_baseline_web_stories_24"
+                    android:icon="@drawable/baseline_web_stories_24"
                     android:title="@string/menu_partidas" />
                 <item
                     android:id="@+id/nav_estatistica"
-                    android:icon="@drawable/ic_baseline_show_chart_24"
+                    android:icon="@drawable/baseline_show_chart_24"
                     android:title="@string/menu_estatistica_partida" />
                 <item
                     android:id="@+id/nav_estatistica_jogadores"
-                    android:icon="@drawable/ic_baseline_stacked_bar_chart_24"
+                    android:icon="@drawable/baseline_stacked_bar_chart_24"
                     android:title="@string/menu_estatistica_jogadores"
                     android:visible="false"/>
                 <item
                     android:id="@+id/nav_estatistica_jogador_partidas"
-                    android:icon="@drawable/ic_baseline_ssid_chart_24"
+                    android:icon="@drawable/baseline_ssid_chart_24"
                     android:title="@string/menu_estatistica_jogador_partidas" />
                <item
                     android:id="@+id/nav_historico_partida"

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.AutoMigration;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -28,7 +29,7 @@ import br.com.aj.truco.classe.Time;
         PartidaJogador.class},
         version = AppRoomDatabase.DBVERSION
         //verificar se precisa mesmo de autoMigrations
-        //, autoMigrations = {@AutoMigration(from = 6, to = 7), @AutoMigration(from = 7, to = 8)}
+        //, autoMigrations = {@AutoMigration(from = 6, to = 7), @AutoMigration(from = 7, to = 8), @AutoMigration(from = 8, to = 9), @AutoMigration(from = 9, to = 10)}
 )
 public abstract class AppRoomDatabase extends RoomDatabase {
 
@@ -46,7 +47,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     //static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     static final ExecutorService databaseWriteExecutor = Executors.newSingleThreadExecutor();
 
-    public static final int DBVERSION = 9;
+    public static final int DBVERSION = 10;
     public static final String DATABASE_NAME = "truco-db.db";
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
@@ -77,6 +78,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
                             .addMigrations(MIGRATION_6_7)
                             .addMigrations(MIGRATION_7_8)
                             .addMigrations(MIGRATION_8_9)
+                            .addMigrations(MIGRATION_9_10)
                             // .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();
@@ -89,25 +91,36 @@ public abstract class AppRoomDatabase extends RoomDatabase {
     static final Migration MIGRATION_6_7 = new Migration(6, 7) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
+
             database.execSQL("ALTER TABLE PartidaJogada ADD COLUMN TimeID INTEGER NULL");
+
         }
     };
-
     static final Migration MIGRATION_7_8 = new Migration(7, 8) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
+
             database.execSQL("ALTER TABLE Jogador ADD COLUMN Ativo INTEGER");
+
         }
     };
     static final Migration MIGRATION_8_9 = new Migration(8, 9) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
+
             database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime1 VARCHAR2");
             database.execSQL("ALTER TABLE Partida ADD COLUMN NomeTime2 VARCHAR2");
             database.execSQL("UPDATE Partida SET NomeTime1 = 'Novos', NomeTime2 = 'Velhos'");
+
+        }
+    };
+    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE 'Partida' ADD COLUMN 'Time1ID' INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE 'Partida' ADD COLUMN 'Time2ID' INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE 'Time' ADD COLUMN 'Ativo' INTEGER");
+            database.execSQL("UPDATE Partida SET Time1ID = 1, Time2ID = 2");
 
         }
     };

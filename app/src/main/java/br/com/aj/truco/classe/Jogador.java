@@ -59,5 +59,4 @@ public class Jogador {
         Ativo = ativo;
     }
 
-
 }

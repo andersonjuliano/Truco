@@ -16,80 +16,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingEnd="4dp"
-            android:text="1"
-            android:textSize="8dp" />
+            android:layout_marginEnd="4dp"
+            tools:text="1" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_partida_pontos_time1_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Time 1:"></TextView>
+                tools:text="Time 1:" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_time1_pontos"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="10"
                 android:textAlignment="textEnd"
-                tools:textStyle="bold"></TextView>
+                tools:text="10" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="/"></TextView>
+                android:text="@string/barra" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_time1_partidas"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="10"></TextView>
+                tools:text="10" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_partida_pontos_time2_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingStart="2dp"
-                android:text="Time 2:"></TextView>
+                tools:text="Time 2:" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_time2_pontos"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="12"
                 android:textAlignment="textEnd"
-                tools:textStyle="bold"></TextView>
+                tools:text="12" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="/"></TextView>
+                android:text="@string/barra" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_time2_partidas"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="9"></TextView>
+                tools:text="9" />
 
         </LinearLayout>
 
@@ -103,35 +99,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="2dp"
-                android:text="+12"
-                android:textAlignment="textEnd"></TextView>
+                android:textAlignment="textEnd"
+                tools:text="+12" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_jogador_nome"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
-                android:text="Juliano:"></TextView>
+                tools:text="Juliano:" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_jogador_pontos"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="-12"></TextView>
+                tools:text="-12" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="/"></TextView>
+                android:text="@string/barra" />
 
             <TextView
                 android:id="@+id/item_partida_pontos_jogador_partidas"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="2dp"
-                android:text="-16"></TextView>
+                tools:text="-16" />
 
 
         </LinearLayout>

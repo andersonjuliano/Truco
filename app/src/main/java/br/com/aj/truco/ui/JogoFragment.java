@@ -161,8 +161,21 @@ public class JogoFragment extends BaseFragment {
                 textTime2Nome.setText(time.getNome());
         }
 
-        if (jogadorPe == null || QtdeJogadores == 0)
+        if (jogadorPe == null || QtdeJogadores == 0) {
+
             Toast.makeText(getActivity(), "Não há lista jogadores definida", Toast.LENGTH_LONG).show();
+
+            buttonVitoriaTime1.setOnClickListener(null);
+            buttonVitoriaTime2.setOnClickListener(null);
+            buttonTrucar.setOnClickListener(null);
+            buttonDesfazer.setOnClickListener(null);
+            textPlacar1.setOnLongClickListener(null);
+            textPlacar2.setOnLongClickListener(null);
+            textPartidas1.setOnLongClickListener(null);
+            textPartidas2.setOnLongClickListener(null);
+            textJogadorPe.setOnLongClickListener(null);
+
+        }
 
         CarregarTela();
 

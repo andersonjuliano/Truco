@@ -18,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.aj.truco.adapter.JogadoresTimesAdapter;
 import br.com.aj.truco.adapter.PartidaJogadoresAdapter;
+import br.com.aj.truco.adapter.ResultadoPartidasAdapter;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.PartidaSelecao;
 import br.com.aj.truco.dao.AppRoomDatabase;
@@ -55,7 +58,38 @@ public class EstatisticaFragment extends Fragment {
 
         Partida partida = dbs.partidaDAO().getPartida(partidaID);
         if (partida != null) {
+
             binding.estatisticaPartidaText.setText("Partida: " + partida.getTitulo());
+            binding.time1Nome.setText(partida.getNomeTime1());
+            binding.time1Vitorias.setText(String.valueOf(partida.getVitoriaTime1()));
+            binding.time2Nome.setText(partida.getNomeTime2());
+            binding.time2Vitorias.setText(String.valueOf(partida.getVitoriaTime2()));
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            binding.recycleviewJogadorTime1.setLayoutManager(linearLayoutManager);
+            binding.recycleviewJogadorTime1.setHasFixedSize(true);
+            List<Jogador> jogadores1 = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), partida.getTime1ID());
+            JogadoresTimesAdapter adapter1 = new JogadoresTimesAdapter(activity, jogadores1, null, null);
+            binding.recycleviewJogadorTime1.setAdapter(adapter1);
+
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+            linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+            binding.recycleviewJogadorTime2.setLayoutManager(linearLayoutManager2);
+            binding.recycleviewJogadorTime2.setHasFixedSize(true);
+            List<Jogador> jogadores2 = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), partida.getTime2ID());
+            JogadoresTimesAdapter adapter2 = new JogadoresTimesAdapter(activity, jogadores2, null, null);
+            binding.recycleviewJogadorTime2.setAdapter(adapter2);
+
+            LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
+            linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
+            binding.recycleviewPartidas.setLayoutManager(linearLayoutManager3);
+            binding.recycleviewPartidas.setHasFixedSize(true);
+            List<PartidaJogada> partidaJogada = dbs.partidaJogadaDAO().getResultadosByPartida(partidaID, partida.getTime1ID(), partida.getTime2ID());
+            ResultadoPartidasAdapter adapter3 = new ResultadoPartidasAdapter(activity, partidaJogada, null, null, partida);
+            binding.recycleviewPartidas.setAdapter(adapter3);
+
+
         }
 
 

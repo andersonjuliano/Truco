@@ -15,17 +15,19 @@ public interface JogadorDAO {
 
     @Query("SELECT * FROM Jogador ORDER BY JogadorID")
     List<Jogador> getAll();
-    @Query("SELECT * FROM Jogador WHERE Ativo == 1 ORDER BY JogadorID")
+
+    @Query("SELECT * FROM Jogador WHERE Ativo = 1 ORDER BY JogadorID")
     List<Jogador> getAllAtivos();
 
     @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem, Nome, Ativo " +
             "FROM Jogador ORDER BY  Ordem1")
     List<Jogador> getAllOrdem();
+
     @Query("SELECT JogadorID, TimeID, CASE WHEN Ordem = 0 THEN 99 ELSE Ordem END AS Ordem1, Ordem, Nome, Ativo " +
             "FROM Jogador WHERE Ativo == 1 ORDER BY  Ordem1")
     List<Jogador> getAllAtivosOrdem();
 
-    @Query("SELECT * FROM Jogador WHERE Ativo == 1")
+    @Query("SELECT * FROM Jogador WHERE Ativo = 1")
     List<Jogador> getJogadoresAtivos();
 
     @Query("SELECT * FROM Jogador WHERE JogadorID = :JogadorID")
@@ -37,6 +39,7 @@ public interface JogadorDAO {
 
     @Query("SELECT COUNT(*) FROM Jogador")
     int CountAll();
+
     @Query("SELECT * FROM Jogador WHERE Nome = :Nome")
     Jogador getJogadorByNome(String Nome);
 

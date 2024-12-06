@@ -1,16 +1,16 @@
 package br.com.aj.truco.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
 
 import java.util.List;
 
 import br.com.aj.truco.R;
-import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
@@ -39,12 +39,19 @@ public class TimesAdapter extends GenericAdapter<Time, TimesAdapter.ViewHolder> 
         return new ViewHolder(itemView);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Time Time = mList.get(position);
-        Time time = dbs.timeDAO().getTime( Time.getTimeID());
+        Time time = mList.get(position);
+//        Time time = dbs.timeDAO().getTime( Time.getTimeID());
 
-        holder.viewNomeTime.setText(Time.getNome());
+        holder.textNomeTime.setText(time.getNome());
+        if (time.isAtivo()) {
+            holder.cardTime.setForeground(mContext.getResources().getDrawable(R.drawable.cardview_border_ativo));
+        }else{
+//            holder.cardTime.setForeground(mContext.getResources().getDrawable(R.drawable.cardview_border_inativo));
+            holder.cardTime.setForeground(null);
+        }
 
     }
 
@@ -55,17 +62,24 @@ public class TimesAdapter extends GenericAdapter<Time, TimesAdapter.ViewHolder> 
 
     public class ViewHolder extends GenericViewHolder {
 
-        private TextView  viewNomeTime;
+        private TextView textNomeTime;
+        private CardView cardTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            viewNomeTime = itemView.findViewById(R.id.item_time_nome);
+            textNomeTime = itemView.findViewById(R.id.item_time_nome);
+            cardTime = itemView.findViewById(R.id.item_card_time);
         }
 
         @Override
         public void onClick(View view) {
             TimesAdapter.this.onClick(view, getAdapterPosition());
+        }
+        @Override
+        public boolean onLongClick(View view) {
+            TimesAdapter.this.onLongClick(view, getAdapterPosition());
+            return true;
         }
     }
 }

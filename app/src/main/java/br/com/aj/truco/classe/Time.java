@@ -26,4 +26,17 @@ public class Time {
     public void setNome(String nome) {
         Nome = nome;
     }
+
+    //region versão 10
+    private Boolean Ativo;
+    public Boolean isAtivo() {
+        if (Ativo == null) {
+            Ativo = false;
+        }
+        return Ativo;
+    }
+    public void setAtivo(Boolean ativo) {
+        Ativo = ativo;
+    }
+    //endregion
 }

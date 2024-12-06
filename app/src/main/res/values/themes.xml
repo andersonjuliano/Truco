@@ -19,6 +19,8 @@
         <item name="fundoPrincipal">@color/white</item>
         <item name="fundoAlternativo">@color/cinza_84</item>
         <item name="fundoDestacado">@color/amarelo</item>
+        <item name="borderAtivo">@color/blue</item>
+        <item name="borderInativo">@color/cinza_20</item>
     </style>
 
     <style name="Theme.Truco.NoActionBar">

@@ -60,8 +60,17 @@ public interface PartidaJogadaDAO {
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid AND JogadorID = :jogadorid")
     List<PartidaJogada> getByPartidaJogador(long partidaid, long jogadorid);
 
+    @Query("SELECT count(*) FROM PartidaJogada WHERE JogadorID = :jogadorid")
+    long getCountByJogador(long jogadorid);
+
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid ORDER BY PartidaJogadaID DESC")
     PartidaJogada getLast(long partidaid);
+
+    @Query("SELECT * FROM PartidaJogada " +
+            " WHERE PartidaID = :partidaid " +
+            " AND (CASE WHEN (TimeID = :time1ID AND Vitoria) OR (TimeID = :time2ID AND NOT Vitoria) THEN PontosTime1 + Pontos ELSE PontosTime2 + Pontos END) >=12 " +
+            " ORDER BY PartidaJogadaID")
+    List<PartidaJogada> getResultadosByPartida(long partidaid, long time1ID, long time2ID);
 
     @Insert
     long insert(PartidaJogada partidajogada);
@@ -83,7 +92,7 @@ public interface PartidaJogadaDAO {
     int deleteByPartida(long partidaID);
 
     @Query("DELETE FROM PartidaJogada WHERE PartidaID = :partidaID AND JogadorID = :jogadorID")
-    int deleteByPartidaJogador(long partidaID,long jogadorID);
+    int deleteByPartidaJogador(long partidaID, long jogadorID);
 
     @Query("SELECT MIN(TimeID) as Time1ID, MAX(TimeID) as Time2ID  FROM PartidaJogada WHERE PartidaID = :partidaid")
     TimesPartida geTimesByPartida(long partidaid);

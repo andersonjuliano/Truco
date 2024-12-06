@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import br.com.aj.truco.network.ErrorMessage;
-import tr.xip.errorview.ErrorView;
+
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -34,7 +34,6 @@ public class BaseActivity extends AppCompatActivity {
     private Bundle transactionPendingBundle;
 
     private ViewGroup mViewData;
-    private ErrorView mErrorView;
     private ProgressDialog progressDialog;
 
     protected Typeface tfRegular;
@@ -120,7 +119,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        boolean isErrorVisible = mErrorView != null && mErrorView.getVisibility() == View.VISIBLE;
+        boolean isErrorVisible = true;
         outState.putBoolean(STATE_IS_ERROR_VISIBLE, isErrorVisible);
         super.onSaveInstanceState(outState);
     }
@@ -221,51 +220,7 @@ public class BaseActivity extends AppCompatActivity {
 
     //region ViewDate / ErrorView
 
-    public void setupErrorView(int errorViewId) {
-        mErrorView = findViewById(errorViewId);
-    }
 
-    public void setupErrorView(int errorViewId, int viewDataId) {
-        mErrorView = findViewById(errorViewId);
-        mViewData = findViewById(viewDataId);
-    }
-
-    public void hideErrorView() {
-        if (mViewData != null) {
-            mViewData.setVisibility(View.VISIBLE);
-        }
-        mErrorView.setVisibility(View.GONE);
-        mErrorView.setSubtitle(null);
-        mErrorView.setRetryText(null);
-    }
-
-    public void showErrorView(String subtitle, ErrorView.RetryListener listener) {
-        isStateErrorVisible = false;
-        if (mViewData != null) {
-            mViewData.setVisibility(View.GONE);
-        }
-        mErrorView.setVisibility(View.VISIBLE);
-        mErrorView.setSubtitle(subtitle);
-        mErrorView.setRetryText(R.string.app_error_view_retry);
-        mErrorView.setRetryListener(listener);
-    }
-
-    public void showEmptyView(String subtitle) {
-        showEmptyView(subtitle, null, null);
-    }
-
-    public void showEmptyView(String subtitle, String retryText, ErrorView.RetryListener listener) {
-        isStateErrorVisible = false;
-        if (mViewData != null) {
-            mViewData.setVisibility(View.GONE);
-        }
-        mErrorView.setVisibility(View.VISIBLE);
-        mErrorView.setSubtitle(subtitle);
-        mErrorView.setRetryText(retryText);
-        mErrorView.setRetryListener(listener);
-
-        mErrorView.setRetryVisible(listener != null);
-    }
 
     public void setViewDataVisible(boolean visible) {
         mViewData.setVisibility(visible ? View.VISIBLE : View.GONE);
@@ -275,12 +230,7 @@ public class BaseActivity extends AppCompatActivity {
 
     //region Show ErrorMessage
 
-    public void showErrorView(ErrorMessage errorMessage, String defaultMessage, ErrorView.RetryListener listener) {
 
-        showErrorView(
-                errorMessage.getMessageOrDefault(defaultMessage),
-                listener);
-    }
 
     public void showErrorToast(Context context, ErrorMessage errorMessage, String defaultMessage) {
 

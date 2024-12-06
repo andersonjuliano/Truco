@@ -1,7 +1,6 @@
 package br.com.aj.truco.adapter;
 
 import android.content.Context;
-import android.provider.Telephony;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,13 +8,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.security.PublicKey;
 import java.util.List;
 
 import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
-import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
 import br.com.aj.truco.generic.GenericViewHolder;
@@ -49,8 +46,8 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
         Partida partida = mList.get(position);
 
         holder.viewPartida.setText(partida.getTitulo());
-        holder.viewNomeTime1.setText(partida.getNomeTime1() + ":");
-        holder.viewNomeTime2.setText(partida.getNomeTime2() + ":");
+        holder.viewNomeTime1.setText(partida.getNomeTime1());
+        holder.viewNomeTime2.setText(partida.getNomeTime2());
         holder.viewVitoriaTime1.setText(String.valueOf(partida.getVitoriaTime1()));
         holder.viewVitoriaTime2.setText(String.valueOf(partida.getVitoriaTime2()));
 
@@ -106,8 +103,8 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
 
 
         @Override
-        public boolean onLongClick(View view){
-            return   PartidasAdapter.this.onLongClick(view, getAdapterPosition());
+        public boolean onLongClick(View view) {
+            return PartidasAdapter.this.onLongClick(view, getAdapterPosition());
         }
 
     }

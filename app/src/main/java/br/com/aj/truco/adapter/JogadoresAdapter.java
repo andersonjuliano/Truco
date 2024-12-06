@@ -76,5 +76,10 @@ public class JogadoresAdapter extends GenericAdapter<Jogador, JogadoresAdapter.V
         public void onClick(View view) {
             JogadoresAdapter.this.onClick(view, getAdapterPosition());
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return JogadoresAdapter.this.onLongClick(view, getAdapterPosition());
+        }
     }
 }

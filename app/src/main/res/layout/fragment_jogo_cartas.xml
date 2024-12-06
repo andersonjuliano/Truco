@@ -19,55 +19,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:orientation="vertical"
             android:paddingTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/label_jogador_pe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:text="Pé:"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_time_pe"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
-                        android:paddingStart="8dp"
-                        android:text="Time 1"
-                        android:textColor="@color/white"
-                        android:textSize="24dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/text_jogador_pe"
+                    android:id="@+id/label_jogador_pe"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="18dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/pe"
                     android:textColor="@color/white"
-                    android:textSize="70dp"
-                    tools:text="Nelson" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_time_pe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="Time 1" />
             </LinearLayout>
-        </FrameLayout>
+
+            <TextView
+                android:id="@+id/text_jogador_pe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:textColor="@color/white"
+                android:textSize="70sp"
+                tools:text="Nelson" />
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -86,7 +82,7 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="28dp"
+            android:textSize="28sp"
             tools:text="Time 1" />
 
         <TextView
@@ -126,9 +122,9 @@
                     android:id="@+id/label_pontos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pontos:"
+                    android:text="@string/pontos_"
                     android:textColor="@color/white"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </FrameLayout>
 
@@ -141,8 +137,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:text="Ponto da Partida:"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/ponto_da_partida"
                     android:textAlignment="textEnd"
                     android:textColor="@color/white" />
 
@@ -159,6 +155,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <FrameLayout
@@ -169,6 +166,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/pontos"
                     android:src="@drawable/paus_2" />
 
                 <TextView
@@ -177,7 +175,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="100dp"
+                    android:textSize="140sp"
                     tools:text="12" />
             </FrameLayout>
 
@@ -189,6 +187,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/pontos"
                     android:src="@drawable/espada_2" />
 
                 <TextView
@@ -197,7 +196,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="100sp"
+                    android:textSize="140sp"
                     tools:text="11" />
             </FrameLayout>
         </LinearLayout>
@@ -222,15 +221,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:text="Partidas:"
+                android:text="@string/partidas_"
                 android:textColor="@color/white"
-                android:textSize="24dp"
-                android:textStyle="bold"></TextView>
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <FrameLayout
@@ -241,6 +241,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/partidas"
                     android:src="@drawable/copas_2" />
 
                 <TextView
@@ -249,7 +250,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="60dp"
+                    android:textSize="60sp"
                     tools:text="7" />
             </FrameLayout>
 
@@ -261,6 +262,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/partidas"
                     android:src="@drawable/ouros_2" />
 
                 <TextView
@@ -269,7 +271,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="60dp"
+                    android:textSize="60sp"
                     tools:text="8" />
             </FrameLayout>
         </LinearLayout>
@@ -296,10 +298,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
-                android:backgroundTint="@color/botoesPadraoShape"
+                android:backgroundTint="?attr/colorPrimary"
                 android:padding="28dp"
-                android:src="@drawable/ic_baseline_add_24"
-                android:text="Vitória"></ImageButton>
+                android:src="@drawable/baseline_add_24"
+                android:text="@string/vitoria" />
         </FrameLayout>
 
         <LinearLayout
@@ -314,16 +316,15 @@
                 android:id="@+id/button_trucar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/botoesPadraoShape"
-                android:text="Truco"></Button>
+                android:text="@string/truco" />
 
             <ImageButton
                 android:id="@+id/button_desfazer"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/round_button"
-                android:src="@drawable/ic_baseline_settings_backup_restore_24"></ImageButton>
+                android:src="@drawable/baseline_settings_backup_restore_24" />
         </LinearLayout>
 
         <LinearLayout
@@ -336,10 +337,10 @@
                 android:id="@+id/button_vitoria_time_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="18dp"
-                android:backgroundTint="@color/botoesPadraoShape"
+                android:layout_marginEnd="18dp"
+                android:backgroundTint="?attr/colorPrimary"
                 android:padding="28dp"
-                android:src="@drawable/ic_baseline_add_24"></ImageButton>
+                android:src="@drawable/baseline_add_24" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
