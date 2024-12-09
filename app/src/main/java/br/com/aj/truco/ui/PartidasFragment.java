@@ -1,12 +1,15 @@
 package br.com.aj.truco.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +24,7 @@ import java.util.List;
 import br.com.aj.truco.R;
 import br.com.aj.truco.adapter.PartidasAdapter;
 import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaPesquisa;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.databinding.FragmentPartidasBinding;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
@@ -36,7 +40,7 @@ public class PartidasFragment extends Fragment {
     private RecyclerView recyclerView;
     private Activity activity;
     private PartidasAdapter adapter;
-
+    private AppRoomDatabase dbs;
 
     public PartidasFragment() {
         // Required empty public constructor
@@ -55,9 +59,9 @@ public class PartidasFragment extends Fragment {
         recyclerView = binding.partidasRecycleview;
 
 
-        AppRoomDatabase dbs = AppRoomDatabase.getDatabase(getContext());
+        dbs = AppRoomDatabase.getDatabase(getContext());
 
-        List<Partida> partidaList = dbs.partidaDAO().getAll();
+        List<PartidaPesquisa> partidaList = dbs.partidaDAO().getAllP();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -72,7 +76,7 @@ public class PartidasFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                List<Partida> partidaList = dbs.partidaDAO().getTotalPartidas();
+                List<PartidaPesquisa> partidaList = dbs.partidaDAO().getTotalPartidas();
 
                 adapter = new PartidasAdapter(activity, partidaList, null, null);
                 recyclerView.setAdapter(adapter);
@@ -84,7 +88,7 @@ public class PartidasFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                List<Partida> partidaList = dbs.partidaDAO().getAll();
+                List<PartidaPesquisa> partidaList = dbs.partidaDAO().getAllP();
 
                 adapter = new PartidasAdapter(activity, partidaList, listClickListener, listLongClickListener);
                 recyclerView.setAdapter(adapter);
@@ -96,10 +100,41 @@ public class PartidasFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                List<Partida> partidaList = dbs.partidaDAO().getLastPartidas(3);
 
-                adapter = new PartidasAdapter(activity, partidaList, null, null);
-                recyclerView.setAdapter(adapter);
+                final AlertDialog.Builder d = new AlertDialog.Builder(getContext());
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.number_picker_dialog, null);
+                d.setTitle("Selecione a quatidade de partidas");
+                d.setView(dialogView);
+                final NumberPicker numberPicker = (NumberPicker) dialogView.findViewById(R.id.dialog_number_picker);
+                numberPicker.setMaxValue(99);
+                numberPicker.setMinValue(1);
+                numberPicker.setWrapSelectorWheel(false);
+                numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                        //Log.d(TAG, "onValueChange: ");
+                    }
+                });
+                d.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        List<PartidaPesquisa> partidaList = dbs.partidaDAO().getLastPartidas(numberPicker.getValue());
+
+                        adapter = new PartidasAdapter(activity, partidaList, null, null);
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+                d.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                AlertDialog alertDialog = d.create();
+                alertDialog.show();
+
+
 
             }
         });
@@ -119,6 +154,17 @@ public class PartidasFragment extends Fragment {
         @Override
         public void onClickListener(View view, int position, Object object) {
             if (object instanceof Partida && ((Partida) object).getPartidaID() != 0) {
+
+
+
+                Partida partida = (Partida) object;
+
+                if (partida.getTime1ID() == 0 || partida.getTime2ID() == 0)
+                {
+                    partida.setTime1ID(1);
+                    partida.setTime2ID(2);
+                    dbs.partidaDAO().update(partida);
+                }
 
                 long id = ((Partida) object).getPartidaID();
                 SharedPreferences.Editor editor = SharedPreferencesUtil.getAppSharedPreferences(getContext()).edit();
@@ -143,6 +189,8 @@ public class PartidasFragment extends Fragment {
         public void onLongPressClickListener(View view, int position, Object object) {
 
             if (object instanceof Partida && ((Partida) object).getPartidaID() != 0) {
+
+
 
                 Intent intent = new Intent(getActivity(), PartidaPontosActivity.class);
                 intent.putExtra(Partida.EXTRA_KEY, ((Partida) object).getPartidaID());

@@ -13,23 +13,24 @@ import java.util.List;
 import br.com.aj.truco.R;
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaPesquisa;
 import br.com.aj.truco.dao.AppRoomDatabase;
 import br.com.aj.truco.generic.GenericAdapter;
 import br.com.aj.truco.generic.GenericViewHolder;
 import br.com.aj.truco.generic.RecyclerViewListenerHack;
 
-public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.ViewHolder> {
+public class PartidasAdapter extends GenericAdapter<PartidaPesquisa, PartidasAdapter.ViewHolder> {
 
     AppRoomDatabase dbs;
     Context mcontext;
 
-    public PartidasAdapter(Context context, List<Partida> objects) {
-        super(context, objects);
-        mcontext = context;
-        dbs = AppRoomDatabase.getDatabase(context);
-    }
+//    public PartidasAdapter(Context context, List<Partida> objects) {
+//        super(context, objects);
+//        mcontext = context;
+//        dbs = AppRoomDatabase.getDatabase(context);
+//    }
 
-    public PartidasAdapter(Context context, List<Partida> objects, RecyclerViewListenerHack.OnClickListener clickListener, RecyclerViewListenerHack.OnLongClickListener longClickListener) {
+    public PartidasAdapter(Context context, List<PartidaPesquisa> objects, RecyclerViewListenerHack.OnClickListener clickListener, RecyclerViewListenerHack.OnLongClickListener longClickListener) {
         super(context, objects, clickListener, longClickListener);
         mcontext = context;
         dbs = AppRoomDatabase.getDatabase(context);
@@ -43,7 +44,7 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Partida partida = mList.get(position);
+        PartidaPesquisa partida = mList.get(position);
 
         holder.viewPartida.setText(partida.getTitulo());
         holder.viewNomeTime1.setText(partida.getNomeTime1());
@@ -51,25 +52,34 @@ public class PartidasAdapter extends GenericAdapter<Partida, PartidasAdapter.Vie
         holder.viewVitoriaTime1.setText(String.valueOf(partida.getVitoriaTime1()));
         holder.viewVitoriaTime2.setText(String.valueOf(partida.getVitoriaTime2()));
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mcontext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        holder.rvJogadoresTime1.setLayoutManager(linearLayoutManager);
-        holder.rvJogadoresTime1.setHasFixedSize(true);
 
-        List<Jogador> jogadorList = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 1);
-        JogadoresTimesAdapter jtaTime1 = new JogadoresTimesAdapter(mcontext, jogadorList, null, null);
-        holder.rvJogadoresTime1.setAdapter(jtaTime1);
+        if (partida.getPartidaID() > 0) {
+
+            holder.rvJogadoresTime1.setVisibility(View.VISIBLE);
+            holder.rvJogadoresTime2.setVisibility(View.VISIBLE);
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mcontext);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            holder.rvJogadoresTime1.setLayoutManager(linearLayoutManager);
+            holder.rvJogadoresTime1.setHasFixedSize(true);
+            List<Jogador> jogadorList = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 1);
+            JogadoresTimesAdapter jtaTime1 = new JogadoresTimesAdapter(mcontext, jogadorList, null, null);
+            holder.rvJogadoresTime1.setAdapter(jtaTime1);
 
 
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(mcontext);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-        holder.rvJogadoresTime2.setLayoutManager(linearLayoutManager2);
-        holder.rvJogadoresTime2.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(mcontext);
+            linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+            holder.rvJogadoresTime2.setLayoutManager(linearLayoutManager2);
+            holder.rvJogadoresTime2.setHasFixedSize(true);
+            List<Jogador> jogadorList2 = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 2);
+            JogadoresTimesAdapter jtaTime2 = new JogadoresTimesAdapter(mcontext, jogadorList2, null, null);
+            holder.rvJogadoresTime2.setAdapter(jtaTime2);
 
-        List<Jogador> jogadorList2 = dbs.jogadorDAO().getJogadoresByPartidaTime(partida.getPartidaID(), 2);
-        JogadoresTimesAdapter jtaTime2 = new JogadoresTimesAdapter(mcontext, jogadorList2, null, null);
-        holder.rvJogadoresTime2.setAdapter(jtaTime2);
-
+        }
+        else {
+            holder.rvJogadoresTime1.setVisibility(View.GONE);
+            holder.rvJogadoresTime2.setVisibility(View.GONE);
+        }
     }
 
     @Override

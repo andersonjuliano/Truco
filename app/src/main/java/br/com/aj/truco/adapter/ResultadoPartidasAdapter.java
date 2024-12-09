@@ -48,18 +48,18 @@ public class ResultadoPartidasAdapter extends GenericAdapter<PartidaJogada, Resu
     public void onBindViewHolder(ViewHolder holder, int position) {
         PartidaJogada partidaJogada = mList.get(position);
 
-        long pontos1 = partidaJogada.getPontosTime1();
-        long pontos2 = partidaJogada.getPontosTime2();
+//        long pontos1 = partidaJogada.getPontosTime1();
+//        long pontos2 = partidaJogada.getPontosTime2();
 
-        if ((partidaJogada.getTimeID() == partida.getTime1ID() && partidaJogada.isVitoria())
-                || (partidaJogada.getTimeID() == partida.getTime2ID() && !partidaJogada.isVitoria())) {
-            pontos1 += partidaJogada.getPontos();
-        } else {
-            pontos2 += partidaJogada.getPontos();
-        }
+//        if ((partidaJogada.getTimeID() == partida.getTime1ID() && partidaJogada.isVitoria())
+//                || (partidaJogada.getTimeID() == partida.getTime2ID() && !partidaJogada.isVitoria())) {
+//            pontos1 += partidaJogada.getPontos();
+//        } else {
+//            pontos2 += partidaJogada.getPontos();
+//        }
 
-        holder.textPontosTime1.setText(String.valueOf(pontos1));
-        holder.textPontosTime2.setText(String.valueOf(pontos2));
+        holder.textPontosTime1.setText(String.valueOf(partidaJogada.getPontosTime1()));
+        holder.textPontosTime2.setText(String.valueOf(partidaJogada.getPontosTime2()));
 
         TypedValue typedValue = new TypedValue();
         mContext.getTheme().resolveAttribute(R.attr.textColorPositivo, typedValue, true);
@@ -68,7 +68,7 @@ public class ResultadoPartidasAdapter extends GenericAdapter<PartidaJogada, Resu
         mContext.getTheme().resolveAttribute(R.attr.textColorNegativo, typedValue, true);
         int textColorNegativo = ContextCompat.getColor(mContext, typedValue.resourceId);
 
-        if (pontos2 >= 12) {
+        if (partidaJogada.getPontosTime2() >= 12) {
             holder.textPontosTime1.setTextColor(textColorNegativo);
             holder.textPontosTime2.setTextColor(textColorPositivo);
         } else {
@@ -77,7 +77,7 @@ public class ResultadoPartidasAdapter extends GenericAdapter<PartidaJogada, Resu
         }
 
 
-        if (pontos1 == 0 || pontos2 == 0) {
+        if (partidaJogada.getPontosTime1() == 0 || partidaJogada.getPontosTime2() == 0) {
             holder.textPontosTime1.setTypeface(null, Typeface.BOLD);
             holder.textPontosTime2.setTypeface(null, Typeface.BOLD);
         } else {

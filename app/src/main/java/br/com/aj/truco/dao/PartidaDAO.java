@@ -9,6 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaPesquisa;
 
 @Dao
 public interface PartidaDAO {
@@ -17,32 +18,45 @@ public interface PartidaDAO {
     @Query("SELECT * FROM Partida ORDER BY PartidaID DESC")
     List<Partida> getAll();
 
+    @Query("SELECT p.*, DataPartida as DataPartidaInicio, DataPartida as DataPartidaFim FROM Partida p ORDER BY PartidaID DESC")
+    List<PartidaPesquisa> getAllP();
+
     @Query("SELECT 0 as PartidaID " +
             ",MAX(DataPartida) as DataPartida" +
+            ",MAX(DataPartida) as DataPartidaFim" +
+            ",MIN(DataPartida) as DataPartidaInicio" +
             ",0 as JogadorID" +
             ",SUM(PontosTime1) as PontosTime1" +
             ",SUM(PontosTime2) as PontosTime2" +
             ",SUM(VitoriaTime1) as VitoriaTime1" +
             ",SUM(VitoriaTime2) as VitoriaTime2" +
             ",0 as Ativo" +
-            ",MAX(Time1ID) as Time1ID" +
-            ",MAX(Time2ID) as Time2ID" +
-            " FROM (SELECT * FROM Partida ORDER BY PartidaID DESC LIMIT :limit)")
-    List<Partida> getLastPartidas(int limit);
+            " ,Time1ID" +
+            " ,NomeTime1" +
+            " ,Time2ID" +
+            " ,NomeTime2" +
+            " FROM (SELECT * FROM Partida ORDER BY PartidaID DESC LIMIT :limit)"+
+            "GROUP BY Time1ID, Time2ID, NomeTime1, NomeTime2")
+    List<PartidaPesquisa> getLastPartidas(int limit);
 
 
     @Query("SELECT 0 as PartidaID" +
-            ",MAX(DataPartida) as DataPartida" +
-            ",0 as JogadorID" +
-            ",SUM(PontosTime1) as PontosTime1" +
-            ",SUM(PontosTime2) as PontosTime2" +
-            ",SUM(VitoriaTime1) as VitoriaTime1" +
-            ",SUM(VitoriaTime2) as VitoriaTime2" +
-            ",0 as Ativo" +
-            ",MAX(Time1ID) as Time1ID" +
-            ",MAX(Time2ID) as Time2ID" +
-            " FROM Partida ")
-    List<Partida> getTotalPartidas();
+            " ,MAX(DataPartida) as DataPartida" +
+            " ,MAX(DataPartida) as DataPartidaFim" +
+            " ,MIN(DataPartida) as DataPartidaInicio" +
+            " ,0 as JogadorID" +
+            " ,SUM(PontosTime1) as PontosTime1" +
+            " ,SUM(PontosTime2) as PontosTime2" +
+            " ,SUM(VitoriaTime1) as VitoriaTime1" +
+            " ,SUM(VitoriaTime2) as VitoriaTime2" +
+            " ,0 as Ativo" +
+            " ,Time1ID" +
+            " ,NomeTime1" +
+            " ,Time2ID" +
+            " ,NomeTime2" +
+            " FROM Partida " +
+            "GROUP BY Time1ID, Time2ID, NomeTime1, NomeTime2")
+    List<PartidaPesquisa> getTotalPartidas();
 
 
 

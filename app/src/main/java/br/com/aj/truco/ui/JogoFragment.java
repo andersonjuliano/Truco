@@ -102,6 +102,7 @@ public class JogoFragment extends BaseFragment {
         }
 
 
+
         buttonVitoriaTime1.setOnClickListener(btnVitoriaTime1);
         buttonVitoriaTime2.setOnClickListener(btnVitoriaTime2);
         buttonTrucar.setOnClickListener(btnTruco);

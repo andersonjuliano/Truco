@@ -66,10 +66,22 @@ public interface PartidaJogadaDAO {
     @Query("SELECT * FROM PartidaJogada WHERE PartidaID = :partidaid ORDER BY PartidaJogadaID DESC")
     PartidaJogada getLast(long partidaid);
 
-    @Query("SELECT * FROM PartidaJogada " +
+
+    @Query("SELECT * FROM (" +
+            "SELECT PartidaJogadaID " +
+            " ,PartidaID" +
+            " ,TimeID" +
+            " ,JogadorID" +
+            " ,Pontos" +
+            " ,(CASE WHEN (TimeID = :time1ID AND Vitoria) OR (TimeID = :time2ID AND NOT Vitoria) THEN PontosTime1 + Pontos ELSE PontosTime1 END) AS PontosTime1" +
+            " ,(CASE WHEN (TimeID = :time2ID AND Vitoria) OR (TimeID = :time1ID AND NOT Vitoria) THEN PontosTime2 + Pontos ELSE PontosTime2 END) AS PontosTime2" +
+            " ,VitoriasTime1" +
+            " ,VitoriasTime2" +
+            " ,Vitoria" +
+            " FROM PartidaJogada " +
             " WHERE PartidaID = :partidaid " +
-            " AND (CASE WHEN (TimeID = :time1ID AND Vitoria) OR (TimeID = :time2ID AND NOT Vitoria) THEN PontosTime1 + Pontos ELSE PontosTime2 + Pontos END) >=12 " +
-            " ORDER BY PartidaJogadaID")
+            " ORDER BY PartidaJogadaID ) TABELA" +
+            " WHERE PontosTime1 >= 12 OR PontosTime2 >= 12")
     List<PartidaJogada> getResultadosByPartida(long partidaid, long time1ID, long time2ID);
 
     @Insert

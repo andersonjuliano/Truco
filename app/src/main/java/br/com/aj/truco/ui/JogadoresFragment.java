@@ -62,6 +62,7 @@ public class JogadoresFragment extends Fragment {
 
         carregar();
 
+        binding.buttonReordenarRecarregar.setOnClickListener(ReordenarRecarregarFiltroClick);
         binding.buttonReordenar.setOnClickListener(buttonReordenarClick);
         binding.buttonReordenarOk.setOnClickListener(buttonReordenarOkClick);
         binding.buttonReordenarCancelar.setOnClickListener(buttonReordenarCancelarClick);
@@ -113,16 +114,44 @@ public class JogadoresFragment extends Fragment {
     }
 
 
+    private View.OnClickListener ReordenarRecarregarFiltroClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            desc = !desc;
+            if (desc)
+                times = dbs.timeDAO().getAtivosDesc();
+            else
+                times = dbs.timeDAO().getAtivos();
+
+
+            if (times.size() < 2) {
+                new android.app.AlertDialog.Builder(getContext())
+                        .setMessage("É necessátio que 2 time esteja ativo.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", null).show();
+                return;
+            } else if (times.size() > 2) {
+                new android.app.AlertDialog.Builder(getContext())
+                        .setMessage("Mais de 2 time está ativo.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", null).show();
+                return;
+            }
+
+            Toast.makeText(getContext(), "Time 1 - " + times.get(0).getNome() + "\n\rTime 2 - " + times.get(1).getNome(), Toast.LENGTH_SHORT).show();
+
+        }
+    };
     private View.OnClickListener buttonReordenarClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
             if (desc)
-                times = dbs.timeDAO().getAtivos();
+                times = dbs.timeDAO().getAtivosDesc();
             else
-                times = dbs.timeDAO().getAtivosAlt();
+                times = dbs.timeDAO().getAtivos();
 
-            desc = !desc;
 
             if (times.size() < 2) {
                 new android.app.AlertDialog.Builder(getContext())
@@ -153,6 +182,7 @@ public class JogadoresFragment extends Fragment {
             binding.buttonNovo.setVisibility(View.GONE);
             binding.buttonReordenarOk.setVisibility(View.VISIBLE);
             binding.buttonReordenarCancelar.setVisibility(View.VISIBLE);
+            binding.buttonReordenarRecarregar.setVisibility(View.VISIBLE);
 
             Ordem = 1;
             Time = 0;
@@ -168,6 +198,7 @@ public class JogadoresFragment extends Fragment {
             binding.buttonNovo.setVisibility(View.VISIBLE);
             binding.buttonReordenarOk.setVisibility(View.GONE);
             binding.buttonReordenarCancelar.setVisibility(View.GONE);
+            binding.buttonReordenarRecarregar.setVisibility(View.GONE);
 
             carregar();
 
@@ -190,6 +221,7 @@ public class JogadoresFragment extends Fragment {
             binding.buttonNovo.setVisibility(View.VISIBLE);
             binding.buttonReordenarOk.setVisibility(View.GONE);
             binding.buttonReordenarCancelar.setVisibility(View.GONE);
+            binding.buttonReordenarRecarregar.setVisibility(View.GONE);
 
             carregar();
 

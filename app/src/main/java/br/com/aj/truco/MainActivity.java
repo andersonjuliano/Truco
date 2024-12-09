@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -118,8 +117,13 @@ public class MainActivity extends AppCompatActivity {
 
                                     Partida partida = new Partida();
                                     partida.setDataPartida(c.getTime().getTime());
+
+                                    partida.setTime1ID(objTime1.getTimeID());
                                     partida.setNomeTime1(objTime1.getNome());
+
+                                    partida.setTime2ID(objTime2.getTimeID());
                                     partida.setNomeTime2(objTime2.getNome());
+
                                     long id = dbs.partidaDAO().insert(partida);
 
                                     //ao iniciar uma nova partida, remove o histórico

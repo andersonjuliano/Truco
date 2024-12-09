@@ -20,7 +20,7 @@ public interface TimeDAO {
     List<Time> getAtivos();
 
  @Query("SELECT * FROM Time WHERE Ativo = 1 ORDER BY TimeID DESC")
-    List<Time> getAtivosAlt();
+    List<Time> getAtivosDesc();
 
     @Query("SELECT * FROM Time WHERE TimeID = :timeid")
     Time getTime(long timeid);

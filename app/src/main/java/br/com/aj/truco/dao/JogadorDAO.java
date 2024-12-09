@@ -49,7 +49,7 @@ public interface JogadorDAO {
     @Query("SELECT * FROM Jogador WHERE Ordem > 0 ORDER BY Ordem")
     Jogador getFirstJogador();
 
-    @Query("SELECT * FROM Jogador WHERE JogadorID in (SELECT JogadorID FROM PartidaJogada WHERE PartidaID = :partidaID AND TimeID = :timeID GROUP BY JogadorID)")
+    @Query("SELECT * FROM Jogador WHERE JogadorID in (SELECT JogadorID FROM PartidaJogada WHERE PartidaID = :partidaID AND TimeID = :timeID)")
     List<Jogador> getJogadoresByPartidaTime(long partidaID, long timeID);
 
     @Query("SELECT MAX(Ordem) FROM Jogador")
