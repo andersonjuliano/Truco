@@ -127,13 +127,13 @@ public class JogadoresFragment extends Fragment {
 
             if (times.size() < 2) {
                 new android.app.AlertDialog.Builder(getContext())
-                        .setMessage("É necessátio que 2 time esteja ativo.")
+                        .setMessage("É necessário que 2 time esteja ativo.")
                         .setCancelable(false)
                         .setPositiveButton("OK", null).show();
                 return;
             } else if (times.size() > 2) {
                 new android.app.AlertDialog.Builder(getContext())
-                        .setMessage("Mais de 2 time está ativo.")
+                        .setMessage("Mais de 2 time estão ativos.")
                         .setCancelable(false)
                         .setPositiveButton("OK", null).show();
                 return;

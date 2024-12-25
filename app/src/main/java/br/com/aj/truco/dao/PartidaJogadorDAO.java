@@ -114,7 +114,7 @@ public interface PartidaJogadorDAO {
     int deleteAll();
 
     @Query("DELETE FROM PartidaJogador WHERE JogadorID = :jogadorID")
-    int deleteByJogador(long jogadorID);
+    void deleteByJogador(long jogadorID);
 
     @Query("DELETE FROM PartidaJogador WHERE PartidaID = :partidaID")
     int deleteByPartida(long partidaID);

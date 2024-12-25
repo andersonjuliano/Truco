@@ -102,7 +102,6 @@ public class JogoFragment extends BaseFragment {
         }
 
 
-
         buttonVitoriaTime1.setOnClickListener(btnVitoriaTime1);
         buttonVitoriaTime2.setOnClickListener(btnVitoriaTime2);
         buttonTrucar.setOnClickListener(btnTruco);
@@ -138,28 +137,38 @@ public class JogoFragment extends BaseFragment {
         QtdeJogadores = dbs.jogadorDAO().getMaxOrdem();
         if (partida == null)
             partida = dbs.partidaDAO().getPartida(partidaID);
-        if (jogadorPe == null) {
 
-            if (partida != null && partida.getJogadorID() != 0)
-                jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
-
-            if (jogadorPe == null)
-                jogadorPe = dbs.jogadorDAO().getFirstJogador();
-        }
 
         if (partida != null) {
-            textTime1Nome.setText(partida.getNomeTime1());
-            textTime2Nome.setText(partida.getNomeTime2());
-        }
-        if (textTime1Nome.getTextColors().equals("")) {
-            Time time = dbs.timeDAO().getTime(1);
-            if (time != null)
+
+            if (jogadorPe == null) {
+
+                if (partida != null && partida.getJogadorID() != 0)
+                    jogadorPe = dbs.jogadorDAO().getJogador(partida.getJogadorID());
+
+                if (jogadorPe == null)
+                    jogadorPe = dbs.jogadorDAO().getFirstJogador();
+            }
+
+            Time time = dbs.timeDAO().getTime(partida.getTime1ID());
+            if (time != null) {
                 textTime1Nome.setText(time.getNome());
-        }
-        if (textTime2Nome.getTextColors().equals("")) {
-            Time time = dbs.timeDAO().getTime(2);
-            if (time != null)
+            }
+            time = dbs.timeDAO().getTime(partida.getTime2ID());
+            if (time != null) {
                 textTime2Nome.setText(time.getNome());
+                partida.setNomeTime2(time.getNome());
+            }
+//            if (textTime1Nome.getTextColors().equals("")) {
+//                Time time = dbs.timeDAO().getTime(1);
+//                if (time != null)
+//                    textTime1Nome.setText(time.getNome());
+//            }
+//            if (textTime2Nome.getTextColors().equals("")) {
+//                Time time = dbs.timeDAO().getTime(2);
+//                if (time != null)
+//                    textTime2Nome.setText(time.getNome());
+//            }
         }
 
         if (jogadorPe == null || QtdeJogadores == 0) {

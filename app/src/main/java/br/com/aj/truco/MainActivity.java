@@ -1,5 +1,6 @@
 package br.com.aj.truco;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,6 +27,7 @@ import java.util.List;
 
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
+import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
@@ -217,22 +220,22 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-//        MenuItem mCorrigirEstatitica = menu.findItem(R.id.action_corrigir_estatistica);
-//        mCorrigirEstatitica.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(@NonNull MenuItem item) {
-//
-//                try {
-//
-//                    new AlertDialog.Builder(MainActivity.this)
-//                            .setMessage(getString(R.string.action_corrigir_estatisticas_confirmar))
-//                            .setCancelable(false)
-//                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                }
-//                            })
+        MenuItem mCorrigirEstatitica = menu.findItem(R.id.action_corrigir_estatistica);
+        mCorrigirEstatitica.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+
+                try {
+
+                    new android.app.AlertDialog.Builder(MainActivity.this)
+                            .setMessage(getString(R.string.action_corrigir_estatisticas_confirmar))
+                            .setCancelable(false)
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
 //                            .setNeutralButton("Corrigir", new DialogInterface.OnClickListener() {
 //                                //trocar os jogadores de time, e corrigir as estatisticas
 //                                @Override
@@ -288,60 +291,62 @@ public class MainActivity extends AppCompatActivity {
 ////                                    }
 //                                }
 //                            })
-//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
-//
-//                                    //List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
-//                                    List<Jogador> jogadorList = dbs.jogadorDAO().getAll();
-//
-//                                    int qtde = 0;
-//                                    for (Jogador jogador : jogadorList) {
-//
-//                                        boolean incluir = false;
-//
-//                                        PartidaJogador partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogador.getJogadorID(), partidaID);
-//                                        if (partidaJogador == null) {
-//                                            partidaJogador = new PartidaJogador();
-//                                            partidaJogador.setJogadorID(jogador.getJogadorID());
-//                                            partidaJogador.setPartidaID(partidaID);
-//                                            incluir = true;
-//                                        }
-//
-//                                        PartidaJogador partidaJogadorNova = dbs.partidaJogadorDAO().getFromPartidaJogadaByPartidaJogador(partidaID, partidaJogador.getJogadorID());
-//                                        if (partidaJogadorNova != null) {
-//
-//                                            partidaJogador.setVitoria(partidaJogadorNova.getVitoria());
-//                                            partidaJogador.setDerrota(partidaJogadorNova.getDerrota());
-//                                            partidaJogador.setPontosPerdidos(partidaJogadorNova.getPontosPerdidos());
-//                                            partidaJogador.setPontosGanhos(partidaJogadorNova.getPontosGanhos());
-//
-//                                            if (incluir)
-//                                                dbs.partidaJogadorDAO().insert(partidaJogador);
-//                                            else
-//                                                dbs.partidaJogadorDAO().update(partidaJogador);
-//
-//                                            qtde++;
-//
-//                                        }
-//
-//                                    }
-//
-//                                    Toast.makeText(getBaseContext(), String.valueOf(qtde) + " estatísticas corrigidas.", Toast.LENGTH_LONG).show();
-//
-//                                }
-//                            }).show();
-//
-//                } catch (Exception e) {
-//                    Log.e(TAG, e.getMessage());
-//                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-//
-//                return false;
-//            }
-//        });
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    long partidaID = SharedPreferencesUtil.getAppSharedPreferences(getBaseContext()).getLong(SharedPreferencesUtil.KEY_PARTIDAID_ATIVA, 0);
+
+                                    //List<PartidaJogador> partidaJogadorList = dbs.partidaJogadorDAO().getByPartida(partidaID);
+                                    List<Jogador> jogadorList = dbs.jogadorDAO().getAll();
+
+                                    int qtde = 0;
+                                    for (Jogador jogador : jogadorList) {
+
+                                        boolean incluir = false;
+
+                                        PartidaJogador partidaJogador = dbs.partidaJogadorDAO().getByJogadorPartida(jogador.getJogadorID(), partidaID);
+                                        if (partidaJogador == null) {
+                                            partidaJogador = new PartidaJogador();
+                                            partidaJogador.setJogadorID(jogador.getJogadorID());
+                                            partidaJogador.setPartidaID(partidaID);
+                                            incluir = true;
+                                        }
+
+                                        PartidaJogador partidaJogadorNova = dbs.partidaJogadorDAO().getFromPartidaJogadaByPartidaJogador(partidaID, partidaJogador.getJogadorID());
+                                        if (partidaJogadorNova != null) {
+
+                                            partidaJogador.setVitoria(partidaJogadorNova.getVitoria());
+                                            partidaJogador.setDerrota(partidaJogadorNova.getDerrota());
+                                            partidaJogador.setPontosPerdidos(partidaJogadorNova.getPontosPerdidos());
+                                            partidaJogador.setPontosGanhos(partidaJogadorNova.getPontosGanhos());
+
+                                            if (incluir)
+                                                dbs.partidaJogadorDAO().insert(partidaJogador);
+                                            else
+                                                dbs.partidaJogadorDAO().update(partidaJogador);
+
+                                            qtde++;
+
+                                        }
+
+                                    }
+
+                                    Toast.makeText(getBaseContext(), String.valueOf(qtde) + " estatísticas corrigidas.", Toast.LENGTH_LONG).show();
+
+                                }
+                            }
+
+                            ).show();
+
+                } catch (Exception e) {
+                    Log.e(TAG, e.getMessage());
+                    Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
 
         MenuItem mLimparBase = menu.findItem(R.id.action_limpar);
         mLimparBase.setOnMenuItemClickListener(item -> {
