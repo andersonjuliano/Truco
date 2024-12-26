@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,6 @@ public class TimesFragment extends Fragment {
     private RecyclerView recyclerView;
     private TimesAdapter adapter;
     private AppRoomDatabase dbs;
-    private List<Time> times;
     private Time timeNovo;
 
 
@@ -39,7 +39,7 @@ public class TimesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentTimesBinding.inflate(inflater, container, false);
@@ -66,8 +66,8 @@ public class TimesFragment extends Fragment {
 
 
     private void carregar() {
-        times = dbs.timeDAO().getAll();
-        adapter = new TimesAdapter(getActivity(), times, listClickListener, listLongClickListener);
+        List<Time> objTimes = dbs.timeDAO().getAll();
+        adapter = new TimesAdapter(getActivity(), objTimes, listClickListener, listLongClickListener);
         recyclerView.setAdapter(adapter);
     }
 

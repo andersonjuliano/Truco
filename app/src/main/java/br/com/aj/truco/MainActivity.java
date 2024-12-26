@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.view.MenuCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import br.com.aj.truco.classe.Jogador;
 import br.com.aj.truco.classe.Partida;
-import br.com.aj.truco.classe.PartidaJogada;
 import br.com.aj.truco.classe.PartidaJogador;
 import br.com.aj.truco.classe.Time;
 import br.com.aj.truco.dao.AppRoomDatabase;
@@ -231,12 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     new android.app.AlertDialog.Builder(MainActivity.this)
                             .setMessage(getString(R.string.action_corrigir_estatisticas_confirmar))
                             .setCancelable(false)
-                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
+                            .setNegativeButton("Cancelar", null)
 //                            .setNeutralButton("Corrigir", new DialogInterface.OnClickListener() {
 //                                //trocar os jogadores de time, e corrigir as estatisticas
 //                                @Override
