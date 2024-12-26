@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.MenuCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
@@ -390,22 +391,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        MenuItem mSobre = menu.findItem(R.id.action_sobre);
-        mSobre.setOnMenuItemClickListener(item -> {
-
-
-//            try {
-//
-////                getSupportFragmentManager().beginTransaction()
-////                        .add(R.id.nav_host_fragment_content_main, SobreFragment.class, bundle)
-////                        .commit();
-//            } catch (Exception e) {
-//                Log.e(TAG, e.getMessage());
-//                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-
-            return false;
-        });
 
 
         return true;

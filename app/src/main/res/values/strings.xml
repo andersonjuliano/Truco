@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Truco v2</string>
+    <string name="app_name">Truco</string>
     <string name="nav_header_title">Truco</string>
     <string name="nav_header_subtitle">Marcador &amp; Estatísticas</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -28,12 +28,14 @@
     <string name="menu_estatistica_jogador_partidas">Estatísticas dos Jogadores</string>
     <string name="menu_historico_partida">Histórico da Partida</string>
     <string name="menu_partidas">Partidas</string>
+    <string name="menu_sobre">Sobre</string>
+    <string name="menu_outros">Outros</string>
     <string name="msg_dialog_desfazer">Desfazer a última jogada?</string>
 
     <string name="msg_dialog_times_ativos">Já tem 2 times ativos. Inative um antes de continuar</string>
     <string name="msg_dialog_exclusao_jogador_registro">Este jogador já tem registros de jogadas. Confirma a exclusão?</string>
     <string name="msg_dialog_exclusao_jogador">Confirma a exclusão?</string>
- <string name="msg_dialog_exclusao_time_registro">Este time já tem registros de jogadas. Confirma a exclusão?</string>
+    <string name="msg_dialog_exclusao_time_registro">Este time já tem registros de jogadas. Confirma a exclusão?</string>
     <string name="msg_dialog_exclusao_time">Confirma a exclusão?</string>
     <string name="msg_dialog_alterar_time">Altera nome do time na partida atual?</string>
 
@@ -88,6 +90,11 @@
     <string name="ok">OK</string>
     <string name="reordenar">Reordenar</string>
     <string name="desfazer">Desfazer</string>
+
+    <!-- sobre -->
+    <string name="about_desenvolvedor">Desenvolvido por AJ Tecnologia LTDA</string>
+    <string name="about_btn_copyright">Licenças de código aberto</string>
+    <string name="versao">Versão %1$s (banco %2$d)  </string>
 
 
 </resources>
